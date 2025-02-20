@@ -33,6 +33,7 @@ public class RegisterCommandHandler :
 
 		var user = new User()
 		{
+			Id = Guid.NewGuid(),
 			FirstName = request.FirstName,
 			LastName = request.LastName,
 			Email = request.Email,
