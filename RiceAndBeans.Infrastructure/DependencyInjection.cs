@@ -1,15 +1,19 @@
 using System.Text;
-using RiceAndBeans.Application.Common.Interfaces.Authentication;
-using RiceAndBeans.Application.Common.Interfaces.Persistence;
-using RiceAndBeans.Application.Common.Interfaces.Services;
-using RiceAndBeans.Infrastructure.Authentication;
-using RiceAndBeans.Infrastructure.Persistence.Repositories;
-using RiceAndBeans.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using RiceAndBeans.Application.Common.Interfaces.Authentication;
+using RiceAndBeans.Application.Common.Interfaces.Persistence;
+using RiceAndBeans.Application.Common.Interfaces.Services;
+using RiceAndBeans.Application.Common.Interfaces.PasswordHash;
+
+using RiceAndBeans.Infrastructure.Authentication;
+using RiceAndBeans.Infrastructure.Persistence.Repositories;
+using RiceAndBeans.Infrastructure.Services;
+using RiceAndBeans.Infrastructure.PasswordHash;
 
 namespace RiceAndBeans.Infrastructure;
 
@@ -22,6 +26,7 @@ public static class DependencyInjection
 		services.AddAuth(configuration);
 
 		services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+		services.AddSingleton<IPasswordHasher, PasswordHasher>();
 		// services.AddSingleton<IUserRepository, UserRepository>();
 		services.AddScoped<IUserRepository, UserRepository>();
 
