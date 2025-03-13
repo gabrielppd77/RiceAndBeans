@@ -1,14 +1,16 @@
-using RiceAndBeans.Application.Authentication.Commands.Register;
-using RiceAndBeans.Application.Authentication.Queries.Login;
-using RiceAndBeans.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using RiceAndBeans.Contracts.Authentication;
+
+using RiceAndBeans.Application.Authentication.Commands.Register;
+using RiceAndBeans.Application.Authentication.Queries.Login;
+using RiceAndBeans.Application.Authentication.Commands.RemoveAccount;
+
 namespace RiceAndBeans.Api.Controllers;
 
-[AllowAnonymous]
 [Route("auth")]
 public class AuthenticationController : ApiController
 {
@@ -21,7 +23,8 @@ public class AuthenticationController : ApiController
 		_mapper = mapper;
 	}
 
-	[HttpPost("register")]
+    [AllowAnonymous]
+    [HttpPost("register")]
 	public async Task<IActionResult> Register(RegisterRequest request)
 	{
 		var command = _mapper.Map<RegisterCommand>(request);
@@ -34,7 +37,8 @@ public class AuthenticationController : ApiController
 		);
 	}
 
-	[HttpPost("login")]
+    [AllowAnonymous]
+    [HttpPost("login")]
 	public async Task<IActionResult> Login(LoginRequest request)
 	{
 		var command = _mapper.Map<LoginQuery>(request);
@@ -46,4 +50,17 @@ public class AuthenticationController : ApiController
 			Problem
 		);
 	}
+
+    [HttpDelete("remove-account")]
+    public async Task<IActionResult> RemoveAccount(string password)
+    {
+		var command = new RemoveAccountCommand(password);
+
+        var authResult = await _mediator.Send(command);
+
+        return authResult.Match(
+            authResult => Ok(),
+            Problem
+        );
+    }
 }

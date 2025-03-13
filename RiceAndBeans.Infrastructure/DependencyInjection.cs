@@ -24,9 +24,11 @@ public static class DependencyInjection
 		ConfigurationManager configuration)
 	{
 		services.AddAuth(configuration);
+		services.AddHttpContextAccessor();
 
 		services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 		services.AddSingleton<IPasswordHasher, PasswordHasher>();
+		services.AddSingleton<IUserAuthenticated, UserAuthenticated>();
 		// services.AddSingleton<IUserRepository, UserRepository>();
 		services.AddScoped<IUserRepository, UserRepository>();
 

@@ -7,17 +7,18 @@ using MediatR;
 using RiceAndBeans.Application.Common.Interfaces.Authentication;
 using RiceAndBeans.Application.Common.Interfaces.Persistence;
 using RiceAndBeans.Application.Common.Interfaces.PasswordHash;
+using RiceAndBeans.Domain.Companies;
 
 namespace RiceAndBeans.Application.Authentication.Commands.Register;
 
-public class RegisterCommandHandler :
-	IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
+public class RemoveAccountCommandHandler :
+    IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
-	private readonly IJwtTokenGenerator _jwtTokenGenerator;
-	private readonly IUserRepository _userRepository;
-	private readonly IPasswordHasher _passwordHasher;
+    private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly IUserRepository _userRepository;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public RegisterCommandHandler(
+    public RemoveAccountCommandHandler(
         IJwtTokenGenerator jwtTokenGenerator,
         IUserRepository userRepository,
         IPasswordHasher passwordHasher)
@@ -28,28 +29,29 @@ public class RegisterCommandHandler :
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
-	{
-		if (await _userRepository.GetUserByEmail(request.Email) is not null)
-		{
-			return Errors.User.DuplicateEmail;
-		}
+    {
+        if (await _userRepository.GetUserByEmail(request.Email) is not null)
+        {
+            return Errors.User.DuplicateEmail;
+        }
 
         var hashedPassword = _passwordHasher.HashPassword(request.Password);
 
-        var user = new User()
-		{
-			FirstName = request.FirstName,
-			LastName = request.LastName,
-			Email = request.Email,
-			Password = hashedPassword
-        };
+        var user = new User(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            hashedPassword);
 
-		await _userRepository.AddUser(user);
+        var company = new Company(user.Id, request.CompanyName);
 
-		await _userRepository.SaveChanges();
+        await _userRepository.AddUser(user);
+        await _userRepository.AddCompany(company);
+
+        await _userRepository.SaveChanges();
 
         var token = _jwtTokenGenerator.GenerateToken(user);
 
-		return new AuthenticationResult(user, token);
-	}
+        return new AuthenticationResult(user, token);
+    }
 }
