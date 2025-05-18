@@ -2,7 +2,7 @@ using RiceAndBeans.Application.Authentication.Common;
 using ErrorOr;
 using MediatR;
 
-namespace RiceAndBeans.Application.Authentication.Commands.Register;
+namespace RiceAndBeans.Application.Authentication.Register;
 
 public record RegisterCommand(
 	string FirstName,

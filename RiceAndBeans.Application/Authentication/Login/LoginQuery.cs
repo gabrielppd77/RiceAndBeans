@@ -2,7 +2,7 @@ using RiceAndBeans.Application.Authentication.Common;
 using ErrorOr;
 using MediatR;
 
-namespace RiceAndBeans.Application.Authentication.Queries.Login;
+namespace RiceAndBeans.Application.Authentication.Login;
 
 public record LoginQuery(
 	string Email,

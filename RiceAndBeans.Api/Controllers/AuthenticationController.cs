@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 using RiceAndBeans.Contracts.Authentication;
 
-using RiceAndBeans.Application.Authentication.Commands.Register;
-using RiceAndBeans.Application.Authentication.Queries.Login;
-using RiceAndBeans.Application.Authentication.Commands.RemoveAccount;
+using RiceAndBeans.Application.Authentication.Register;
+using RiceAndBeans.Application.Authentication.Login;
+using RiceAndBeans.Application.Authentication.RemoveAccount;
 
 namespace RiceAndBeans.Api.Controllers;
 

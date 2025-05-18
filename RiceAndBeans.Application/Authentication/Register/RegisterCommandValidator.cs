@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace RiceAndBeans.Application.Authentication.Commands.Register;
+namespace RiceAndBeans.Application.Authentication.Register;
 
 public class RemoveAccountCommandValidator : AbstractValidator<RegisterCommand>
 {

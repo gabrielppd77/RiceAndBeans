@@ -1,6 +1,6 @@
-using RiceAndBeans.Application.Authentication.Commands.Register;
+using RiceAndBeans.Application.Authentication.Register;
 using RiceAndBeans.Application.Authentication.Common;
-using RiceAndBeans.Application.Authentication.Queries.Login;
+using RiceAndBeans.Application.Authentication.Login;
 using RiceAndBeans.Contracts.Authentication;
 using Mapster;
 

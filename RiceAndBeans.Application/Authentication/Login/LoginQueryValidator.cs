@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace RiceAndBeans.Application.Authentication.Queries.Login;
+namespace RiceAndBeans.Application.Authentication.Login;
 
 public class LoginQueryValidator : AbstractValidator<LoginQuery>
 {

@@ -8,7 +8,7 @@ using RiceAndBeans.Application.Common.Interfaces.Authentication;
 using RiceAndBeans.Application.Common.Interfaces.Persistence;
 using RiceAndBeans.Application.Common.Interfaces.PasswordHash;
 
-namespace RiceAndBeans.Application.Authentication.Queries.Login;
+namespace RiceAndBeans.Application.Authentication.Login;
 
 public class LoginQueryHandler :
 	IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>

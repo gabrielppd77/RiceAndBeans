@@ -6,7 +6,7 @@ using RiceAndBeans.Application.Common.Interfaces.Persistence;
 using RiceAndBeans.Application.Common.Interfaces.PasswordHash;
 using RiceAndBeans.Application.Common.Interfaces.Authentication;
 
-namespace RiceAndBeans.Application.Authentication.Commands.RemoveAccount;
+namespace RiceAndBeans.Application.Authentication.RemoveAccount;
 
 public class RemoveAccountCommandHandler :
     IRequestHandler<RemoveAccountCommand, ErrorOr<Unit>>

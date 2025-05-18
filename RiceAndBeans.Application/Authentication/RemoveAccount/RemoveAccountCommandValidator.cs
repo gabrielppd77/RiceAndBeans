@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace RiceAndBeans.Application.Authentication.Commands.RemoveAccount;
+namespace RiceAndBeans.Application.Authentication.RemoveAccount;
 
 public class RemoveAccountCommandValidator : AbstractValidator<RemoveAccountCommand>
 {

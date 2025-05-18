@@ -9,7 +9,7 @@ using RiceAndBeans.Application.Common.Interfaces.Persistence;
 using RiceAndBeans.Application.Common.Interfaces.PasswordHash;
 using RiceAndBeans.Domain.Companies;
 
-namespace RiceAndBeans.Application.Authentication.Commands.Register;
+namespace RiceAndBeans.Application.Authentication.Register;
 
 public class RemoveAccountCommandHandler :
     IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
