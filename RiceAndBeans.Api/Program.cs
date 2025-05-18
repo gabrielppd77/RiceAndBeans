@@ -16,6 +16,7 @@ var app = builder.Build();
 	app.MapGet("/", () => "Server is Living!");
 	app.UseAuthentication();
 	app.UseAuthorization();
-
-	app.Run();
+	app.UseSwaggerDocumentation();	
+  
+    app.Run();
 }
