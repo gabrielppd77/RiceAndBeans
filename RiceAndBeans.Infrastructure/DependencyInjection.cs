@@ -9,11 +9,13 @@ using RiceAndBeans.Application.Common.Interfaces.Authentication;
 using RiceAndBeans.Application.Common.Interfaces.Persistence;
 using RiceAndBeans.Application.Common.Interfaces.Services;
 using RiceAndBeans.Application.Common.Interfaces.PasswordHash;
+using RiceAndBeans.Application.Common.Interfaces.FileService;
 
 using RiceAndBeans.Infrastructure.Authentication;
 using RiceAndBeans.Infrastructure.Persistence.Repositories;
 using RiceAndBeans.Infrastructure.Services;
 using RiceAndBeans.Infrastructure.PasswordHash;
+using RiceAndBeans.Infrastructure.FileService;
 
 namespace RiceAndBeans.Infrastructure;
 
@@ -29,10 +31,14 @@ public static class DependencyInjection
 		services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 		services.AddSingleton<IPasswordHasher, PasswordHasher>();
 		services.AddSingleton<IUserAuthenticated, UserAuthenticated>();
+		services.AddSingleton<IUploadFileService, UploadFileService>();
+
 		// services.AddSingleton<IUserRepository, UserRepository>();
 		services.AddScoped<IUserRepository, UserRepository>();
 
-		return services;
+        services.Configure<UploadFileSettings>(configuration.GetRequiredSection(UploadFileSettings.SectionName));
+
+        return services;
 	}
 
 	public static IServiceCollection AddAuth(
