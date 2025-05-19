@@ -1,4 +1,4 @@
-namespace RiceAndBeans.Contracts.Authentication;
+namespace RiceAndBeans.Api.Controllers.Authentication;
 
 public record AuthenticationResponse(
 	Guid Id,

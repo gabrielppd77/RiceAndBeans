@@ -1,7 +1,7 @@
 using RiceAndBeans.Application.Authentication.Register;
 using RiceAndBeans.Application.Authentication.Common;
 using RiceAndBeans.Application.Authentication.Login;
-using RiceAndBeans.Contracts.Authentication;
+using RiceAndBeans.Api.Controllers.Authentication;
 using Mapster;
 
 namespace RiceAndBeans.Api.Common.Mapping;

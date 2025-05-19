@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RiceAndBeans.Contracts\RiceAndBeans.Contracts.csproj" />
     <ProjectReference Include="..\RiceAndBeans.Application\RiceAndBeans.Application.csproj" />
     <ProjectReference Include="..\RiceAndBeans.Infrastructure\RiceAndBeans.Infrastructure.csproj" />
   </ItemGroup>

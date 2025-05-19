@@ -3,13 +3,13 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-using RiceAndBeans.Contracts.Authentication;
+using RiceAndBeans.Api.Controllers.Authentication;
 
 using RiceAndBeans.Application.Authentication.Register;
 using RiceAndBeans.Application.Authentication.Login;
 using RiceAndBeans.Application.Authentication.RemoveAccount;
 
-namespace RiceAndBeans.Api.Controllers;
+namespace RiceAndBeans.Api.Controllers.Authentication;
 
 [Route("auth")]
 public class AuthenticationController : ApiController
