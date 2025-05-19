@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiceAndBeans.Api", "RiceAndBeans.Api\RiceAndBeans.Api.csproj", "{9BC802CC-C858-8733-CCD1-0C524A400D0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{9BC802CC-C858-8733-CCD1-0C524A400D0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiceAndBeans.Application", "RiceAndBeans.Application\RiceAndBeans.Application.csproj", "{AF2AF452-3669-4908-8263-2C8AE613A46D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{AF2AF452-3669-4908-8263-2C8AE613A46D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiceAndBeans.Domain", "RiceAndBeans.Domain\RiceAndBeans.Domain.csproj", "{47D55935-E510-4B41-A987-D851E5C5B097}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{47D55935-E510-4B41-A987-D851E5C5B097}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiceAndBeans.Infrastructure", "RiceAndBeans.Infrastructure\RiceAndBeans.Infrastructure.csproj", "{CFFC2DD5-9DF1-4024-8723-6E36CD106B02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{CFFC2DD5-9DF1-4024-8723-6E36CD106B02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
