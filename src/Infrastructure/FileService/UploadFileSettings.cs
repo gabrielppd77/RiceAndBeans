@@ -4,7 +4,7 @@ public class UploadFileSettings
 {
     public const string SectionName = "UploadFileSettings";
 
-    public required string ServiceURL { get; set; }
-    public required string AccessKey { get; set; }
-    public required string SecretKey { get; set; }
+    public string BaseUrl { get; set; } = "";
+    public string AccessKey { get; set; } = "";
+    public string SecretKey { get; set; } = "";
 }

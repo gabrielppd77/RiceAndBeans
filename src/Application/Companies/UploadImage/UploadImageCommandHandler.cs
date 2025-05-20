@@ -15,7 +15,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
 
     public async Task<ErrorOr<Unit>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
     {
-        await _uploadFileService.UploadFileAsync(request.File.OpenReadStream(), "teste-buckets", "imagem.jpg", "image/jpeg");
+        await _uploadFileService.UploadFileAsync(request.File.OpenReadStream(), request.File.FileName, "teste");
 
         return Unit.Value;
     }
