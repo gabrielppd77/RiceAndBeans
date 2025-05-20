@@ -1,8 +1,7 @@
-namespace Api.Controllers.Authentication;
+namespace Api.Controllers.Authentication.Contracts;
 
 public record RegisterRequest(
 	string FirstName,
-	string LastName,
 	string Email,
 	string Password,
 	string CompanyName);

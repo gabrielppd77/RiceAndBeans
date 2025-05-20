@@ -1,8 +1,8 @@
 using Mapster;
-using Api.Controllers.Authentication;
 using Application.Authentication.Common;
 using Application.Authentication.Login;
 using Application.Authentication.Register;
+using Api.Controllers.Authentication.Contracts;
 
 namespace Api.Common.Mapping;
 

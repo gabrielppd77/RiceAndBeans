@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Authentication.RemoveAccount;
 using Application.Authentication.Login;
 using Application.Authentication.Register;
+using Api.Controllers.Authentication.Contracts;
 
 namespace Api.Controllers.Authentication;
 

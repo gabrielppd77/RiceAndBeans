@@ -1,4 +1,4 @@
-namespace Api.Controllers.Authentication;
+namespace Api.Controllers.Authentication.Contracts;
 
 public record LoginRequest(
 	string Email,

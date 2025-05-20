@@ -38,7 +38,6 @@ public class RemoveAccountCommandHandler :
 
         var user = new User(
             request.FirstName,
-            request.LastName,
             request.Email,
             hashedPassword);
 

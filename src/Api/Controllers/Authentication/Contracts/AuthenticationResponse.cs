@@ -1,8 +1,7 @@
-namespace Api.Controllers.Authentication;
+namespace Api.Controllers.Authentication.Contracts;
 
 public record AuthenticationResponse(
 	Guid Id,
 	string FirstName,
-	string LastName,
 	string Email,
 	string Token);

@@ -34,8 +34,7 @@ public static class DependencyInjection
         services.AddSingleton<IUserAuthenticated, UserAuthenticated>();
         services.AddSingleton<IUploadFileService, UploadFileService>();
 
-        // services.AddSingleton<IUserRepository, UserRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddSingleton<IUserRepository, UserRepository>();
 
         services.Configure<UploadFileSettings>(configuration.GetRequiredSection(UploadFileSettings.SectionName));
 
