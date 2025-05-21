@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.Services;
+using Application.Common.Interfaces.Time;
 using Domain.Users;
 
 namespace Infrastructure.Authentication;
