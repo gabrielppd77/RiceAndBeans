@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Authentication.RemoveAccount;
 using Application.Companies.UploadImage;
 
-namespace Api.Controllers;
+namespace Api.Controllers.Companies;
 
 [Route("[controller]")]
 public class CompaniesController : ApiController

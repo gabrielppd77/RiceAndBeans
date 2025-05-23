@@ -1,10 +1,10 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace Api;
+namespace Api.Extensions;
 
-public static class SwaggerConfig
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
+    internal static IServiceCollection AddSwaggerGenWithAuth(this IServiceCollection services)
     {
         services.AddSwaggerGen(c =>
         {
@@ -36,16 +36,5 @@ public static class SwaggerConfig
         });
 
         return services;
-    }
-
-    public static WebApplication UseSwaggerDocumentation(this WebApplication app)
-    {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        return app;
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Api.Common.Mapping;
 using Api.Common.Errors;
+using Api.Extensions;
 
 namespace Api;
 
@@ -12,7 +13,7 @@ public static class DependencyInjection
         services.AddSingleton<ProblemDetailsFactory, ApiProblemDetailsFactory>();
         services.AddMappings();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerDocumentation();
+        services.AddSwaggerGenWithAuth();
 
         return services;
     }

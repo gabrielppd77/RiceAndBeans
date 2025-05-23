@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 #Project
 **/appsettings.Development.json
+
+# Docker volume
+/volumes

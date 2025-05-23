@@ -1,4 +1,5 @@
 using Api;
+using Api.Extensions;
 using Application;
 using Infrastructure;
 
@@ -16,7 +17,8 @@ var app = builder.Build();
 	app.MapGet("/", () => "Server is Living!");
 	app.UseAuthentication();
 	app.UseAuthorization();
-	app.UseSwaggerDocumentation();	
-  
-    app.Run();
+	app.UseSwaggerWithUi();
+	app.ApplyMigrations();
+
+	app.Run();
 }
