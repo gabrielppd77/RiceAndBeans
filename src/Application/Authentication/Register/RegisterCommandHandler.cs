@@ -10,32 +10,33 @@ using Application.Common.Interfaces.PasswordHash;
 using Application.Authentication.Common;
 using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories.Users;
 
 namespace Application.Authentication.Register;
 
-public class RemoveAccountCommandHandler :
+public class RegisterCommandHandler :
     IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
-    private readonly IUserRepository _userRepository;
+    private readonly ICreateUserRepository _createUserRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RemoveAccountCommandHandler(
+    public RegisterCommandHandler(
         IJwtTokenGenerator jwtTokenGenerator,
-        IUserRepository userRepository,
         IPasswordHasher passwordHasher,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        ICreateUserRepository createUserRepository)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
-        _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _unitOfWork = unitOfWork;
+        _createUserRepository = createUserRepository;
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        if (await _userRepository.GetUserByEmail(request.Email) is not null)
+        if (await _createUserRepository.GetUserByEmail(request.Email) is not null)
         {
             return Errors.User.DuplicateEmail;
         }
@@ -49,8 +50,8 @@ public class RemoveAccountCommandHandler :
 
         var company = new Company(user.Id, request.CompanyName);
 
-        await _userRepository.AddUser(user);
-        await _userRepository.AddCompany(company);
+        await _createUserRepository.AddUser(user);
+        await _createUserRepository.AddCompany(company);
 
         await _unitOfWork.SaveChangesAsync();
 

@@ -18,14 +18,15 @@ using Application.Common.Interfaces.FileService;
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories.Users;
 
 using Infrastructure.Authentication;
 using Infrastructure.FileService;
-using Infrastructure.Persistence.Repositories;
 using Infrastructure.Time;
 using Infrastructure.PasswordHash;
 using Infrastructure.Database;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories.Users;
 
 namespace Infrastructure;
 
@@ -48,7 +49,9 @@ public static class DependencyInjection
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICreateUserRepository, UserRepository>();
+        services.AddScoped<ILoginUserRepository, UserRepository>();
+        services.AddScoped<IDeleteUserRepository, UserRepository>();
 
         services.Configure<UploadFileSettings>(configuration.GetRequiredSection(UploadFileSettings.SectionName));
 

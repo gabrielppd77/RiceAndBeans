@@ -7,34 +7,35 @@ using Application.Common.Interfaces.PasswordHash;
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories.Users;
 
 namespace Application.Authentication.RemoveAccount;
 
 public class RemoveAccountCommandHandler :
     IRequestHandler<RemoveAccountCommand, ErrorOr<Unit>>
 {
-    private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserAuthenticated _userAuthenticated;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDeleteUserRepository _deleteUserRepository;
 
     public RemoveAccountCommandHandler(
-        IUserRepository userRepository,
         IPasswordHasher passwordHasher,
         IUserAuthenticated userAuthenticated,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IDeleteUserRepository deleteUserRepository)
     {
-        _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _userAuthenticated = userAuthenticated;
         _unitOfWork = unitOfWork;
+        _deleteUserRepository = deleteUserRepository;
     }
 
     public async Task<ErrorOr<Unit>> Handle(RemoveAccountCommand request, CancellationToken cancellationToken)
     {
         var userId = _userAuthenticated.GetUserId();
 
-        var user = await _userRepository.GetUserById(userId);
+        var user = await _deleteUserRepository.GetUserById(userId);
 
         if (user is null)
         {
@@ -46,7 +47,7 @@ public class RemoveAccountCommandHandler :
             return Errors.Authentication.InvalidCredentials;
         }
 
-        _userRepository.RemoveUser(user);
+        _deleteUserRepository.RemoveUser(user);
 
         await _unitOfWork.SaveChangesAsync();
 

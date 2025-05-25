@@ -2,13 +2,14 @@ using Microsoft.EntityFrameworkCore;
 
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence.Repositories;
+using Application.Common.Interfaces.Persistence.Repositories.Users;
 
 using Domain.Companies;
 using Domain.Users;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository : IUserRepository
+public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository
 {
     private readonly IApplicationDbContext _context;
 
