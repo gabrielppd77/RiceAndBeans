@@ -1,11 +1,13 @@
-using Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
+
+using Domain.Users;
+using Domain.Common.Errors;
+
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.PasswordHash;
-using Application.Common.Interfaces.Persistence;
 using Application.Authentication.Common;
-using Domain.Users;
+using Application.Common.Interfaces.Persistence.Repositories;
 
 namespace Application.Authentication.Login;
 

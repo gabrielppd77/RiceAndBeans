@@ -1,9 +1,12 @@
-using Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
+
+using Domain.Common.Errors;
+
 using Application.Common.Interfaces.PasswordHash;
-using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Authentication;
+using Application.Common.Interfaces.Persistence.Repositories;
+using Application.Common.Interfaces.Persistence;
 
 namespace Application.Authentication.RemoveAccount;
 
@@ -13,15 +16,18 @@ public class RemoveAccountCommandHandler :
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserAuthenticated _userAuthenticated;
+    private readonly IUnitOfWork _unitOfWork;
 
     public RemoveAccountCommandHandler(
         IUserRepository userRepository,
         IPasswordHasher passwordHasher,
-        IUserAuthenticated userAuthenticated)
+        IUserAuthenticated userAuthenticated,
+        IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _userAuthenticated = userAuthenticated;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(RemoveAccountCommand request, CancellationToken cancellationToken)
@@ -42,7 +48,7 @@ public class RemoveAccountCommandHandler :
 
         _userRepository.RemoveUser(user);
 
-        await _userRepository.SaveChanges();
+        await _unitOfWork.SaveChangesAsync();
 
         return Unit.Value;
     }

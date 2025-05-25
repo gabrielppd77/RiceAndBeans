@@ -1,12 +1,15 @@
-using Domain.Common.Errors;
-using Domain.Users;
 using ErrorOr;
 using MediatR;
+
+using Domain.Users;
 using Domain.Companies;
+using Domain.Common.Errors;
+
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.PasswordHash;
-using Application.Common.Interfaces.Persistence;
 using Application.Authentication.Common;
+using Application.Common.Interfaces.Persistence.Repositories;
+using Application.Common.Interfaces.Persistence;
 
 namespace Application.Authentication.Register;
 
@@ -16,15 +19,18 @@ public class RemoveAccountCommandHandler :
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IUnitOfWork _unitOfWork;
 
     public RemoveAccountCommandHandler(
         IJwtTokenGenerator jwtTokenGenerator,
         IUserRepository userRepository,
-        IPasswordHasher passwordHasher)
+        IPasswordHasher passwordHasher,
+        IUnitOfWork unitOfWork)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -46,7 +52,7 @@ public class RemoveAccountCommandHandler :
         await _userRepository.AddUser(user);
         await _userRepository.AddCompany(company);
 
-        await _userRepository.SaveChanges();
+        await _unitOfWork.SaveChangesAsync();
 
         var token = _jwtTokenGenerator.GenerateToken(user);
 

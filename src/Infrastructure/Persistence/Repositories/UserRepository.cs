@@ -1,8 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+
 using Application.Common.Interfaces.Database;
-using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories;
+
 using Domain.Companies;
 using Domain.Users;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
@@ -28,11 +30,6 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetUserByEmail(string email)
     {
         return await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
-    }
-
-    public async Task SaveChanges()
-    {
-        await _context.SaveChangesAsync();
     }
 
     public async Task<User?> GetUserById(Guid userId)

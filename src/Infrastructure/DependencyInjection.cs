@@ -14,9 +14,10 @@ using Minio.DataModel.Args;
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Time;
 using Application.Common.Interfaces.PasswordHash;
-using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.FileService;
 using Application.Common.Interfaces.Database;
+using Application.Common.Interfaces.Persistence.Repositories;
+using Application.Common.Interfaces.Persistence;
 
 using Infrastructure.Authentication;
 using Infrastructure.FileService;
@@ -24,6 +25,7 @@ using Infrastructure.Persistence.Repositories;
 using Infrastructure.Time;
 using Infrastructure.PasswordHash;
 using Infrastructure.Database;
+using Infrastructure.Persistence;
 
 namespace Infrastructure;
 
@@ -44,6 +46,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUploadFileService, UploadFileService>();
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IUserRepository, UserRepository>();
 
