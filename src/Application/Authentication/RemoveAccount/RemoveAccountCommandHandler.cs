@@ -3,7 +3,6 @@ using MediatR;
 
 using Domain.Common.Errors;
 
-using Application.Common.Interfaces.PasswordHash;
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence;

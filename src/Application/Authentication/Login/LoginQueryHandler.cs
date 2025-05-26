@@ -5,7 +5,6 @@ using Domain.Users;
 using Domain.Common.Errors;
 
 using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.PasswordHash;
 using Application.Authentication.Common;
 using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence.Repositories.Users;

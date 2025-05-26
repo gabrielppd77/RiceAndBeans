@@ -13,7 +13,6 @@ using Minio.DataModel.Args;
 
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Time;
-using Application.Common.Interfaces.PasswordHash;
 using Application.Common.Interfaces.FileService;
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence.Repositories;
@@ -23,7 +22,6 @@ using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Infrastructure.Authentication;
 using Infrastructure.FileService;
 using Infrastructure.Time;
-using Infrastructure.PasswordHash;
 using Infrastructure.Database;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories.Users;
