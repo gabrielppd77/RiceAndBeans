@@ -1,9 +1,10 @@
-﻿using MapsterMapper;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Application.Authentication.RemoveAccount;
+
+using MapsterMapper;
+using MediatR;
+
 using Application.Companies.UploadImage;
 
 namespace Api.Controllers.Companies;

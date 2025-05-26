@@ -4,11 +4,10 @@ using MediatR;
 using Domain.Common.Errors;
 
 using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 
-namespace Application.Authentication.RemoveAccount;
+namespace Application.Users.RemoveAccount;
 
 public class RemoveAccountCommandHandler :
     IRequestHandler<RemoveAccountCommand, ErrorOr<Unit>>

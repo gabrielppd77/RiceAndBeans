@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Application.Authentication.RemoveAccount;
+namespace Application.Users.RemoveAccount;
 
 public class RemoveAccountCommandValidator : AbstractValidator<RemoveAccountCommand>
 {

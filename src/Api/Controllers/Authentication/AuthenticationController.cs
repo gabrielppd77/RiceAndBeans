@@ -1,10 +1,12 @@
-using MapsterMapper;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Application.Authentication.RemoveAccount;
+
+using MapsterMapper;
+using MediatR;
+
 using Application.Authentication.Login;
 using Application.Authentication.Register;
+
 using Api.Controllers.Authentication.Contracts;
 
 namespace Api.Controllers.Authentication;
@@ -48,17 +50,4 @@ public class AuthenticationController : ApiController
 			Problem
 		);
 	}
-
-    [HttpDelete("remove-account")]
-    public async Task<IActionResult> RemoveAccount(string password)
-    {
-		var command = new RemoveAccountCommand(password);
-
-        var authResult = await _mediator.Send(command);
-
-        return authResult.Match(
-            authResult => Ok(),
-            Problem
-        );
-    }
 }
