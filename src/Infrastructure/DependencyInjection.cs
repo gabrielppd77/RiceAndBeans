@@ -39,19 +39,24 @@ public static class DependencyInjection
         services.AddMinio(configuration);
         services.AddDatabase(configuration);
         services.AddHealthChecks(configuration);
+        services.AddServices();
 
+        return services;
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection services)
+    {
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
         services.AddScoped<IUploadFileService, UploadFileService>();
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<ICreateUserRepository, UserRepository>();
         services.AddScoped<ILoginUserRepository, UserRepository>();
         services.AddScoped<IDeleteUserRepository, UserRepository>();
-
-        services.Configure<UploadFileSettings>(configuration.GetRequiredSection(UploadFileSettings.SectionName));
 
         return services;
     }
