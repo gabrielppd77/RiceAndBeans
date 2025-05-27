@@ -9,15 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 using Minio;
-using Minio.DataModel.Args;
 
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Time;
 using Application.Common.Interfaces.FileService;
 using Application.Common.Interfaces.Database;
-using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
+using Application.Common.Interfaces.Email;
 
 using Infrastructure.Authentication;
 using Infrastructure.FileService;
@@ -25,14 +24,13 @@ using Infrastructure.Time;
 using Infrastructure.Database;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories.Users;
+using Infrastructure.Email;
 
 namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services,
-        ConfigurationManager configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuth(configuration);
         services.AddHttpContextAccessor();
@@ -40,6 +38,7 @@ public static class DependencyInjection
         services.AddDatabase(configuration);
         services.AddHealthChecks(configuration);
         services.AddServices();
+        services.AddSettings(configuration);
 
         return services;
     }
@@ -51,6 +50,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUploadFileService, UploadFileService>();
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
+        services.AddScoped<IEmailService, EmailService>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -61,9 +61,14 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddAuth(
-        this IServiceCollection services,
-        ConfigurationManager configuration)
+    public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
+
+        return services;
+    }
+
+    public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtSettings = new JwtSettings();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
@@ -96,9 +101,7 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddMinio(
-        this IServiceCollection services,
-        ConfigurationManager configuration)
+    public static IServiceCollection AddMinio(this IServiceCollection services, IConfiguration configuration)
     {
         var uploadFileSettings = new UploadFileSettings();
         configuration.Bind(UploadFileSettings.SectionName, uploadFileSettings);
