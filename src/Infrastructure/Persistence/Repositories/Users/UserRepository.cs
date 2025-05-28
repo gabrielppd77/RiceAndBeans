@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
 using Application.Common.Interfaces.Database;
-using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 
 using Domain.Companies;
@@ -9,7 +8,7 @@ using Domain.Users;
 
 namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository, IRecoverPasswordUserRepository
+public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository, IRecoverPasswordUserRepository, IResetPasswordUserRepository
 {
     private readonly IApplicationDbContext _context;
 
@@ -41,5 +40,10 @@ public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDele
     public void RemoveUser(User user)
     {
         _context.Users.Remove(user);
+    }
+
+    public async Task<User?> GetUserByTokenRecoverPassword(Guid token)
+    {
+        return await _context.Users.SingleOrDefaultAsync(x => x.TokenRecoverPassword == token);
     }
 }
