@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using MapsterMapper;
 using MediatR;
@@ -20,6 +21,7 @@ public class UsersController : ApiController
         _mapper = mapper;
     }
 
+    [AllowAnonymous]
     [HttpGet("recover-password")]
     public async Task<IActionResult> RecoverPassword(string email)
     {

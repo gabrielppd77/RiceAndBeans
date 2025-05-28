@@ -9,7 +9,7 @@ using Domain.Users;
 
 namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository
+public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository, IRecoverPasswordUserRepository
 {
     private readonly IApplicationDbContext _context;
 

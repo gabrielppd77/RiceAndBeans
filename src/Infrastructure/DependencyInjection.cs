@@ -17,6 +17,8 @@ using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Application.Common.Interfaces.Email;
+using Application.Common.Interfaces.Frontend;
+using Application.Common.Interfaces.Email.Templates;
 
 using Infrastructure.Authentication;
 using Infrastructure.FileService;
@@ -25,6 +27,8 @@ using Infrastructure.Database;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories.Users;
 using Infrastructure.Email;
+using Infrastructure.Frontend;
+using Infrastructure.Email.Templates;
 
 namespace Infrastructure;
 
@@ -50,13 +54,17 @@ public static class DependencyInjection
 
         services.AddScoped<IUploadFileService, UploadFileService>();
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
+        services.AddScoped<IFrontendSettingsWrapper, FrontendSettingsWrapper>();
+
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IPasswordRecoveryEmailTemplate, PasswordRecoveryEmailTemplate>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<ICreateUserRepository, UserRepository>();
         services.AddScoped<ILoginUserRepository, UserRepository>();
         services.AddScoped<IDeleteUserRepository, UserRepository>();
+        services.AddScoped<IRecoverPasswordUserRepository, UserRepository>();
 
         return services;
     }
@@ -64,6 +72,7 @@ public static class DependencyInjection
     public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
+        services.Configure<FrontendSettings>(configuration.GetSection(FrontendSettings.SectionName));
 
         return services;
     }

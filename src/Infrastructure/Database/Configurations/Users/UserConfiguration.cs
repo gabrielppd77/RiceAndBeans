@@ -15,5 +15,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.FirstName).IsRequired().HasMaxLength(100);
         builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
         builder.Property(x => x.Password).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.TokenRecoverPassword);
+        builder.Property(x => x.TokenRecoverPasswordExpire);
     }
 }
