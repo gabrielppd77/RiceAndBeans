@@ -7,7 +7,7 @@ using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Email.Templates;
 
-namespace Application.Users.RecoverPassword;
+namespace Application.RecoverPassword.RecoverPassword;
 
 public class RecoverPasswordCommandHandler : IRequestHandler<RecoverPasswordCommand, ErrorOr<Unit>>
 {

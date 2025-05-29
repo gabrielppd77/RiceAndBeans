@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 using MapsterMapper;
 using MediatR;
@@ -9,7 +7,7 @@ using Application.Companies.UploadImage;
 
 namespace Api.Controllers.Companies;
 
-[Route("[controller]")]
+[Route("companies")]
 public class CompaniesController : ApiController
 {
     private readonly ISender _mediator;

@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
 
-namespace Application.Users.RecoverPassword;
+namespace Application.RecoverPassword.RecoverPassword;
 
 public record RecoverPasswordCommand(string Email) : IRequest<ErrorOr<Unit>>;

@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
 using MapsterMapper;
 using MediatR;
 
 using Application.Users.RemoveAccount;
-using Application.Users.RecoverPassword;
 
 namespace Api.Controllers.Users;
 
-[Route("[controller]")]
+[Route("users")]
 public class UsersController : ApiController
 {
     private readonly ISender _mediator;
@@ -19,20 +17,6 @@ public class UsersController : ApiController
     {
         _mediator = mediator;
         _mapper = mapper;
-    }
-
-    [AllowAnonymous]
-    [HttpGet("recover-password")]
-    public async Task<IActionResult> RecoverPassword(string email)
-    {
-        var command = new RecoverPasswordCommand(email);
-
-        var authResult = await _mediator.Send(command);
-
-        return authResult.Match(
-            authResult => Ok(),
-            Problem
-        );
     }
 
     [HttpDelete("remove-account")]

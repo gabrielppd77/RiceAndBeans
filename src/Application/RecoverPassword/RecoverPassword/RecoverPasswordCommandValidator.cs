@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Users.RecoverPassword;
+namespace Application.RecoverPassword.RecoverPassword;
 
 public class RecoverPasswordCommandValidator : AbstractValidator<RecoverPasswordCommand>
 {
