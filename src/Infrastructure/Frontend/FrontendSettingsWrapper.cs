@@ -13,5 +13,6 @@ public class FrontendSettingsWrapper : IFrontendSettingsWrapper
         _frontendSettings = _frontendSettingsOptions.Value;
     }
 
+    public string ConfirmEmailUrl => _frontendSettings.ConfirmEmailUrl;
     public string PasswordRecoveryUrl => _frontendSettings.PasswordRecoveryUrl;
 }

@@ -14,16 +14,30 @@ public class User
     public string FirstName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public bool IsEmailConfirmed { get; private set; }
+    public Guid? TokenEmailConfirmation { get; private set; }
     public Guid? TokenRecoverPassword { get; private set; }
     public DateTime? TokenRecoverPasswordExpire { get; private set; }
 
-    public void CreateTokenRecoverPassword()
+    public void StartEmailConfirmation()
+    {
+        IsEmailConfirmed = false;
+        TokenEmailConfirmation = Guid.NewGuid();
+    }
+
+    public void ConfirmEmailConfirmation()
+    {
+        IsEmailConfirmed = true;
+        TokenEmailConfirmation = null;
+    }
+
+    public void StartRecoverPassword()
     {
         TokenRecoverPassword = Guid.NewGuid();
         TokenRecoverPasswordExpire = DateTime.UtcNow.AddMinutes(10);
     }
-    
-    public void RemoveTokenRecoverPassword()
+
+    public void ResetRecoverPassword()
     {
         TokenRecoverPassword = null;
         TokenRecoverPasswordExpire = null;

@@ -15,9 +15,8 @@ internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
 
         builder.HasIndex(x => x.Path).IsUnique();
 
-        builder.Property(x => x.UserId).IsRequired();
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-        builder.Property(x => x.Path).IsRequired().HasMaxLength(150);
+        builder.Property(x => x.Name).HasMaxLength(100);
+        builder.Property(x => x.Path).HasMaxLength(150);
 
         builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
     }

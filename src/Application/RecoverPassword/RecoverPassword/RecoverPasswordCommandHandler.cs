@@ -40,7 +40,7 @@ public class RecoverPasswordCommandHandler : IRequestHandler<RecoverPasswordComm
             return Unit.Value;
         }
 
-        user.CreateTokenRecoverPassword();
+        user.StartRecoverPassword();
 
         var link = $"{_frontendSettingsWrapper.PasswordRecoveryUrl}?token={user.TokenRecoverPassword}";
 

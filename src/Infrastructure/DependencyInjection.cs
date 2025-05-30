@@ -57,6 +57,7 @@ public static class DependencyInjection
         services.AddScoped<IFrontendSettingsWrapper, FrontendSettingsWrapper>();
 
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IConfirmPasswordEmailTemplate, ConfirmPasswordEmailTemplate>();
         services.AddScoped<IPasswordRecoveryEmailTemplate, PasswordRecoveryEmailTemplate>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

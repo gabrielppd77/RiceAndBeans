@@ -35,7 +35,7 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
         if (user.TokenRecoverPasswordExpire < DateTime.UtcNow)
             return Errors.RecoverPassword.ExpiredToken;
 
-        user.RemoveTokenRecoverPassword();
+        user.ResetRecoverPassword();
         user.Password = _passwordHasher.HashPassword(request.NewPassword);
 
         await _unitOfWork.SaveChangesAsync();
