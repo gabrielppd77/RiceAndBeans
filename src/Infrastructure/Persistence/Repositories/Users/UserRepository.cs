@@ -8,7 +8,7 @@ using Domain.Users;
 
 namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository, IRecoverPasswordUserRepository, IResetPasswordUserRepository
+public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository, IRecoverPasswordUserRepository, IResetPasswordUserRepository, IConfirmEmailUserRepository
 {
     private readonly IApplicationDbContext _context;
 
@@ -45,5 +45,10 @@ public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDele
     public async Task<User?> GetUserByTokenRecoverPassword(Guid token)
     {
         return await _context.Users.SingleOrDefaultAsync(x => x.TokenRecoverPassword == token);
+    }
+
+    public async Task<User?> GetUserByTokenEmailConfirmation(Guid token)
+    {
+        return await _context.Users.SingleOrDefaultAsync(x => x.TokenEmailConfirmation == token);
     }
 }

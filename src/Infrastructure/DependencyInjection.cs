@@ -67,6 +67,7 @@ public static class DependencyInjection
         services.AddScoped<IDeleteUserRepository, UserRepository>();
         services.AddScoped<IRecoverPasswordUserRepository, UserRepository>();
         services.AddScoped<IResetPasswordUserRepository, UserRepository>();
+        services.AddScoped<IConfirmEmailUserRepository, UserRepository>();
 
         return services;
     }
