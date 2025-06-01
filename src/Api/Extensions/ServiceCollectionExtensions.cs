@@ -1,5 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 
+using Api.Extensions.Common;
+
 namespace Api.Extensions;
 
 public static class ServiceCollectionExtensions
@@ -32,6 +34,28 @@ public static class ServiceCollectionExtensions
                     },
                     new string[] {}
                 }
+            });
+        });
+
+        return services;
+    }
+
+    internal static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(CorsPolicy.Default, policy =>
+            {
+                policy.WithOrigins([])
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
+
+            options.AddPolicy(CorsPolicy.Development, policy =>
+            {
+                policy.AllowAnyOrigin()
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
             });
         });
 

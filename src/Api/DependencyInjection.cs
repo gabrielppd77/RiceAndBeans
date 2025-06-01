@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddMappings();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGenWithAuth();
+        services.AddCorsPolicy();
 
         return services;
     }

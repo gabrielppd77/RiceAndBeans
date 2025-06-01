@@ -19,6 +19,7 @@ var app = builder.Build();
 	app.UseAuthorization();
 	app.UseSwaggerWithUi();
 	app.ApplyMigrations();
+	app.UseCorsPolicy();
 
 	app.Run();
 }
