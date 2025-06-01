@@ -54,7 +54,7 @@ public class RegisterCommandHandler :
         var hashedPassword = _passwordHasher.HashPassword(request.Password);
 
         var user = new User(
-            request.FirstName,
+            request.Name,
             request.Email,
             hashedPassword);
 
@@ -69,7 +69,7 @@ public class RegisterCommandHandler :
 
         var link = $"{_frontendSettingsWrapper.ConfirmEmailUrl}?token={user.TokenEmailConfirmation}";
 
-        var body = _confirmPasswordEmailTemplate.Generate(user.FirstName, link);
+        var body = _confirmPasswordEmailTemplate.Generate(user.Name, link);
 
         await _emailService.SendEmailAsync(request.Email, "Confirmação de E-mail", body);
 
