@@ -1,12 +1,10 @@
 using ErrorOr;
 using MediatR;
 
-using Domain.Users;
 using Domain.Common.Errors;
 
 using Application.Common.Interfaces.Authentication;
 using Application.Authentication.Common;
-using Application.Common.Interfaces.Persistence.Repositories;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 
 namespace Application.Authentication.Login;
@@ -30,7 +28,9 @@ public class LoginQueryHandler :
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
 	{
-		if (await _loginUserRepository.GetUserByEmail(request.Email) is not User user)
+		var user = await _loginUserRepository.GetUserByEmail(request.Email);
+
+        if (user is null)
 		{
 			return Errors.Authentication.InvalidCredentials;
 		}
@@ -39,6 +39,11 @@ public class LoginQueryHandler :
 		{
 			return Errors.Authentication.InvalidCredentials;
 		}
+
+		if(user.IsEmailConfirmed is false)
+		{
+			return Errors.Authentication.EmailIsNotConfirmed;
+        }
 
 		var token = _jwtTokenGenerator.GenerateToken(user);
 

@@ -2,6 +2,6 @@ namespace Api.Controllers.Authentication.Contracts;
 
 public record AuthenticationResponse(
 	Guid Id,
-	string name,
+	string Name,
 	string Email,
 	string Token);
