@@ -1,6 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
-
-using Api.Extensions.Common;
+﻿using Api.Extensions.Common.CorsConfiguration;
+using Microsoft.OpenApi.Models;
 
 namespace Api.Extensions;
 
@@ -32,7 +31,7 @@ public static class ServiceCollectionExtensions
                             Id = "Bearer"
                         }
                     },
-                    new string[] {}
+                    new string[] { }
                 }
             });
         });
@@ -40,22 +39,20 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    internal static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    internal static IServiceCollection AddCorsPolicy(this IServiceCollection services, IConfiguration configuration)
     {
+        var corsSettings = new CorsSettings();
+        configuration.Bind(CorsSettings.SectionName, corsSettings);
+
+        var allowedOrigins = corsSettings.AllowedOrigins.Split(";");
+
         services.AddCors(options =>
         {
             options.AddPolicy(CorsPolicy.Default, policy =>
             {
-                policy.WithOrigins([])
-                      .AllowAnyHeader()
-                      .AllowAnyMethod();
-            });
-
-            options.AddPolicy(CorsPolicy.Development, policy =>
-            {
-                policy.AllowAnyOrigin()
-                      .AllowAnyHeader()
-                      .AllowAnyMethod();
+                policy.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
             });
         });
 

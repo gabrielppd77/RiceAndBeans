@@ -1,4 +1,4 @@
-﻿using Api.Extensions.Common;
+﻿using Api.Extensions.Common.CorsConfiguration;
 
 namespace Api.Extensions;
 
@@ -17,14 +17,7 @@ public static class ApplicationBuilderExtensions
 
     public static IApplicationBuilder UseCorsPolicy(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseCors(CorsPolicy.Development);
-        }
-        else
-        {
-            app.UseCors(CorsPolicy.Default);
-        }
+        app.UseCors(CorsPolicy.Default);
 
         return app;
     }
