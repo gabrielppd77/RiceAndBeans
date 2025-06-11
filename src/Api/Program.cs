@@ -12,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
+    app.Use(async (context, next) =>
+    {
+        var host = context.Request.Host;
+        Console.WriteLine($"Host request: {host}");
+        await next();
+    });
+
     app.UseHttpsRedirection();
     app.MapControllers().RequireAuthorization();
     app.MapGet("/", () => "Server is Living!");
