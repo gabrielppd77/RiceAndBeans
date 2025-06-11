@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using MapsterMapper;
 using MediatR;
-
 using Application.Companies.UploadImage;
 
 namespace Api.Controllers.Companies;
@@ -27,7 +25,7 @@ public class CompaniesController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(),
+            authResult => NoContent(),
             Problem
         );
     }

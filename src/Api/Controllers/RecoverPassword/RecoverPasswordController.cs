@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using MapsterMapper;
 using MediatR;
-
 using Application.RecoverPassword.RecoverPassword;
 using Application.RecoverPassword.ResetPassword;
-
 using Api.Controllers.RecoverPassword.Contracts;
 
 namespace Api.Controllers.RecoverPassword;
@@ -32,7 +29,7 @@ public class RecoverPasswordController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(),
+            authResult => NoContent(),
             Problem
         );
     }
@@ -46,7 +43,7 @@ public class RecoverPasswordController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(),
+            authResult => NoContent(),
             Problem
         );
     }

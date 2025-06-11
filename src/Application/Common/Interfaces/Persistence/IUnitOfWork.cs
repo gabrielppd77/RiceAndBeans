@@ -3,4 +3,6 @@
 public interface IUnitOfWork
 {
     Task SaveChangesAsync();
+
+    Task MigrateAsync();
 }

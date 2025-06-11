@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using MapsterMapper;
 using MediatR;
-
 using Api.Controllers.Authentication.Contracts;
-
 using Application.Authentication.Login;
 using Application.Authentication.Register;
 using Application.Authentication.ConfirmEmail;
@@ -61,7 +58,7 @@ public class AuthenticationController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(),
+            authResult => NoContent(),
             Problem
         );
     }

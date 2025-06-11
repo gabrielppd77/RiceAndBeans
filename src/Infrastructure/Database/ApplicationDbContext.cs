@@ -1,8 +1,7 @@
 ﻿using Application.Common.Interfaces.Database;
-using Microsoft.EntityFrameworkCore;
-
 using Domain.Companies;
 using Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
@@ -18,5 +17,10 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
         modelBuilder.HasDefaultSchema(Schemas.Default);
+    }
+
+    public async Task MigrateAsync()
+    {
+        await Database.MigrateAsync();
     }
 }

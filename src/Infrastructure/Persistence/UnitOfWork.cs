@@ -1,8 +1,6 @@
 ﻿using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace Infrastructure.Persistence;
 
 public class UnitOfWork : IUnitOfWork
@@ -17,5 +15,10 @@ public class UnitOfWork : IUnitOfWork
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
+    }
+
+    public async Task MigrateAsync()
+    {
+        await _context.MigrateAsync();
     }
 }

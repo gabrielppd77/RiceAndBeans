@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using MapsterMapper;
 using MediatR;
-
 using Application.Users.RemoveAccount;
 
 namespace Api.Controllers.Users;
@@ -27,7 +25,7 @@ public class UsersController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(),
+            authResult => NoContent(),
             Problem
         );
     }

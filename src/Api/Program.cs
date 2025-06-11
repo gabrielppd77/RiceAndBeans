@@ -14,20 +14,6 @@ var app = builder.Build();
 {
     app.UseHttpsRedirection();
     app.MapControllers().RequireAuthorization();
-    app.MapGet("/", () => "Server is Living!");
-    app.MapGet("/version", () =>
-    {
-        var version = new
-        {
-            Name = Environment.GetEnvironmentVariable("APP_NAME"),
-            Version = Environment.GetEnvironmentVariable("APP_VERSION"),
-            Commit = Environment.GetEnvironmentVariable("GIT_COMMIT"),
-            BuildTime = Environment.GetEnvironmentVariable("BUILD_TIME"),
-            Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-        };
-
-        return Results.Ok(version);
-    });
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseSwaggerWithUi();
