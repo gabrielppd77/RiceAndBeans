@@ -2,5 +2,5 @@
 
 public interface IUploadFileService
 {
-    Task<string?> UploadFileAsync(Stream fileStream, string fileName, string bucketName);
+    Task<string?> UploadFileAsync(Stream fileStream, string fileName);
 }

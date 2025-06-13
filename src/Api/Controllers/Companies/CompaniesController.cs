@@ -25,7 +25,7 @@ public class CompaniesController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => NoContent(),
+            Ok,
             Problem
         );
     }

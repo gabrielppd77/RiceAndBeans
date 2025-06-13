@@ -6,6 +6,7 @@ using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.FileService;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories.Companies;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Application.Common.Interfaces.Project.ApplyMigration;
 using Application.Common.Interfaces.Time;
@@ -16,6 +17,7 @@ using Infrastructure.Email.Templates;
 using Infrastructure.FileService;
 using Infrastructure.Frontend;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories.Companies;
 using Infrastructure.Persistence.Repositories.Users;
 using Infrastructure.Project.ApplyMigration;
 using Infrastructure.Time;
@@ -68,12 +70,15 @@ public static class DependencyInjection
         services.AddScoped<IResetPasswordUserRepository, UserRepository>();
         services.AddScoped<IConfirmEmailUserRepository, UserRepository>();
 
+        services.AddScoped<IUploadImageCompanyRepository, CompanyRepository>();
+
         return services;
     }
 
     public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
+        services.Configure<UploadFileSettings>(configuration.GetSection(UploadFileSettings.SectionName));
         services.Configure<FrontendSettings>(configuration.GetSection(FrontendSettings.SectionName));
         services.Configure<ApplyMigrationSettings>(configuration.GetSection(ApplyMigrationSettings.SectionName));
 
@@ -121,13 +126,13 @@ public static class DependencyInjection
         services.AddMinio(configureClient => configureClient
             .WithEndpoint(uploadFileSettings.BaseUrl)
             .WithCredentials(uploadFileSettings.AccessKey, uploadFileSettings.SecretKey)
-            .WithSSL(true)
+            .WithSSL()
             .Build());
 
         return services;
     }
 
-    private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    private static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
@@ -139,14 +144,10 @@ public static class DependencyInjection
                 .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
-
-        return services;
     }
 
-    private static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    private static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("DefaultConnection")!);
-
-        return services;
     }
 }

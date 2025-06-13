@@ -7,4 +7,5 @@ public class UploadFileSettings
     public string BaseUrl { get; set; } = "";
     public string AccessKey { get; set; } = "";
     public string SecretKey { get; set; } = "";
+    public string MainBucket { get; set; } = "";
 }

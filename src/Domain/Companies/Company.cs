@@ -14,6 +14,7 @@
         public Guid UserId { get; }
         public string Name { get; private set; }
         public string Path { get; private set; }
+        public string? UrlImage { get; set; }
 
         public void SetName(string name)
         {

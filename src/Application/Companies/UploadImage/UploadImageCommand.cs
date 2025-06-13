@@ -4,4 +4,4 @@ using Microsoft.AspNetCore.Http;
 
 namespace Application.Companies.UploadImage;
 
-public record UploadImageCommand(IFormFile File) : IRequest<ErrorOr<Unit>>;
+public record UploadImageCommand(IFormFile File) : IRequest<ErrorOr<string>>;
