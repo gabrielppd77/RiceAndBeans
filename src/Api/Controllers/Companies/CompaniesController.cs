@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Controllers.Companies.Contracts;
+using Application.Companies.FormData;
+using Application.Companies.UploadImage;
 using MapsterMapper;
 using MediatR;
-using Application.Companies.UploadImage;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Companies;
 
@@ -15,6 +17,19 @@ public class CompaniesController : ApiController
     {
         _mediator = mediator;
         _mapper = mapper;
+    }
+
+    [HttpGet("get-form-data")]
+    public async Task<IActionResult> GetFormData()
+    {
+        var query = new FormDataQuery();
+
+        var authResult = await _mediator.Send(query);
+
+        return authResult.Match(
+            x => Ok(_mapper.Map<FormDataResponse>(x)),
+            Problem
+        );
     }
 
     [HttpPatch("upload-image")]

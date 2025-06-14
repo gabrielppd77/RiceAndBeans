@@ -11,25 +11,25 @@ namespace Application.Companies.UploadImage;
 public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, ErrorOr<string>>
 {
     private readonly IUploadFileService _uploadFileService;
-    private readonly IUserAuthenticated _serAuthenticated;
+    private readonly IUserAuthenticated _userAuthenticated;
     private readonly IUploadImageCompanyRepository _uploadImageCompanyRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UploadImageCommandHandler(
         IUploadFileService uploadFileService,
-        IUserAuthenticated serAuthenticated,
+        IUserAuthenticated userAuthenticated,
         IUploadImageCompanyRepository uploadImageCompanyRepository,
         IUnitOfWork unitOfWork)
     {
         _uploadFileService = uploadFileService;
-        _serAuthenticated = serAuthenticated;
+        _userAuthenticated = userAuthenticated;
         _uploadImageCompanyRepository = uploadImageCompanyRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<string>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
     {
-        var userId = _serAuthenticated.GetUserId();
+        var userId = _userAuthenticated.GetUserId();
 
         var company = await _uploadImageCompanyRepository.GetCompanyByUser(userId);
 
