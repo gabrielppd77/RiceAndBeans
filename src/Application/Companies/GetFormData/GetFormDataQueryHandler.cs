@@ -3,15 +3,15 @@ using Application.Common.Interfaces.Persistence.Repositories.Companies;
 using ErrorOr;
 using MediatR;
 
-namespace Application.Companies.FormData;
+namespace Application.Companies.GetFormData;
 
-public class FormDataQueryHandler :
-    IRequestHandler<FormDataQuery, ErrorOr<FormDataResult>>
+public class GetFormDataQueryHandler :
+    IRequestHandler<GetFormDataQuery, ErrorOr<FormDataResult>>
 {
     private readonly IFormDataCompanyRepository _formDataCompanyRepository;
     private readonly IUserAuthenticated _userAuthenticated;
 
-    public FormDataQueryHandler(
+    public GetFormDataQueryHandler(
         IFormDataCompanyRepository formDataCompanyRepository,
         IUserAuthenticated userAuthenticated)
     {
@@ -19,7 +19,7 @@ public class FormDataQueryHandler :
         _userAuthenticated = userAuthenticated;
     }
 
-    public async Task<ErrorOr<FormDataResult>> Handle(FormDataQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<FormDataResult>> Handle(GetFormDataQuery request, CancellationToken cancellationToken)
     {
         var userId = _userAuthenticated.GetUserId();
 

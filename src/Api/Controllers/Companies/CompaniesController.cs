@@ -1,5 +1,5 @@
 ﻿using Api.Controllers.Companies.Contracts;
-using Application.Companies.FormData;
+using Application.Companies.GetFormData;
 using Application.Companies.UploadImage;
 using MapsterMapper;
 using MediatR;
@@ -22,7 +22,7 @@ public class CompaniesController : ApiController
     [HttpGet("get-form-data")]
     public async Task<IActionResult> GetFormData()
     {
-        var query = new FormDataQuery();
+        var query = new GetFormDataQuery();
 
         var authResult = await _mediator.Send(query);
 

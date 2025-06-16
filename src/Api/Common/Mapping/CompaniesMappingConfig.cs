@@ -1,5 +1,5 @@
 ﻿using Api.Controllers.Companies.Contracts;
-using Application.Companies.FormData;
+using Application.Companies.GetFormData;
 using Mapster;
 
 namespace Api.Common.Mapping;

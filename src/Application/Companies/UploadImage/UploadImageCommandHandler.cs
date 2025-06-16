@@ -35,6 +35,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
+        //todo: pass this to domain, "company path"
         var fileName = $"company/{company.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
 
         var urlImageUploaded =
