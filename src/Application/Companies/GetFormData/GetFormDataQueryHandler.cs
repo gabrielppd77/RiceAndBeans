@@ -25,6 +25,6 @@ public class GetFormDataQueryHandler :
 
         var company = await _formDataCompanyRepository.GetCompanyByUser(userId);
 
-        return new FormDataResult(company.Name, company.Path, company.UrlImage);
+        return new FormDataResult(company.Name, company.Description, company.Path, company.UrlImage);
     }
 }

@@ -13,6 +13,7 @@
         public Guid Id { get; }
         public Guid UserId { get; }
         public string Name { get; private set; }
+        public string? Description { get; set; }
         public string Path { get; private set; }
         public string? UrlImage { get; set; }
 

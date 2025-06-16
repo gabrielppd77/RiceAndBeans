@@ -14,6 +14,7 @@ internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.HasIndex(x => x.Path).IsUnique();
 
         builder.Property(x => x.Name).HasMaxLength(100);
+        builder.Property(x => x.Description).HasMaxLength(500);
         builder.Property(x => x.Path).HasMaxLength(150);
         builder.Property(x => x.UrlImage).HasMaxLength(150);
 
