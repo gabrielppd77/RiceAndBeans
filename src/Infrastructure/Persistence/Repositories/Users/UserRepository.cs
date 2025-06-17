@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
-
 using Domain.Companies;
 using Domain.Users;
 
 namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository, IRecoverPasswordUserRepository, IResetPasswordUserRepository, IConfirmEmailUserRepository
+public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository,
+    IRecoverPasswordUserRepository, IResetPasswordUserRepository, IConfirmEmailUserRepository,
+    IUploadImageUserRepository
 {
     private readonly IApplicationDbContext _context;
 

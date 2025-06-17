@@ -70,6 +70,7 @@ public static class DependencyInjection
         services.AddScoped<IRecoverPasswordUserRepository, UserRepository>();
         services.AddScoped<IResetPasswordUserRepository, UserRepository>();
         services.AddScoped<IConfirmEmailUserRepository, UserRepository>();
+        services.AddScoped<IUploadImageUserRepository, UserRepository>();
 
         services.AddScoped<IUploadImageCompanyRepository, CompanyRepository>();
         services.AddScoped<IGetFormDataCompanyRepository, CompanyRepository>();
