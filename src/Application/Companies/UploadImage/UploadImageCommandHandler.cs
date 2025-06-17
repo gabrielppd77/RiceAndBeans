@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.FileService;
+using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Persistence.Repositories.Companies;
 using Domain.Common.Errors;
@@ -8,44 +8,51 @@ using MediatR;
 
 namespace Application.Companies.UploadImage;
 
-public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, ErrorOr<string>>
+public class UploadImageCommandHandler(
+    IUploadFileService uploadFileService,
+    IRemoveFileService removeFileService,
+    IUserAuthenticated userAuthenticated,
+    IUploadImageCompanyRepository uploadImageCompanyRepository,
+    IUnitOfWork unitOfWork)
+    : IRequestHandler<UploadImageCommand, ErrorOr<string>>
 {
-    private readonly IUploadFileService _uploadFileService;
-    private readonly IUserAuthenticated _userAuthenticated;
-    private readonly IUploadImageCompanyRepository _uploadImageCompanyRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UploadImageCommandHandler(
-        IUploadFileService uploadFileService,
-        IUserAuthenticated userAuthenticated,
-        IUploadImageCompanyRepository uploadImageCompanyRepository,
-        IUnitOfWork unitOfWork)
-    {
-        _uploadFileService = uploadFileService;
-        _userAuthenticated = userAuthenticated;
-        _uploadImageCompanyRepository = uploadImageCompanyRepository;
-        _unitOfWork = unitOfWork;
-    }
+    private readonly string _folderPathImage = "company";
 
     public async Task<ErrorOr<string>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
     {
-        var userId = _userAuthenticated.GetUserId();
+        var userId = userAuthenticated.GetUserId();
 
-        var company = await _uploadImageCompanyRepository.GetCompanyByUser(userId);
+        var company = await uploadImageCompanyRepository.GetCompanyByUser(userId);
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
-        //todo: pass this to domain, "company path"
-        var fileName = $"company/{company.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
+        if (company.UrlImage is not null)
+        {
+            var uri = new Uri(company.UrlImage);
+            var fileNameToRemove = $"{_folderPathImage}/{Path.GetFileName(uri.LocalPath)}";
+            var resultRemove = await removeFileService.RemoveFileAsync(fileNameToRemove);
 
-        var urlImageUploaded =
-            await _uploadFileService.UploadFileAsync(request.File.OpenReadStream(), fileName);
+            if (resultRemove.IsError)
+            {
+                return resultRemove.Errors;
+            }
+        }
 
-        if (urlImageUploaded is null) return Errors.UploadFile.UnexpectedError;
+        var fileName = $"{_folderPathImage}/{company.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
+
+        var resultUpload =
+            await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), fileName);
+
+        if (resultUpload.IsError)
+        {
+            return resultUpload.Errors;
+        }
+
+        var urlImageUploaded = resultUpload.Value;
 
         company.UpdateImage(urlImageUploaded);
 
-        await _unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync();
 
         return urlImageUploaded;
     }

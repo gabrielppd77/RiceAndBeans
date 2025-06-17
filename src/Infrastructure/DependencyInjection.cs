@@ -3,7 +3,7 @@ using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Email;
 using Application.Common.Interfaces.Email.Templates;
-using Application.Common.Interfaces.FileService;
+using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Persistence.Repositories.Companies;
@@ -14,7 +14,7 @@ using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Email;
 using Infrastructure.Email.Templates;
-using Infrastructure.FileService;
+using Infrastructure.FileManager;
 using Infrastructure.Frontend;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories.Companies;
@@ -53,6 +53,7 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
         services.AddScoped<IUploadFileService, UploadFileService>();
+        services.AddScoped<IRemoveFileService, RemoveFileService>();
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
         services.AddScoped<IFrontendSettingsWrapper, FrontendSettingsWrapper>();
         services.AddScoped<IApplyMigrationSettingsWrapper, ApplyMigrationSettingsWrapper>();
@@ -80,7 +81,7 @@ public static class DependencyInjection
     public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
-        services.Configure<UploadFileSettings>(configuration.GetSection(UploadFileSettings.SectionName));
+        services.Configure<FileManagerSettings>(configuration.GetSection(FileManagerSettings.SectionName));
         services.Configure<FrontendSettings>(configuration.GetSection(FrontendSettings.SectionName));
         services.Configure<ApplyMigrationSettings>(configuration.GetSection(ApplyMigrationSettings.SectionName));
 
@@ -122,8 +123,8 @@ public static class DependencyInjection
 
     public static IServiceCollection AddMinio(this IServiceCollection services, IConfiguration configuration)
     {
-        var uploadFileSettings = new UploadFileSettings();
-        configuration.Bind(UploadFileSettings.SectionName, uploadFileSettings);
+        var uploadFileSettings = new FileManagerSettings();
+        configuration.Bind(FileManagerSettings.SectionName, uploadFileSettings);
 
         services.AddMinio(configureClient => configureClient
             .WithEndpoint(uploadFileSettings.BaseUrl)

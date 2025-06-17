@@ -1,8 +1,8 @@
-﻿namespace Infrastructure.FileService;
+﻿namespace Infrastructure.FileManager;
 
-public class UploadFileSettings
+public class FileManagerSettings
 {
-    public const string SectionName = "UploadFileSettings";
+    public const string SectionName = "FileManagerSettings";
 
     public string BaseUrl { get; set; } = "";
     public string AccessKey { get; set; } = "";
