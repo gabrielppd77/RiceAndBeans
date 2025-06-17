@@ -71,7 +71,8 @@ public static class DependencyInjection
         services.AddScoped<IConfirmEmailUserRepository, UserRepository>();
 
         services.AddScoped<IUploadImageCompanyRepository, CompanyRepository>();
-        services.AddScoped<IFormDataCompanyRepository, CompanyRepository>();
+        services.AddScoped<IGetFormDataCompanyRepository, CompanyRepository>();
+        services.AddScoped<IUpdateFormDataRepository, CompanyRepository>();
 
         return services;
     }

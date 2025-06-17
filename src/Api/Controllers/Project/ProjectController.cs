@@ -7,15 +7,8 @@ namespace Api.Controllers.Project;
 
 [AllowAnonymous]
 [Route("")]
-public class ProjectController : ApiController
+public class ProjectController(ISender mediator) : ApiController
 {
-    private readonly ISender _mediator;
-
-    public ProjectController(ISender mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpGet("")]
     public IActionResult GetHealthCheck()
     {
@@ -40,10 +33,10 @@ public class ProjectController : ApiController
     {
         var command = new ApplyMigrationCommand(authorization);
 
-        var authResult = await _mediator.Send(command);
+        var authResult = await mediator.Send(command);
 
         return authResult.Match(
-            authResult => NoContent(),
+            _ => NoContent(),
             Problem
         );
     }

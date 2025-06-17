@@ -8,14 +8,14 @@ namespace Application.Companies.GetFormData;
 public class GetFormDataQueryHandler :
     IRequestHandler<GetFormDataQuery, ErrorOr<FormDataResult>>
 {
-    private readonly IFormDataCompanyRepository _formDataCompanyRepository;
+    private readonly IGetFormDataCompanyRepository _getFormDataCompanyRepository;
     private readonly IUserAuthenticated _userAuthenticated;
 
     public GetFormDataQueryHandler(
-        IFormDataCompanyRepository formDataCompanyRepository,
+        IGetFormDataCompanyRepository formDataCompanyRepository,
         IUserAuthenticated userAuthenticated)
     {
-        _formDataCompanyRepository = formDataCompanyRepository;
+        _getFormDataCompanyRepository = formDataCompanyRepository;
         _userAuthenticated = userAuthenticated;
     }
 
@@ -23,7 +23,7 @@ public class GetFormDataQueryHandler :
     {
         var userId = _userAuthenticated.GetUserId();
 
-        var company = await _formDataCompanyRepository.GetCompanyByUser(userId);
+        var company = await _getFormDataCompanyRepository.GetCompanyByUser(userId);
 
         return new FormDataResult(company.Name, company.Description, company.Path, company.UrlImage);
     }

@@ -1,11 +1,9 @@
-﻿using ErrorOr;
-using MediatR;
-
-using Domain.Common.Errors;
-
-using Application.Common.Interfaces.Persistence.Repositories.Users;
-using Application.Common.Interfaces.Authentication;
+﻿using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories.Users;
+using Domain.Common.Errors;
+using ErrorOr;
+using MediatR;
 
 namespace Application.RecoverPassword.ResetPassword;
 
@@ -35,8 +33,8 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
         if (user.TokenRecoverPasswordExpire < DateTime.UtcNow)
             return Errors.RecoverPassword.ExpiredToken;
 
-        user.ResetRecoverPassword();
-        user.Password = _passwordHasher.HashPassword(request.NewPassword);
+        var newPasswordHashed = _passwordHasher.HashPassword(request.NewPassword);
+        user.ResetRecoverPassword(newPasswordHashed);
 
         await _unitOfWork.SaveChangesAsync();
 

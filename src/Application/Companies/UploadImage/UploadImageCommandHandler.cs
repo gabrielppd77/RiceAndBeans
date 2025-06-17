@@ -43,7 +43,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
 
         if (urlImageUploaded is null) return Errors.UploadFile.UnexpectedError;
 
-        company.UrlImage = urlImageUploaded;
+        company.UpdateImage(urlImageUploaded);
 
         await _unitOfWork.SaveChangesAsync();
 

@@ -1,36 +1,27 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MapsterMapper;
-using MediatR;
 using Api.Controllers.Authentication.Contracts;
+using Application.Authentication.ConfirmEmail;
 using Application.Authentication.Login;
 using Application.Authentication.Register;
-using Application.Authentication.ConfirmEmail;
+using MapsterMapper;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Authentication;
 
 [Route("auth")]
-public class AuthenticationController : ApiController
+public class AuthenticationController(ISender mediator, IMapper mapper) : ApiController
 {
-    private readonly ISender _mediator;
-    private readonly IMapper _mapper;
-
-    public AuthenticationController(ISender mediator, IMapper mapper)
-    {
-        _mediator = mediator;
-        _mapper = mapper;
-    }
-
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var command = _mapper.Map<RegisterCommand>(request);
+        var command = mapper.Map<RegisterCommand>(request);
 
-        var authResult = await _mediator.Send(command);
+        var authResult = await mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+            x => Ok(mapper.Map<AuthenticationResponse>(x)),
             Problem
         );
     }
@@ -39,12 +30,12 @@ public class AuthenticationController : ApiController
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var command = _mapper.Map<LoginQuery>(request);
+        var command = mapper.Map<LoginQuery>(request);
 
-        var authResult = await _mediator.Send(command);
+        var authResult = await mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+            x => Ok(mapper.Map<AuthenticationResponse>(x)),
             Problem
         );
     }
@@ -55,10 +46,10 @@ public class AuthenticationController : ApiController
     {
         var command = new ConfirmEmailCommand(token);
 
-        var authResult = await _mediator.Send(command);
+        var authResult = await mediator.Send(command);
 
         return authResult.Match(
-            authResult => NoContent(),
+            _ => NoContent(),
             Problem
         );
     }

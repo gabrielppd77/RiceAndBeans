@@ -1,8 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
-
 using Domain.Common.Errors;
-
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Application.Common.Interfaces.Persistence;
 
@@ -28,7 +26,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, E
         if (user is null)
             return Errors.ConfirmEmail.InvalidToken;
 
-        user.ConfirmEmailConfirmation();
+        user.ConfirmEmail();
 
         await _unitOfWork.SaveChangesAsync();
 

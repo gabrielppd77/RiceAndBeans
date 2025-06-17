@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Companies;
 
-public class CompanyRepository : IUploadImageCompanyRepository, IFormDataCompanyRepository
+public class CompanyRepository : IUploadImageCompanyRepository, IGetFormDataCompanyRepository, IUpdateFormDataRepository
 {
     private readonly IApplicationDbContext _context;
 

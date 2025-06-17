@@ -1,10 +1,8 @@
 using ErrorOr;
 using MediatR;
-
 using Domain.Users;
 using Domain.Companies;
 using Domain.Common.Errors;
-
 using Application.Common.Interfaces.Authentication;
 using Application.Authentication.Common;
 using Application.Common.Interfaces.Persistence;
@@ -44,7 +42,8 @@ public class RegisterCommandHandler :
         _confirmPasswordEmailTemplate = confirmPasswordEmailTemplate;
     }
 
-    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request,
+        CancellationToken cancellationToken)
     {
         if (await _createUserRepository.GetUserByEmail(request.Email) is not null)
         {
@@ -57,8 +56,6 @@ public class RegisterCommandHandler :
             request.Name,
             request.Email,
             hashedPassword);
-
-        user.StartEmailConfirmation();
 
         var company = new Company(user.Id, request.CompanyName);
 
