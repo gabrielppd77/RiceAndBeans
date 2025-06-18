@@ -49,4 +49,9 @@ public class User
     {
         UrlImage = urlImage;
     }
+
+    public void UpdateFormFields(string name)
+    {
+        Name = name;
+    }
 }

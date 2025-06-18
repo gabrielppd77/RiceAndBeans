@@ -1,6 +1,7 @@
 ﻿using Api.Controllers.Users.Contracts;
 using Application.Users.GetGeneralData;
 using Application.Users.RemoveAccount;
+using Application.Users.UpdateFormData;
 using Application.Users.UploadImage;
 using MapsterMapper;
 using MediatR;
@@ -20,6 +21,19 @@ public class UsersController(ISender mediator, IMapper mapper) : ApiController
 
         return authResult.Match(
             x => Ok(mapper.Map<GeneralDataResponse>(x)),
+            Problem
+        );
+    }
+
+    [HttpPut("update-form-data")]
+    public async Task<IActionResult> UpdateFormData(FormDataRequest request)
+    {
+        var command = mapper.Map<UpdateFormDataCommand>(request);
+
+        var authResult = await mediator.Send(command);
+
+        return authResult.Match(
+            _ => NoContent(),
             Problem
         );
     }

@@ -1,27 +1,27 @@
 ﻿using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Persistence;
-using Application.Common.Interfaces.Persistence.Repositories.Companies;
+using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
 
-namespace Application.Companies.UpdateFormData;
+namespace Application.Users.UpdateFormData;
 
 public class UpdateFormDataCommandHandler(
     IUserAuthenticated userAuthenticated,
     IUnitOfWork unitOfWork,
-    IUpdateFormDataCompanyRepository updateFormDataCompanyRepository)
+    IUpdateFormDataUserRepository updateFormDataUserRepository)
     : IRequestHandler<UpdateFormDataCommand, ErrorOr<Unit>>
 {
     public async Task<ErrorOr<Unit>> Handle(UpdateFormDataCommand request, CancellationToken cancellationToken)
     {
         var userId = userAuthenticated.GetUserId();
 
-        var company = await updateFormDataCompanyRepository.GetCompanyByUser(userId);
+        var user = await updateFormDataUserRepository.GetUserById(userId);
 
-        if (company is null) return Errors.Company.CompanyNotFound;
+        if (user is null) return Errors.User.UserNotFound;
 
-        company.UpdateFormFields(request.Name, request.Description, request.Path);
+        user.UpdateFormFields(request.Name);
 
         await unitOfWork.SaveChangesAsync();
 
