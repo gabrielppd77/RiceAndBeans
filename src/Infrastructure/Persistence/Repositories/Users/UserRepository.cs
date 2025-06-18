@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.Repositories.Users;
 
 public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository,
     IRecoverPasswordUserRepository, IResetPasswordUserRepository, IConfirmEmailUserRepository,
-    IUploadImageUserRepository
+    IUploadImageUserRepository, IGetGeneralDataUserRepository
 {
     private readonly IApplicationDbContext _context;
 
