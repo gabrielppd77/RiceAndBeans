@@ -14,6 +14,7 @@ using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Email;
 using Infrastructure.Email.Templates;
+using Infrastructure.Exception;
 using Infrastructure.FileManager;
 using Infrastructure.Frontend;
 using Infrastructure.Persistence;
@@ -22,6 +23,8 @@ using Infrastructure.Persistence.Repositories.Users;
 using Infrastructure.Project.ApplyMigration;
 using Infrastructure.Time;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +46,8 @@ public static class DependencyInjection
         services.AddHealthChecks(configuration);
         services.AddServices();
         services.AddSettings(configuration);
+        services.AddProblemDetails();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
 
         return services;
     }
@@ -118,6 +123,27 @@ public static class DependencyInjection
                     ValidIssuer = jwtSettings.Issuer,
                     ValidAudience = jwtSettings.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                };
+
+                x.Events = new JwtBearerEvents
+                {
+                    OnChallenge = async context =>
+                    {
+                        context.HandleResponse();
+
+                        var problemDetails = new ProblemDetails
+                        {
+                            Status = StatusCodes.Status401Unauthorized,
+                            Type = "https://datatracker.ietf.org/doc/html/rfc7235#section-3.1",
+                            Title = "Authentication failed",
+                            Detail = context.ErrorDescription,
+                        };
+                        context.Response.StatusCode = problemDetails.Status.Value;
+                        context.Response.ContentType = "application/json";
+                        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                        await context.Response.WriteAsJsonAsync(problemDetails);
+                    },
                 };
             });
 
