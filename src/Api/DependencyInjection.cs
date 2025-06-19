@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGenWithAuth();
         services.AddCorsPolicy(configuration);
+        services.AddSerilogServices(configuration);
 
         return services;
     }

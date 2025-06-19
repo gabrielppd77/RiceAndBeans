@@ -1,5 +1,11 @@
-﻿using Api.Extensions.Common.CorsConfiguration;
+﻿using System.Net;
+using Api.Extensions.Common.CorsConfiguration;
+using Api.Extensions.Common.SerilogConfiguration;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Display;
+using Serilog.Sinks.Email;
 
 namespace Api.Extensions;
 
@@ -31,7 +37,7 @@ public static class ServiceCollectionExtensions
                             Id = "Bearer"
                         }
                     },
-                    new string[] { }
+                    []
                 }
             });
         });
@@ -55,6 +61,43 @@ public static class ServiceCollectionExtensions
                     .AllowAnyMethod();
             });
         });
+
+        return services;
+    }
+
+    internal static IServiceCollection AddSerilogServices(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var serilogSettings = new SerilogSettings();
+        configuration.Bind(SerilogSettings.SectionName, serilogSettings);
+
+        var emailConfiguration = new EmailSinkOptions()
+        {
+            From = serilogSettings.EmailConfigFrom,
+            To = [serilogSettings.EmailConfigTo],
+            Host = serilogSettings.EmailConfigHost,
+            Port = serilogSettings.EmailConfigPort,
+            Credentials = new NetworkCredential()
+            {
+                UserName = serilogSettings.EmailConfigCrendentialUserName,
+                Password = serilogSettings.EmailConfigCrendentialPassword
+            },
+            Subject = new MessageTemplateTextFormatter("[CRITICAL ERROR] RICE-AND-BEANS-API"),
+            Body = new MessageTemplateTextFormatter(
+                "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"),
+        };
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .Enrich.WithMachineName()
+            .Enrich.WithThreadId()
+            .WriteTo.Console()
+            .WriteTo.Seq(serilogSettings.SeqServerUrl)
+            .WriteTo.Email(emailConfiguration, null, LogEventLevel.Fatal)
+            .CreateLogger();
 
         return services;
     }
