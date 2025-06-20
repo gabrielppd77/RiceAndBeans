@@ -77,18 +77,20 @@ public static class DependencyInjection
 
     public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
-        services.Configure<FileManagerSettings>(configuration.GetSection(FileManagerSettings.SectionName));
-        services.Configure<FrontendSettings>(configuration.GetSection(FrontendSettings.SectionName));
-        services.Configure<ApplyMigrationSettings>(configuration.GetSection(ApplyMigrationSettings.SectionName));
+        services.Configure<EmailSettings>(configuration.GetRequiredSection(EmailSettings.SectionName));
+        services.Configure<FileManagerSettings>(configuration.GetRequiredSection(FileManagerSettings.SectionName));
+        services.Configure<FrontendSettings>(configuration.GetRequiredSection(FrontendSettings.SectionName));
+        services.Configure<ApplyMigrationSettings>(
+            configuration.GetRequiredSection(ApplyMigrationSettings.SectionName));
 
         return services;
     }
 
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
-        var jwtSettings = new JwtSettings();
-        configuration.Bind(JwtSettings.SectionName, jwtSettings);
+        var jwtSettings = configuration
+            .GetRequiredSection(JwtSettings.SectionName)
+            .Get<JwtSettings>()!;
 
         services.AddSingleton(Options.Create(jwtSettings));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -141,8 +143,9 @@ public static class DependencyInjection
 
     public static IServiceCollection AddMinio(this IServiceCollection services, IConfiguration configuration)
     {
-        var uploadFileSettings = new FileManagerSettings();
-        configuration.Bind(FileManagerSettings.SectionName, uploadFileSettings);
+        var uploadFileSettings = configuration
+            .GetRequiredSection(FileManagerSettings.SectionName)
+            .Get<FileManagerSettings>()!;
 
         services.AddMinio(configureClient => configureClient
             .WithEndpoint(uploadFileSettings.BaseUrl)

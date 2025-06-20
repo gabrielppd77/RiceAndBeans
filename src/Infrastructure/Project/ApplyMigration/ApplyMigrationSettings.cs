@@ -4,5 +4,5 @@ public class ApplyMigrationSettings
 {
     public const string SectionName = "ApplyMigrationSettings";
 
-    public string MigrationToken { get; set; } = "";
+    public required string MigrationToken { get; set; }
 }

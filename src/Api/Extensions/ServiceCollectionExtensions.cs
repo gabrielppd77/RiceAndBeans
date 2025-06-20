@@ -69,8 +69,9 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var serilogSettings = new SerilogSettings();
-        configuration.Bind(SerilogSettings.SectionName, serilogSettings);
+        var serilogSettings = configuration
+            .GetRequiredSection(SerilogSettings.SectionName)
+            .Get<SerilogSettings>()!;
 
         var emailConfiguration = new EmailSinkOptions()
         {
