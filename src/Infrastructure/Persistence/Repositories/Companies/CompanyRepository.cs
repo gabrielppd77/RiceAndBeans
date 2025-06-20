@@ -5,18 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Companies;
 
-public class CompanyRepository : IUploadImageCompanyRepository, IGetFormDataCompanyRepository,
-    IUpdateFormDataCompanyRepository
+public class CompanyRepository(IApplicationDbContext context) : ICompanyRepository
 {
-    private readonly IApplicationDbContext _context;
-
-    public CompanyRepository(IApplicationDbContext context)
+    public async Task<Company?> GetByUserId(Guid userId)
     {
-        _context = context;
-    }
-
-    public async Task<Company?> GetCompanyByUser(Guid userId)
-    {
-        return await _context.Companies.FirstOrDefaultAsync(x => x.UserId == userId);
+        return await context.Companies.FirstOrDefaultAsync(x => x.UserId == userId);
     }
 }

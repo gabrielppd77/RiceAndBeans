@@ -69,19 +69,8 @@ public static class DependencyInjection
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<ICreateUserRepository, UserRepository>();
-        services.AddScoped<ILoginUserRepository, UserRepository>();
-        services.AddScoped<IDeleteUserRepository, UserRepository>();
-        services.AddScoped<IRecoverPasswordUserRepository, UserRepository>();
-        services.AddScoped<IResetPasswordUserRepository, UserRepository>();
-        services.AddScoped<IConfirmEmailUserRepository, UserRepository>();
-        services.AddScoped<IUploadImageUserRepository, UserRepository>();
-        services.AddScoped<IGetGeneralDataUserRepository, UserRepository>();
-        services.AddScoped<IUpdateFormDataUserRepository, UserRepository>();
-
-        services.AddScoped<IUploadImageCompanyRepository, CompanyRepository>();
-        services.AddScoped<IGetFormDataCompanyRepository, CompanyRepository>();
-        services.AddScoped<IUpdateFormDataCompanyRepository, CompanyRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
 
         return services;
     }

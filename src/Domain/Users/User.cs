@@ -1,7 +1,24 @@
+using Domain.Companies;
+
 namespace Domain.Users;
 
 public class User
 {
+    public Guid Id { get; }
+    public string Name { get; private set; }
+    public string Email { get; private set; }
+    public string Password { get; private set; }
+    public string? UrlImage { get; private set; }
+    public bool IsEmailConfirmed { get; private set; }
+    public Guid? TokenEmailConfirmation { get; private set; }
+    public Guid? TokenRecoverPassword { get; private set; }
+    public DateTime? TokenRecoverPasswordExpire { get; private set; }
+    public Company? Company { get; private set; }
+
+    public User()
+    {
+    }
+
     public User(string name, string email, string password)
     {
         Id = Guid.NewGuid();
@@ -13,18 +30,10 @@ public class User
         TokenEmailConfirmation = Guid.NewGuid();
     }
 
-    public Guid Id { get; }
-
-    public string Name { get; private set; }
-    public string Email { get; private set; }
-    public string Password { get; private set; }
-    public string? UrlImage { get; private set; }
-
-    public bool IsEmailConfirmed { get; private set; }
-    public Guid? TokenEmailConfirmation { get; private set; }
-
-    public Guid? TokenRecoverPassword { get; private set; }
-    public DateTime? TokenRecoverPasswordExpire { get; private set; }
+    public void SetCompany(Company company)
+    {
+        Company = company;
+    }
 
     public void ConfirmEmail()
     {

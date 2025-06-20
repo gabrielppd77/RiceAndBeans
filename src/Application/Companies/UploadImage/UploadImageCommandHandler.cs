@@ -12,24 +12,24 @@ public class UploadImageCommandHandler(
     IUploadFileService uploadFileService,
     IRemoveFileService removeFileService,
     IUserAuthenticated userAuthenticated,
-    IUploadImageCompanyRepository uploadImageCompanyRepository,
+    ICompanyRepository companyRepository,
     IUnitOfWork unitOfWork)
     : IRequestHandler<UploadImageCommand, ErrorOr<string>>
 {
-    private readonly string _folderPathImage = "company";
+    private const string FolderPathImage = "company";
 
     public async Task<ErrorOr<string>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
     {
         var userId = userAuthenticated.GetUserId();
 
-        var company = await uploadImageCompanyRepository.GetCompanyByUser(userId);
+        var company = await companyRepository.GetByUserId(userId);
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
         if (company.UrlImage is not null)
         {
             var uri = new Uri(company.UrlImage);
-            var fileNameToRemove = $"{_folderPathImage}/{Path.GetFileName(uri.LocalPath)}";
+            var fileNameToRemove = $"{FolderPathImage}/{Path.GetFileName(uri.LocalPath)}";
             var resultRemove = await removeFileService.RemoveFileAsync(fileNameToRemove);
 
             if (resultRemove.IsError)
@@ -38,7 +38,7 @@ public class UploadImageCommandHandler(
             }
         }
 
-        var fileName = $"{_folderPathImage}/{company.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
+        var fileName = $"{FolderPathImage}/{company.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
 
         var resultUpload =
             await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), fileName);

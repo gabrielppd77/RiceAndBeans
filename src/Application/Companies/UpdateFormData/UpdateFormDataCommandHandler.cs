@@ -10,14 +10,14 @@ namespace Application.Companies.UpdateFormData;
 public class UpdateFormDataCommandHandler(
     IUserAuthenticated userAuthenticated,
     IUnitOfWork unitOfWork,
-    IUpdateFormDataCompanyRepository updateFormDataCompanyRepository)
+    ICompanyRepository companyRepository)
     : IRequestHandler<UpdateFormDataCommand, ErrorOr<Unit>>
 {
     public async Task<ErrorOr<Unit>> Handle(UpdateFormDataCommand request, CancellationToken cancellationToken)
     {
         var userId = userAuthenticated.GetUserId();
 
-        var company = await updateFormDataCompanyRepository.GetCompanyByUser(userId);
+        var company = await companyRepository.GetByUserId(userId);
 
         if (company is null) return Errors.Company.CompanyNotFound;
 

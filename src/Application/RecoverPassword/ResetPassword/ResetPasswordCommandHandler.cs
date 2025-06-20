@@ -7,25 +7,15 @@ using MediatR;
 
 namespace Application.RecoverPassword.ResetPassword;
 
-public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, ErrorOr<Unit>>
+public class ResetPasswordCommandHandler(
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher,
+    IUnitOfWork unitOfWork)
+    : IRequestHandler<ResetPasswordCommand, ErrorOr<Unit>>
 {
-    private readonly IResetPasswordUserRepository _resetPasswordByRecoverUserRepository;
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public ResetPasswordCommandHandler(
-        IResetPasswordUserRepository resetPasswordByRecoverUserRepository,
-        IPasswordHasher passwordHasher,
-        IUnitOfWork unitOfWork)
-    {
-        _resetPasswordByRecoverUserRepository = resetPasswordByRecoverUserRepository;
-        _passwordHasher = passwordHasher;
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<ErrorOr<Unit>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
-        var user = await _resetPasswordByRecoverUserRepository.GetUserByTokenRecoverPassword(request.Token);
+        var user = await userRepository.GetByTokenRecoverPassword(request.Token);
 
         if (user is null)
             return Errors.RecoverPassword.InvalidToken;
@@ -33,10 +23,10 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
         if (user.TokenRecoverPasswordExpire < DateTime.UtcNow)
             return Errors.RecoverPassword.ExpiredToken;
 
-        var newPasswordHashed = _passwordHasher.HashPassword(request.NewPassword);
+        var newPasswordHashed = passwordHasher.HashPassword(request.NewPassword);
         user.ResetRecoverPassword(newPasswordHashed);
 
-        await _unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync();
 
         return Unit.Value;
     }

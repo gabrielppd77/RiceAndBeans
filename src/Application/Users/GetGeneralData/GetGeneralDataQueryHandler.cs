@@ -1,12 +1,13 @@
 ﻿using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
+using Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
 
 namespace Application.Users.GetGeneralData;
 
 public class GetGeneralDataQueryHandler(
-    IGetGeneralDataUserRepository getGeneralDataUserRepository,
+    IUserRepository userRepository,
     IUserAuthenticated userAuthenticated)
     :
         IRequestHandler<GetGeneralDataQuery, ErrorOr<GeneralDataResult>>
@@ -16,7 +17,10 @@ public class GetGeneralDataQueryHandler(
     {
         var userId = userAuthenticated.GetUserId();
 
-        var user = await getGeneralDataUserRepository.GetUserById(userId);
+        var user = await userRepository.GetById(userId);
+
+        if (user is null)
+            return Errors.User.UserNotFound;
 
         return new GeneralDataResult(user.Name, user.UrlImage);
     }

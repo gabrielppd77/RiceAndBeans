@@ -1,54 +1,39 @@
-using Microsoft.EntityFrameworkCore;
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
-using Domain.Companies;
 using Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository : ICreateUserRepository, ILoginUserRepository, IDeleteUserRepository,
-    IRecoverPasswordUserRepository, IResetPasswordUserRepository, IConfirmEmailUserRepository,
-    IUploadImageUserRepository, IGetGeneralDataUserRepository, IUpdateFormDataUserRepository
+public class UserRepository(IApplicationDbContext context) : IUserRepository
 {
-    private readonly IApplicationDbContext _context;
-
-    public UserRepository(IApplicationDbContext context)
+    public async Task Add(User user)
     {
-        _context = context;
+        await context.Users.AddAsync(user);
     }
 
-    public async Task AddUser(User user)
+    public async Task<User?> GetByEmail(string email)
     {
-        await _context.Users.AddAsync(user);
+        return await context.Users.SingleOrDefaultAsync(x => x.Email == email);
     }
 
-    public async Task AddCompany(Company company)
+    public async Task<User?> GetById(Guid userId)
     {
-        await _context.Companies.AddAsync(company);
+        return await context.Users.SingleOrDefaultAsync(x => x.Id == userId);
     }
 
-    public async Task<User?> GetUserByEmail(string email)
+    public void Remove(User user)
     {
-        return await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
+        context.Users.Remove(user);
     }
 
-    public async Task<User?> GetUserById(Guid userId)
+    public async Task<User?> GetByTokenRecoverPassword(Guid token)
     {
-        return await _context.Users.SingleOrDefaultAsync(x => x.Id == userId);
+        return await context.Users.SingleOrDefaultAsync(x => x.TokenRecoverPassword == token);
     }
 
-    public void RemoveUser(User user)
+    public async Task<User?> GetByTokenEmailConfirmation(Guid token)
     {
-        _context.Users.Remove(user);
-    }
-
-    public async Task<User?> GetUserByTokenRecoverPassword(Guid token)
-    {
-        return await _context.Users.SingleOrDefaultAsync(x => x.TokenRecoverPassword == token);
-    }
-
-    public async Task<User?> GetUserByTokenEmailConfirmation(Guid token)
-    {
-        return await _context.Users.SingleOrDefaultAsync(x => x.TokenEmailConfirmation == token);
+        return await context.Users.SingleOrDefaultAsync(x => x.TokenEmailConfirmation == token);
     }
 }

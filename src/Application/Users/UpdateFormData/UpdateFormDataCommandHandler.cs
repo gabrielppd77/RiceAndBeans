@@ -10,14 +10,14 @@ namespace Application.Users.UpdateFormData;
 public class UpdateFormDataCommandHandler(
     IUserAuthenticated userAuthenticated,
     IUnitOfWork unitOfWork,
-    IUpdateFormDataUserRepository updateFormDataUserRepository)
+    IUserRepository userRepository)
     : IRequestHandler<UpdateFormDataCommand, ErrorOr<Unit>>
 {
     public async Task<ErrorOr<Unit>> Handle(UpdateFormDataCommand request, CancellationToken cancellationToken)
     {
         var userId = userAuthenticated.GetUserId();
 
-        var user = await updateFormDataUserRepository.GetUserById(userId);
+        var user = await userRepository.GetById(userId);
 
         if (user is null) return Errors.User.UserNotFound;
 

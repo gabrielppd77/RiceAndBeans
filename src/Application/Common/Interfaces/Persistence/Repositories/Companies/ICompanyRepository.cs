@@ -2,7 +2,7 @@
 
 namespace Application.Common.Interfaces.Persistence.Repositories.Companies;
 
-public interface IUpdateFormDataCompanyRepository
+public interface ICompanyRepository
 {
-    Task<Company?> GetCompanyByUser(Guid userId);
+    Task<Company?> GetByUserId(Guid userId);
 }

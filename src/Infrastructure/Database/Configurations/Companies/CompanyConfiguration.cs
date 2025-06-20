@@ -18,6 +18,6 @@ internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(x => x.Path).HasMaxLength(150);
         builder.Property(x => x.UrlImage).HasMaxLength(150);
 
-        builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
+        builder.HasOne(x => x.User).WithOne(x => x.Company).HasForeignKey<Company>(x => x.UserId);
     }
 }
