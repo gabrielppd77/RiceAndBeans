@@ -27,7 +27,7 @@ public class RegisterCommandHandler(
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request,
         CancellationToken cancellationToken)
     {
-        if (await userRepository.GetByEmail(request.Email) is not null)
+        if (await userRepository.GetByEmailUntracked(request.Email) is not null)
         {
             return Errors.User.DuplicateEmail;
         }

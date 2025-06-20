@@ -16,7 +16,7 @@ public class GetFormDataQueryHandler(
     {
         var userId = userAuthenticated.GetUserId();
 
-        var company = await companyRepository.GetByUserId(userId);
+        var company = await companyRepository.GetByUserIdUntracked(userId);
 
         if (company is null) return Errors.Company.CompanyNotFound;
 

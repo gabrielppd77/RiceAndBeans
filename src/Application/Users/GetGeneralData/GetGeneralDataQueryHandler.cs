@@ -17,7 +17,7 @@ public class GetGeneralDataQueryHandler(
     {
         var userId = userAuthenticated.GetUserId();
 
-        var user = await userRepository.GetById(userId);
+        var user = await userRepository.GetByIdUntracked(userId);
 
         if (user is null)
             return Errors.User.UserNotFound;

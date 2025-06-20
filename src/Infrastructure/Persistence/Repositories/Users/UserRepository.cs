@@ -17,9 +17,19 @@ public class UserRepository(IApplicationDbContext context) : IUserRepository
         return await context.Users.SingleOrDefaultAsync(x => x.Email == email);
     }
 
+    public async Task<User?> GetByEmailUntracked(string email)
+    {
+        return await context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Email == email);
+    }
+
     public async Task<User?> GetById(Guid userId)
     {
         return await context.Users.SingleOrDefaultAsync(x => x.Id == userId);
+    }
+
+    public async Task<User?> GetByIdUntracked(Guid userId)
+    {
+        return await context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Id == userId);
     }
 
     public void Remove(User user)
