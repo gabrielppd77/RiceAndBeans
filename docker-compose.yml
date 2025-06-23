@@ -1,6 +1,20 @@
 version: "3.8"
 
 services:
+  api:
+    container_name: rice-and-beans-api
+    image: rice-and-beans-api
+    build:
+      context: .
+      dockerfile: src/Api/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db
+
   db:
     image: postgres:17.5-alpine
     container_name: rice-and-beans-db
@@ -10,6 +24,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: rice-and-beans
-      PGDATA: /docker/pg
+      PGDATA: /var/lib/postgresql/data
     volumes:
-      - ./volumes/pg:/docker/pg
+      - rice-and-beans-db-volume:/var/lib/postgresql/data
+
+volumes:
+  rice-and-beans-db-volume:
