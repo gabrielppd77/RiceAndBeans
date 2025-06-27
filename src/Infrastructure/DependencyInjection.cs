@@ -148,9 +148,9 @@ public static class DependencyInjection
             .Get<FileManagerSettings>()!;
 
         services.AddMinio(configureClient => configureClient
-            .WithEndpoint(uploadFileSettings.BaseUrl)
+            .WithEndpoint(uploadFileSettings.Host)
             .WithCredentials(uploadFileSettings.AccessKey, uploadFileSettings.SecretKey)
-            .WithSSL()
+            .WithSSL(uploadFileSettings.EnableSsl)
             .Build());
 
         return services;

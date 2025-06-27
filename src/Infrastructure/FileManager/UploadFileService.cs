@@ -12,6 +12,7 @@ public class UploadFileService(IMinioClient minioClient, IOptions<FileManagerSet
     : IUploadFileService
 {
     private readonly string _mainBucket = fileManagerSettingsOptions.Value.MainBucket;
+    private readonly string _baseUrl = fileManagerSettingsOptions.Value.BaseUrl;
 
     public async Task<ErrorOr<string>> UploadFileAsync(Stream fileStream, string fileName)
     {
@@ -31,6 +32,6 @@ public class UploadFileService(IMinioClient minioClient, IOptions<FileManagerSet
 
         if (response.ResponseStatusCode is not HttpStatusCode.OK) return Errors.FileManager.UnexpectedError;
 
-        return $"{minioClient.Config.Endpoint}/{_mainBucket}/{fileName}";
+        return $"{_baseUrl}/{_mainBucket}/{fileName}";
     }
 }

@@ -73,17 +73,24 @@ public static class ServiceCollectionExtensions
             .GetRequiredSection(SerilogSettings.SectionName)
             .Get<SerilogSettings>()!;
 
+        NetworkCredential? credentials = null;
+
+        if (!string.IsNullOrEmpty(serilogSettings.EmailConfigCrendentialUserName))
+        {
+            credentials = new NetworkCredential()
+            {
+                UserName = serilogSettings.EmailConfigCrendentialUserName,
+                Password = serilogSettings.EmailConfigCrendentialPassword
+            };
+        }
+
         var emailConfiguration = new EmailSinkOptions()
         {
             From = serilogSettings.EmailConfigFrom,
             To = [serilogSettings.EmailConfigTo],
             Host = serilogSettings.EmailConfigHost,
             Port = serilogSettings.EmailConfigPort,
-            Credentials = new NetworkCredential()
-            {
-                UserName = serilogSettings.EmailConfigCrendentialUserName,
-                Password = serilogSettings.EmailConfigCrendentialPassword
-            },
+            Credentials = credentials,
             Subject = new MessageTemplateTextFormatter("[CRITICAL ERROR] RICE-AND-BEANS-API"),
             Body = new MessageTemplateTextFormatter(
                 "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"),
