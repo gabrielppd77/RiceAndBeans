@@ -3,5 +3,6 @@
     public interface IUserAuthenticated
     {
         public Guid GetUserId();
+        public Guid GetCompanyId();
     }
 }

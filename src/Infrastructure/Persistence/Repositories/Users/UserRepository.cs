@@ -19,7 +19,10 @@ public class UserRepository(IApplicationDbContext context) : IUserRepository
 
     public async Task<User?> GetByEmailUntracked(string email)
     {
-        return await context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Email == email);
+        return await context.Users
+            .AsNoTracking()
+            .Include(x => x.Company)
+            .SingleOrDefaultAsync(x => x.Email == email);
     }
 
     public async Task<User?> GetById(Guid userId)

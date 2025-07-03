@@ -14,9 +14,9 @@ public class GetFormDataQueryHandler(
 {
     public async Task<ErrorOr<FormDataResult>> Handle(GetFormDataQuery request, CancellationToken cancellationToken)
     {
-        var userId = userAuthenticated.GetUserId();
+        var companyId = userAuthenticated.GetCompanyId();
 
-        var company = await companyRepository.GetByUserIdUntracked(userId);
+        var company = await companyRepository.GetByIdUntracked(companyId);
 
         if (company is null) return Errors.Company.CompanyNotFound;
 

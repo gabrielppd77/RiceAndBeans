@@ -4,6 +4,6 @@ namespace Application.Common.Interfaces.Persistence.Repositories.Companies;
 
 public interface ICompanyRepository
 {
-    Task<Company?> GetByUserId(Guid userId);
-    Task<Company?> GetByUserIdUntracked(Guid userId);
+    Task<Company?> GetById(Guid userId);
+    Task<Company?> GetByIdUntracked(Guid companyId);
 }

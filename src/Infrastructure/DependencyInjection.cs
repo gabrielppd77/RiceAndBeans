@@ -6,6 +6,7 @@ using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Repositories.Categories;
 using Application.Common.Interfaces.Persistence.Repositories.Companies;
 using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Application.Common.Interfaces.Project.ApplyMigration;
@@ -18,6 +19,7 @@ using Infrastructure.Exception;
 using Infrastructure.FileManager;
 using Infrastructure.Frontend;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories.Categories;
 using Infrastructure.Persistence.Repositories.Companies;
 using Infrastructure.Persistence.Repositories.Users;
 using Infrastructure.Project.ApplyMigration;
@@ -71,6 +73,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;
     }

@@ -15,9 +15,9 @@ public class UpdateFormDataCommandHandler(
 {
     public async Task<ErrorOr<Unit>> Handle(UpdateFormDataCommand request, CancellationToken cancellationToken)
     {
-        var userId = userAuthenticated.GetUserId();
+        var companyId = userAuthenticated.GetCompanyId();
 
-        var company = await companyRepository.GetByUserId(userId);
+        var company = await companyRepository.GetById(companyId);
 
         if (company is null) return Errors.Company.CompanyNotFound;
 

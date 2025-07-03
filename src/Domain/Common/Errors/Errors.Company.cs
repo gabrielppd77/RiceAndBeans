@@ -7,7 +7,7 @@ public static partial class Errors
     public static class Company
     {
         public static Error CompanyNotFound => Error.NotFound(
-            code: "User.CompanyNotFound",
+            code: "Company.CompanyNotFound",
             description: "Could not find company.");
     }
 }

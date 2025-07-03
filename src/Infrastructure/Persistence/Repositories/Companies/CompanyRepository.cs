@@ -7,13 +7,13 @@ namespace Infrastructure.Persistence.Repositories.Companies;
 
 public class CompanyRepository(IApplicationDbContext context) : ICompanyRepository
 {
-    public async Task<Company?> GetByUserId(Guid userId)
+    public async Task<Company?> GetById(Guid companyId)
     {
-        return await context.Companies.FirstOrDefaultAsync(x => x.UserId == userId);
+        return await context.Companies.FirstOrDefaultAsync(x => x.Id == companyId);
     }
 
-    public async Task<Company?> GetByUserIdUntracked(Guid userId)
+    public async Task<Company?> GetByIdUntracked(Guid companyId)
     {
-        return await context.Companies.AsNoTracking().FirstOrDefaultAsync(x => x.UserId == userId);
+        return await context.Companies.AsNoTracking().FirstOrDefaultAsync(x => x.Id == companyId);
     }
 }
