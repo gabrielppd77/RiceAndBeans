@@ -7,9 +7,9 @@ public class Category
     public Guid Id { get; }
     public Guid CompanyId { get; private set; }
     public string Name { get; private set; }
-    public Company Company { get; private set; }
+    public Company? Company { get; private set; }
 
-    public Category()
+    protected Category()
     {
     }
 

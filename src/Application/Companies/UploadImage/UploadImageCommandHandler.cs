@@ -1,8 +1,7 @@
 ﻿using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.FileManager;
-using Application.Common.Interfaces.Persistence;
-using Application.Common.Interfaces.Persistence.Repositories.Companies;
 using Domain.Common.Errors;
+using Domain.Common.Repositories;
 using ErrorOr;
 using MediatR;
 

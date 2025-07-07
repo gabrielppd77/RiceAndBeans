@@ -1,6 +1,5 @@
-﻿using Application.Common.Interfaces.Persistence;
-using Application.Common.Interfaces.Persistence.Repositories.Users;
-using Domain.Common.Errors;
+﻿using Domain.Common.Errors;
+using Domain.Common.Repositories;
 using ErrorOr;
 using MediatR;
 

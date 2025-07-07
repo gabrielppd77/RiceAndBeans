@@ -1,5 +1,6 @@
 ﻿using Api.Controllers.Categories.Contracts;
 using Application.Categories.CreateCategory;
+using Application.Categories.ListAllCategories;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,5 +21,12 @@ public class CategoriesController(ISender mediator, IMapper mapper) : ApiControl
             _ => NoContent(),
             Problem
         );
+    }
+
+    [HttpGet("list-all")]
+    public async Task<IActionResult> ListAll(IListAllCategoriesService service)
+    {
+        var result = await service.Handle();
+        return Ok(result);
     }
 }

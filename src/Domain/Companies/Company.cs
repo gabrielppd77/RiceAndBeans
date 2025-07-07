@@ -10,9 +10,9 @@ namespace Domain.Companies
         public string? Description { get; private set; }
         public string Path { get; private set; }
         public string? UrlImage { get; private set; }
-        public User User { get; private set; }
+        public User? User { get; private set; }
 
-        public Company()
+        protected Company()
         {
         }
 

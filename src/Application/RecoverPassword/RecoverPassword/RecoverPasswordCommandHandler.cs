@@ -1,8 +1,7 @@
 ﻿using Application.Common.Interfaces.Email;
 using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.Frontend;
-using Application.Common.Interfaces.Persistence;
-using Application.Common.Interfaces.Persistence.Repositories.Users;
+using Domain.Common.Repositories;
 using ErrorOr;
 using MediatR;
 

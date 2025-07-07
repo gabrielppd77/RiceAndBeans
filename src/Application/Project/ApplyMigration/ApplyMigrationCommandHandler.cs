@@ -1,6 +1,6 @@
-﻿using Application.Common.Interfaces.Persistence;
-using Application.Common.Interfaces.Project.ApplyMigration;
+﻿using Application.Common.Interfaces.Project.ApplyMigration;
 using Domain.Common.Errors;
+using Domain.Common.Repositories;
 using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;

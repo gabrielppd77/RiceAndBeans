@@ -15,7 +15,7 @@ public class User
     public DateTime? TokenRecoverPasswordExpire { get; private set; }
     public Company? Company { get; private set; }
 
-    public User()
+    protected User()
     {
     }
 

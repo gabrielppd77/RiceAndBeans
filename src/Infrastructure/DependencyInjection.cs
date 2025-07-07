@@ -1,16 +1,14 @@
 using System.Text;
+using Application.Categories.ListAllCategories;
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Database;
 using Application.Common.Interfaces.Email;
 using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Frontend;
-using Application.Common.Interfaces.Persistence;
-using Application.Common.Interfaces.Persistence.Repositories.Categories;
-using Application.Common.Interfaces.Persistence.Repositories.Companies;
-using Application.Common.Interfaces.Persistence.Repositories.Users;
 using Application.Common.Interfaces.Project.ApplyMigration;
 using Application.Common.Interfaces.Time;
+using Domain.Common.Repositories;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Email;
@@ -69,8 +67,9 @@ public static class DependencyInjection
         services.AddScoped<IConfirmPasswordEmailTemplate, ConfirmPasswordEmailTemplate>();
         services.AddScoped<IPasswordRecoveryEmailTemplate, PasswordRecoveryEmailTemplate>();
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IListAllCategoriesService, ListAllCategoriesService>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();

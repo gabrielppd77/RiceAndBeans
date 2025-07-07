@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces.Database;
-using Application.Common.Interfaces.Persistence.Repositories.Companies;
+using Domain.Common.Repositories;
 using Domain.Companies;
 using Microsoft.EntityFrameworkCore;
 

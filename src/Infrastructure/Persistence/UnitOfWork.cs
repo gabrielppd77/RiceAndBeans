@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces.Database;
-using Application.Common.Interfaces.Persistence;
+using Domain.Common.Repositories;
 
 namespace Infrastructure.Persistence;
 
