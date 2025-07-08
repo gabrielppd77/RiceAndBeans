@@ -1,4 +1,5 @@
-﻿using Domain.Common.Errors;
+﻿using Application.Common.Services;
+using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
 
@@ -7,9 +8,9 @@ namespace Application.Authentication.ConfirmEmail;
 public class ConfirmEmailService(
     IUserRepository userRepository,
     IUnitOfWork unitOfWork)
-    : IConfirmEmailService
+    : IServiceHandler<ConfirmEmailRequest, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(ConfirmEmailRequest request)
+    public async Task<ErrorOr<Success>> Handler(ConfirmEmailRequest request)
     {
         var user = await userRepository.GetByTokenEmailConfirmation(request.Token);
 

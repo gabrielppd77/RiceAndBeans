@@ -1,5 +1,6 @@
 using Application.Authentication.Common;
 using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
@@ -10,10 +11,9 @@ public class LoginService(
     IJwtTokenGenerator jwtTokenGenerator,
     IPasswordHasher passwordHasher,
     IUserRepository userRepository)
-    :
-        ILoginService
+    : IServiceHandler<LoginRequest, ErrorOr<AuthenticationResponse>>
 {
-    public async Task<ErrorOr<AuthenticationResponse>> Handle(LoginRequest request)
+    public async Task<ErrorOr<AuthenticationResponse>> Handler(LoginRequest request)
     {
         var user = await userRepository.GetByEmailUntracked(request.Email);
 

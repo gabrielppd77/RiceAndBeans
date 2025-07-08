@@ -3,6 +3,7 @@ using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Email;
 using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.Frontend;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using Domain.Companies;
@@ -19,9 +20,9 @@ public class RegisterService(
     IEmailService emailService,
     IFrontendSettingsWrapper frontendSettingsWrapper,
     IConfirmPasswordEmailTemplate confirmPasswordEmailTemplate)
-    : IRegisterService
+    : IServiceHandler<RegisterRequest, ErrorOr<AuthenticationResponse>>
 {
-    public async Task<ErrorOr<AuthenticationResponse>> Handle(RegisterRequest request)
+    public async Task<ErrorOr<AuthenticationResponse>> Handler(RegisterRequest request)
     {
         if (await userRepository.GetByEmailUntracked(request.Email) is not null)
         {

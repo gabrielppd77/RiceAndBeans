@@ -1,7 +1,4 @@
 using System.Text;
-using Application.Authentication.ConfirmEmail;
-using Application.Authentication.Login;
-using Application.Authentication.Register;
 using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
 using Application.Common.Interfaces.Authentication;
@@ -76,10 +73,6 @@ public static class DependencyInjection
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IConfirmPasswordEmailTemplate, ConfirmPasswordEmailTemplate>();
         services.AddScoped<IPasswordRecoveryEmailTemplate, PasswordRecoveryEmailTemplate>();
-
-        services.AddScoped<IRegisterService, RegisterService>();
-        services.AddScoped<ILoginService, LoginService>();
-        services.AddScoped<IConfirmEmailService, ConfirmEmailService>();
 
         services.AddScoped<IRecoverPasswordService, RecoverPasswordService>();
         services.AddScoped<IResetPasswordService, ResetPasswordService>();
