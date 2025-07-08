@@ -1,19 +1,17 @@
 ﻿using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Users.GetGeneralData;
 
-public class GetGeneralDataQueryHandler(
+public class GetGeneralDataService(
     IUserRepository userRepository,
     IUserAuthenticated userAuthenticated)
-    :
-        IRequestHandler<GetGeneralDataQuery, ErrorOr<GeneralDataResult>>
+    : IServiceHandler<Unit, ErrorOr<GeneralDataResponse>>
 {
-    public async Task<ErrorOr<GeneralDataResult>> Handle(GetGeneralDataQuery request,
-        CancellationToken cancellationToken)
+    public async Task<ErrorOr<GeneralDataResponse>> Handler(Unit _)
     {
         var userId = userAuthenticated.GetUserId();
 
@@ -22,6 +20,6 @@ public class GetGeneralDataQueryHandler(
         if (user is null)
             return Errors.User.UserNotFound;
 
-        return new GeneralDataResult(user.Name, user.UrlImage);
+        return new GeneralDataResponse(user.Name, user.UrlImage);
     }
 }

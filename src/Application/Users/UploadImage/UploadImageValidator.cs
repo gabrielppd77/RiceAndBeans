@@ -2,9 +2,9 @@
 
 namespace Application.Users.UploadImage;
 
-public class UploadImageCommandValidator : AbstractValidator<UploadImageCommand>
+public class UploadImageValidator : AbstractValidator<UploadImageRequest>
 {
-    public UploadImageCommandValidator()
+    public UploadImageValidator()
     {
         RuleFor(x => x.File).NotNull();
     }

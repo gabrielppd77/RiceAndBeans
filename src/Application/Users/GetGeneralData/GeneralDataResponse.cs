@@ -1,3 +1,3 @@
-﻿namespace Api.Controllers.Users.Contracts;
+﻿namespace Application.Users.GetGeneralData;
 
 public record GeneralDataResponse(string Name, string? UrlImage);

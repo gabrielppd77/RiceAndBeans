@@ -1,20 +1,19 @@
 using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Users.RemoveAccount;
 
-public class RemoveAccountCommandHandler(
+public class RemoveAccountService(
     IPasswordHasher passwordHasher,
     IUserAuthenticated userAuthenticated,
     IUnitOfWork unitOfWork,
     IUserRepository userRepository)
-    :
-        IRequestHandler<RemoveAccountCommand, ErrorOr<Unit>>
+    : IServiceHandler<RemoveAccountRequest, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Unit>> Handle(RemoveAccountCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handler(RemoveAccountRequest request)
     {
         var userId = userAuthenticated.GetUserId();
 
@@ -34,6 +33,6 @@ public class RemoveAccountCommandHandler(
 
         await unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return Result.Success;
     }
 }

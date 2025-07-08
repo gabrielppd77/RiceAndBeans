@@ -1,23 +1,23 @@
 ﻿using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.FileManager;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Users.UploadImage;
 
-public class UploadImageCommandHandler(
+public class UploadImageService(
     IUploadFileService uploadFileService,
     IRemoveFileService removeFileService,
     IUserAuthenticated userAuthenticated,
     IUserRepository userRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<UploadImageCommand, ErrorOr<string>>
+    : IServiceHandler<UploadImageRequest, ErrorOr<string>>
 {
     private const string FolderPathImage = "user";
 
-    public async Task<ErrorOr<string>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<string>> Handler(UploadImageRequest request)
     {
         var userId = userAuthenticated.GetUserId();
 

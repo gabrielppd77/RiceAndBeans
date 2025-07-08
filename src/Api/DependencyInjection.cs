@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Api.Common.Mapping;
 using Api.Common.Errors;
 using Api.Extensions;
 
@@ -11,7 +10,6 @@ public static class DependencyInjection
     {
         services.AddControllers();
         services.AddSingleton<ProblemDetailsFactory, ApiProblemDetailsFactory>();
-        services.AddMappings();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGenWithAuth();
         services.AddCorsPolicy(configuration);

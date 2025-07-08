@@ -2,9 +2,9 @@
 
 namespace Application.Users.UpdateFormData;
 
-public class UpdateFormDataCommandValidator : AbstractValidator<UpdateFormDataCommand>
+public class UpdateFormDataValidator : AbstractValidator<UpdateFormDataRequest>
 {
-    public UpdateFormDataCommandValidator()
+    public UpdateFormDataValidator()
     {
         RuleFor(x => x.Name).NotNull().NotEmpty();
     }
