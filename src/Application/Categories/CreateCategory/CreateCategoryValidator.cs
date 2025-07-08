@@ -2,9 +2,9 @@
 
 namespace Application.Categories.CreateCategory;
 
-public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+public class CreateCategoryValidator : AbstractValidator<CreateCategoryRequest>
 {
-    public CreateCategoryCommandValidator()
+    public CreateCategoryValidator()
     {
         RuleFor(x => x.Name).NotNull().NotEmpty();
     }

@@ -1,4 +1,5 @@
 using System.Text;
+using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Database;
@@ -68,6 +69,7 @@ public static class DependencyInjection
         services.AddScoped<IPasswordRecoveryEmailTemplate, PasswordRecoveryEmailTemplate>();
 
         services.AddScoped<IListAllCategoriesService, ListAllCategoriesService>();
+        services.AddScoped<ICreateCategoryService, CreateCategoryService>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();

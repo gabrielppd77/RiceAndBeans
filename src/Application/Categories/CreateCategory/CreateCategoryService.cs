@@ -2,17 +2,15 @@
 using Domain.Categories;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Categories.CreateCategory;
 
-public class CreateCategoryCommandHandler(
-    ICategoryRepository categoryRepository,
+public class CreateCategoryService(
     IUserAuthenticated userAuthenticated,
-    IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateCategoryCommand, ErrorOr<Unit>>
+    ICategoryRepository categoryRepository,
+    IUnitOfWork unitOfWork) : ICreateCategoryService
 {
-    public async Task<ErrorOr<Unit>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handler(CreateCategoryRequest request)
     {
         var companyId = userAuthenticated.GetCompanyId();
 
@@ -22,6 +20,6 @@ public class CreateCategoryCommandHandler(
 
         await unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return Result.Success;
     }
 }
