@@ -1,12 +1,15 @@
 ﻿using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Repositories;
 
 namespace Application.Categories.ListAllCategories;
 
-public class ListAllCategoriesService(IUserAuthenticated userAuthenticated, ICategoryRepository categoryRepository)
-    : IListAllCategoriesService
+public class ListAllCategoriesService(
+    IUserAuthenticated userAuthenticated,
+    ICategoryRepository categoryRepository)
+    : IServiceHandler<Unit, IEnumerable<CategoryResponse>>
 {
-    public async Task<IEnumerable<CategoryResponse>> Handle()
+    public async Task<IEnumerable<CategoryResponse>> Handler(Unit _)
     {
         var companyId = userAuthenticated.GetCompanyId();
 

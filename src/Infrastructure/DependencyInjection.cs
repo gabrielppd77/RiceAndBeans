@@ -77,9 +77,6 @@ public static class DependencyInjection
         services.AddScoped<IRecoverPasswordService, RecoverPasswordService>();
         services.AddScoped<IResetPasswordService, ResetPasswordService>();
 
-        services.AddScoped<IListAllCategoriesService, ListAllCategoriesService>();
-        services.AddScoped<ICreateCategoryService, CreateCategoryService>();
-
         services.AddScoped<IApplyMigrationService, ApplyMigrationService>();
 
         services.AddScoped<IGetFormDataService, GetFormDataService>();

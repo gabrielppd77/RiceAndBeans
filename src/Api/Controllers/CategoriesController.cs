@@ -1,5 +1,7 @@
 ﻿using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
+using Application.Common.Services;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -8,7 +10,8 @@ namespace Api.Controllers;
 public class CategoriesController : ApiController
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Register(ICreateCategoryService service, CreateCategoryRequest request)
+    public async Task<IActionResult> Register(IServiceHandler<CreateCategoryRequest, ErrorOr<Success>> service,
+        CreateCategoryRequest request)
     {
         var result = await service.Handler(request);
         return result.Match(
@@ -18,9 +21,9 @@ public class CategoriesController : ApiController
     }
 
     [HttpGet("list-all")]
-    public async Task<IActionResult> ListAll(IListAllCategoriesService service)
+    public async Task<IActionResult> ListAll(IServiceHandler<Unit, IEnumerable<CategoryResponse>> service)
     {
-        var result = await service.Handle();
+        var result = await service.Handler(Unit.Value);
         return Ok(result);
     }
 }
