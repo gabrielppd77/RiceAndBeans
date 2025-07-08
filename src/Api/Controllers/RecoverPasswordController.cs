@@ -13,7 +13,6 @@ public class RecoverPasswordController : ApiController
     public async Task<IActionResult> RecoverPassword(IRecoverPasswordService service, string email)
     {
         var result = await service.Handle(new RecoverPasswordRequest(email));
-
         return result.Match(
             _ => NoContent(),
             Problem
@@ -25,7 +24,6 @@ public class RecoverPasswordController : ApiController
     public async Task<IActionResult> ResetPassword(IResetPasswordService service, ResetPasswordRequest request)
     {
         var result = await service.Handle(request);
-
         return result.Match(
             _ => NoContent(),
             Problem

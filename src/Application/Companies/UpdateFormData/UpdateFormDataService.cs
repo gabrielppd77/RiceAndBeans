@@ -2,17 +2,16 @@
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Companies.UpdateFormData;
 
-public class UpdateFormDataCommandHandler(
+public class UpdateFormDataService(
     IUserAuthenticated userAuthenticated,
     IUnitOfWork unitOfWork,
     ICompanyRepository companyRepository)
-    : IRequestHandler<UpdateFormDataCommand, ErrorOr<Unit>>
+    : IUpdateFormDataService
 {
-    public async Task<ErrorOr<Unit>> Handle(UpdateFormDataCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(UpdateFormDataRequest request)
     {
         var companyId = userAuthenticated.GetCompanyId();
 
@@ -24,6 +23,6 @@ public class UpdateFormDataCommandHandler(
 
         await unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return Result.Success;
     }
 }

@@ -2,17 +2,15 @@
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Companies.GetFormData;
 
-public class GetFormDataQueryHandler(
+public class GetFormDataService(
     ICompanyRepository companyRepository,
     IUserAuthenticated userAuthenticated)
-    :
-        IRequestHandler<GetFormDataQuery, ErrorOr<FormDataResult>>
+    : IGetFormDataService
 {
-    public async Task<ErrorOr<FormDataResult>> Handle(GetFormDataQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<FormDataResponse>> Handle()
     {
         var companyId = userAuthenticated.GetCompanyId();
 
@@ -20,6 +18,6 @@ public class GetFormDataQueryHandler(
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
-        return new FormDataResult(company.Name, company.Description, company.Path, company.UrlImage);
+        return new FormDataResponse(company.Name, company.Description, company.Path, company.UrlImage);
     }
 }

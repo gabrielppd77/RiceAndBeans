@@ -1,13 +1,12 @@
 ﻿using Application.Project.ApplyMigration;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Project;
+namespace Api.Controllers;
 
 [AllowAnonymous]
 [Route("")]
-public class ProjectController(ISender mediator) : ApiController
+public class ProjectController : ApiController
 {
     [HttpGet("")]
     public IActionResult GetHealthCheck()
@@ -29,12 +28,10 @@ public class ProjectController(ISender mediator) : ApiController
     }
 
     [HttpPost("apply-migration")]
-    public async Task<IActionResult> ApplyMigration([FromHeader(Name = "Authorization")] string? authorization)
+    public async Task<IActionResult> ApplyMigration(IApplyMigrationService service,
+        [FromHeader(Name = "Authorization")] string? authorization)
     {
-        var command = new ApplyMigrationCommand(authorization);
-
-        var result = await mediator.Send(command);
-
+        var result = await service.Handle(new ApplyMigrationRequest(authorization));
         return result.Match(
             _ => NoContent(),
             Problem

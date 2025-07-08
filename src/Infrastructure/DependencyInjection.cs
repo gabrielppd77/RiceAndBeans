@@ -12,6 +12,10 @@ using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Project.ApplyMigration;
 using Application.Common.Interfaces.Time;
+using Application.Companies.GetFormData;
+using Application.Companies.UpdateFormData;
+using Application.Companies.UploadImage;
+using Application.Project.ApplyMigration;
 using Application.RecoverPassword.RecoverPassword;
 using Application.RecoverPassword.ResetPassword;
 using Domain.Common.Repositories;
@@ -82,6 +86,12 @@ public static class DependencyInjection
 
         services.AddScoped<IListAllCategoriesService, ListAllCategoriesService>();
         services.AddScoped<ICreateCategoryService, CreateCategoryService>();
+
+        services.AddScoped<IApplyMigrationService, ApplyMigrationService>();
+
+        services.AddScoped<IGetFormDataService, GetFormDataService>();
+        services.AddScoped<IUpdateFormDataService, UpdateFormDataService>();
+        services.AddScoped<IUploadImageService, UploadImageService>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();

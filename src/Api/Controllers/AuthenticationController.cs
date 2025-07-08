@@ -14,7 +14,6 @@ public class AuthenticationController : ApiController
     public async Task<IActionResult> Register(IRegisterService service, RegisterRequest request)
     {
         var result = await service.Handle(request);
-
         return result.Match(
             Ok,
             Problem
@@ -26,7 +25,6 @@ public class AuthenticationController : ApiController
     public async Task<IActionResult> Login(ILoginService service, LoginRequest request)
     {
         var result = await service.Handle(request);
-
         return result.Match(
             Ok,
             Problem
@@ -38,7 +36,6 @@ public class AuthenticationController : ApiController
     public async Task<IActionResult> ConfirmEmail(IConfirmEmailService service, Guid token)
     {
         var result = await service.Handle(new ConfirmEmailRequest(token));
-
         return result.Match(
             _ => NoContent(),
             Problem

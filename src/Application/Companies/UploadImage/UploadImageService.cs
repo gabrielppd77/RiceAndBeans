@@ -3,21 +3,20 @@ using Application.Common.Interfaces.FileManager;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Companies.UploadImage;
 
-public class UploadImageCommandHandler(
+public class UploadImageService(
     IUploadFileService uploadFileService,
     IRemoveFileService removeFileService,
     IUserAuthenticated userAuthenticated,
     ICompanyRepository companyRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<UploadImageCommand, ErrorOr<string>>
+    : IUploadImageService
 {
     private const string FolderPathImage = "company";
 
-    public async Task<ErrorOr<string>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<string>> Handle(UploadImageRequest request)
     {
         var companyId = userAuthenticated.GetCompanyId();
 
