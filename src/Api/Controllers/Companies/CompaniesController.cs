@@ -16,9 +16,9 @@ public class CompaniesController(ISender mediator, IMapper mapper) : ApiControll
     {
         var query = new GetFormDataQuery();
 
-        var authResult = await mediator.Send(query);
+        var result = await mediator.Send(query);
 
-        return authResult.Match(
+        return result.Match(
             x => Ok(mapper.Map<FormDataResponse>(x)),
             Problem
         );
@@ -29,9 +29,9 @@ public class CompaniesController(ISender mediator, IMapper mapper) : ApiControll
     {
         var command = mapper.Map<UpdateFormDataCommand>(request);
 
-        var authResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return authResult.Match(
+        return result.Match(
             _ => NoContent(),
             Problem
         );
@@ -42,9 +42,9 @@ public class CompaniesController(ISender mediator, IMapper mapper) : ApiControll
     {
         var command = new UploadImageCommand(file);
 
-        var authResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return authResult.Match(
+        return result.Match(
             Ok,
             Problem
         );

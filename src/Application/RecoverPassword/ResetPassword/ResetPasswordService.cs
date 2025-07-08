@@ -2,17 +2,16 @@
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.RecoverPassword.ResetPassword;
 
-public class ResetPasswordCommandHandler(
+public class ResetPasswordService(
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<ResetPasswordCommand, ErrorOr<Unit>>
+    : IResetPasswordService
 {
-    public async Task<ErrorOr<Unit>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(ResetPasswordRequest request)
     {
         var user = await userRepository.GetByTokenRecoverPassword(request.Token);
 
@@ -27,6 +26,6 @@ public class ResetPasswordCommandHandler(
 
         await unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return Result.Success;
     }
 }

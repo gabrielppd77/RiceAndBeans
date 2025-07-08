@@ -17,9 +17,9 @@ public class UsersController(ISender mediator, IMapper mapper) : ApiController
     {
         var query = new GetGeneralDataQuery();
 
-        var authResult = await mediator.Send(query);
+        var result = await mediator.Send(query);
 
-        return authResult.Match(
+        return result.Match(
             x => Ok(mapper.Map<GeneralDataResponse>(x)),
             Problem
         );
@@ -30,9 +30,9 @@ public class UsersController(ISender mediator, IMapper mapper) : ApiController
     {
         var command = mapper.Map<UpdateFormDataCommand>(request);
 
-        var authResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return authResult.Match(
+        return result.Match(
             _ => NoContent(),
             Problem
         );
@@ -43,9 +43,9 @@ public class UsersController(ISender mediator, IMapper mapper) : ApiController
     {
         var command = new RemoveAccountCommand(password);
 
-        var authResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return authResult.Match(
+        return result.Match(
             _ => NoContent(),
             Problem
         );
@@ -56,9 +56,9 @@ public class UsersController(ISender mediator, IMapper mapper) : ApiController
     {
         var command = new UploadImageCommand(file);
 
-        var authResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return authResult.Match(
+        return result.Match(
             Ok,
             Problem
         );

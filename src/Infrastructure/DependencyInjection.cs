@@ -12,6 +12,8 @@ using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Project.ApplyMigration;
 using Application.Common.Interfaces.Time;
+using Application.RecoverPassword.RecoverPassword;
+using Application.RecoverPassword.ResetPassword;
 using Domain.Common.Repositories;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
@@ -74,6 +76,9 @@ public static class DependencyInjection
         services.AddScoped<IRegisterService, RegisterService>();
         services.AddScoped<ILoginService, LoginService>();
         services.AddScoped<IConfirmEmailService, ConfirmEmailService>();
+
+        services.AddScoped<IRecoverPasswordService, RecoverPasswordService>();
+        services.AddScoped<IResetPasswordService, ResetPasswordService>();
 
         services.AddScoped<IListAllCategoriesService, ListAllCategoriesService>();
         services.AddScoped<ICreateCategoryService, CreateCategoryService>();

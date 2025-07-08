@@ -3,25 +3,24 @@ using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.Frontend;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.RecoverPassword.RecoverPassword;
 
-public class RecoverPasswordCommandHandler(
+public class RecoverPasswordService(
     IEmailService emailService,
     IUserRepository userRepository,
     IUnitOfWork unitOfWork,
     IFrontendSettingsWrapper frontendSettingsWrapper,
     IPasswordRecoveryEmailTemplate passwordRecoveryEmailTemplate)
-    : IRequestHandler<RecoverPasswordCommand, ErrorOr<Unit>>
+    : IRecoverPasswordService
 {
-    public async Task<ErrorOr<Unit>> Handle(RecoverPasswordCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(RecoverPasswordRequest request)
     {
         var user = await userRepository.GetByEmail(request.Email);
 
         if (user is null)
         {
-            return Unit.Value;
+            return Result.Success;
         }
 
         user.StartRecoverPassword();
@@ -34,6 +33,6 @@ public class RecoverPasswordCommandHandler(
 
         await unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return Result.Success;
     }
 }

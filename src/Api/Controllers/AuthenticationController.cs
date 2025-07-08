@@ -37,9 +37,9 @@ public class AuthenticationController : ApiController
     [HttpPost("confirm-email")]
     public async Task<IActionResult> ConfirmEmail(IConfirmEmailService service, Guid token)
     {
-        var authResult = await service.Handle(new ConfirmEmailRequest(token));
+        var result = await service.Handle(new ConfirmEmailRequest(token));
 
-        return authResult.Match(
+        return result.Match(
             _ => NoContent(),
             Problem
         );

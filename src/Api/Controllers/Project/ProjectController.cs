@@ -33,9 +33,9 @@ public class ProjectController(ISender mediator) : ApiController
     {
         var command = new ApplyMigrationCommand(authorization);
 
-        var authResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return authResult.Match(
+        return result.Match(
             _ => NoContent(),
             Problem
         );
