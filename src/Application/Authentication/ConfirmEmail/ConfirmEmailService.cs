@@ -1,16 +1,15 @@
 ﻿using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Authentication.ConfirmEmail;
 
-public class ConfirmEmailCommandHandler(
+public class ConfirmEmailService(
     IUserRepository userRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<ConfirmEmailCommand, ErrorOr<Unit>>
+    : IConfirmEmailService
 {
-    public async Task<ErrorOr<Unit>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(ConfirmEmailRequest request)
     {
         var user = await userRepository.GetByTokenEmailConfirmation(request.Token);
 
@@ -21,6 +20,6 @@ public class ConfirmEmailCommandHandler(
 
         await unitOfWork.SaveChangesAsync();
 
-        return Unit.Value;
+        return Result.Success;
     }
 }

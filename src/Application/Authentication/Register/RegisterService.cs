@@ -8,11 +8,10 @@ using Domain.Common.Repositories;
 using Domain.Companies;
 using Domain.Users;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Authentication.Register;
 
-public class RegisterCommandHandler(
+public class RegisterService(
     IJwtTokenGenerator jwtTokenGenerator,
     IPasswordHasher passwordHasher,
     IUnitOfWork unitOfWork,
@@ -20,11 +19,9 @@ public class RegisterCommandHandler(
     IEmailService emailService,
     IFrontendSettingsWrapper frontendSettingsWrapper,
     IConfirmPasswordEmailTemplate confirmPasswordEmailTemplate)
-    :
-        IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
+    : IRegisterService
 {
-    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request,
-        CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationResponse>> Handle(RegisterRequest request)
     {
         if (await userRepository.GetByEmailUntracked(request.Email) is not null)
         {
@@ -54,6 +51,6 @@ public class RegisterCommandHandler(
 
         var token = jwtTokenGenerator.GenerateToken(user);
 
-        return new AuthenticationResult(user, token);
+        return new AuthenticationResponse(user.Id, user.Name, user.Email, token);
     }
 }

@@ -3,18 +3,17 @@ using Application.Common.Interfaces.Authentication;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
-using MediatR;
 
 namespace Application.Authentication.Login;
 
-public class LoginQueryHandler(
+public class LoginService(
     IJwtTokenGenerator jwtTokenGenerator,
     IPasswordHasher passwordHasher,
     IUserRepository userRepository)
     :
-        IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
+        ILoginService
 {
-    public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationResponse>> Handle(LoginRequest request)
     {
         var user = await userRepository.GetByEmailUntracked(request.Email);
 
@@ -35,6 +34,6 @@ public class LoginQueryHandler(
 
         var token = jwtTokenGenerator.GenerateToken(user);
 
-        return new AuthenticationResult(user, token);
+        return new AuthenticationResponse(user.Id, user.Name, user.Email, token);
     }
 }
