@@ -7,7 +7,6 @@ using Application.Common.Interfaces.FileManager;
 using Application.Common.Interfaces.Frontend;
 using Application.Common.Interfaces.Project.ApplyMigration;
 using Application.Common.Interfaces.Time;
-using Application.Project.ApplyMigration;
 using Application.RecoverPassword.RecoverPassword;
 using Application.RecoverPassword.ResetPassword;
 using Domain.Common.Repositories;
@@ -71,8 +70,6 @@ public static class DependencyInjection
 
         services.AddScoped<IRecoverPasswordService, RecoverPasswordService>();
         services.AddScoped<IResetPasswordService, ResetPasswordService>();
-
-        services.AddScoped<IApplyMigrationService, ApplyMigrationService>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces.Project.ApplyMigration;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
@@ -9,9 +10,10 @@ namespace Application.Project.ApplyMigration;
 public class ApplyMigrationService(
     IUnitOfWork unitOfWork,
     ILogger<ApplyMigrationService> logger,
-    IApplyMigrationSettingsWrapper applyMigrationSettingsWrapper) : IApplyMigrationService
+    IApplyMigrationSettingsWrapper applyMigrationSettingsWrapper)
+    : IServiceHandler<ApplyMigrationRequest, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(ApplyMigrationRequest request)
+    public async Task<ErrorOr<Success>> Handler(ApplyMigrationRequest request)
     {
         if (applyMigrationSettingsWrapper.MigrationToken != request.Token)
         {

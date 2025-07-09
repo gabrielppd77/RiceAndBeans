@@ -1,4 +1,6 @@
-﻿using Application.Project.ApplyMigration;
+﻿using Application.Common.Services;
+using Application.Project.ApplyMigration;
+using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,10 +30,10 @@ public class ProjectController : ApiController
     }
 
     [HttpPost("apply-migration")]
-    public async Task<IActionResult> ApplyMigration(IApplyMigrationService service,
+    public async Task<IActionResult> ApplyMigration(IServiceHandler<ApplyMigrationRequest, ErrorOr<Success>> service,
         [FromHeader(Name = "Authorization")] string? authorization)
     {
-        var result = await service.Handle(new ApplyMigrationRequest(authorization));
+        var result = await service.Handler(new ApplyMigrationRequest(authorization));
         return result.Match(
             _ => NoContent(),
             Problem
