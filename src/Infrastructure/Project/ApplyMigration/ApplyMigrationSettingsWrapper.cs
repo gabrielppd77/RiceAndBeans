@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces.Project.ApplyMigration;
+﻿using Contracts.Services.Project.ApplyMigration;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Project.ApplyMigration;

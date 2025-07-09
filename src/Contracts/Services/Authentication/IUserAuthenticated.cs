@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Interfaces.Authentication
+﻿namespace Contracts.Services.Authentication
 {
     public interface IUserAuthenticated
     {

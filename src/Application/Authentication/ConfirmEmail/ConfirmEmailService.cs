@@ -1,6 +1,6 @@
 ﻿using Application.Common.Services;
 using Domain.Common.Errors;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using ErrorOr;
 
 namespace Application.Authentication.ConfirmEmail;

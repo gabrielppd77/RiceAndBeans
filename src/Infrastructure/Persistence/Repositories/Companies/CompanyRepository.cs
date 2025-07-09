@@ -1,11 +1,11 @@
-﻿using Application.Common.Interfaces.Database;
-using Domain.Common.Repositories;
+﻿using Contracts.Repositories;
 using Domain.Companies;
+using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Companies;
 
-public class CompanyRepository(IApplicationDbContext context) : ICompanyRepository
+public class CompanyRepository(ApplicationDbContext context) : ICompanyRepository
 {
     public async Task<Company?> GetById(Guid companyId)
     {

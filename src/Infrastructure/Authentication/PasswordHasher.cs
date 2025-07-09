@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces.Authentication;
+﻿using Contracts.Services.Authentication;
 using System.Security.Cryptography;
 
 namespace Infrastructure.Authentication

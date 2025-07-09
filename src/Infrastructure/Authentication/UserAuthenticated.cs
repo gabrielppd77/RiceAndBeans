@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Application.Common.Interfaces.Authentication;
+using Contracts.Services.Authentication;
 using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.Authentication

@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces.FileManager;
+﻿using Contracts.Services.FileManager;
 using Domain.Common.Errors;
 using ErrorOr;
 using Microsoft.Extensions.Options;

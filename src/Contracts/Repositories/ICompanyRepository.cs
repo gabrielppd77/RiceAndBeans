@@ -1,6 +1,6 @@
 ﻿using Domain.Companies;
 
-namespace Domain.Common.Repositories;
+namespace Contracts.Repositories;
 
 public interface ICompanyRepository
 {

@@ -1,4 +1,4 @@
-﻿namespace Domain.Common.Repositories;
+﻿namespace Contracts.Repositories;
 
 public interface IUnitOfWork
 {

@@ -1,24 +1,17 @@
-﻿using Application.Common.Interfaces.Database;
-using Domain.Common.Repositories;
+﻿using Contracts.Repositories;
+using Infrastructure.Database;
 
 namespace Infrastructure.Persistence;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 {
-    private readonly IApplicationDbContext _context;
-
-    public UnitOfWork(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task SaveChangesAsync()
     {
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task MigrateAsync()
     {
-        await _context.MigrateAsync();
+        await context.MigrateAsync();
     }
 }

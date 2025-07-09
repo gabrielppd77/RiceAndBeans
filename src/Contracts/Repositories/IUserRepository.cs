@@ -1,6 +1,6 @@
 ﻿using Domain.Users;
 
-namespace Domain.Common.Repositories;
+namespace Contracts.Repositories;
 
 public interface IUserRepository
 {

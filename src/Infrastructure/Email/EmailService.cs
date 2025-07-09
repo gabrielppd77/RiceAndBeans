@@ -1,10 +1,8 @@
 ﻿using System.Net.Mail;
 using System.Net;
 using System.Runtime;
-
 using Microsoft.Extensions.Options;
-
-using Application.Common.Interfaces.Email;
+using Contracts.Services.Email;
 
 namespace Infrastructure.Email;
 

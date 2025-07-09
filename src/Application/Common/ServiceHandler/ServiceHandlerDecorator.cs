@@ -1,9 +1,8 @@
-﻿using Application.Common.Services;
-using ErrorOr;
+﻿using ErrorOr;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Common.Decorators;
+namespace Application.Common.Services;
 
 public class ServiceHandlerDecorator<TRequest, TResponse> : IServiceHandler<TRequest, TResponse>
 {

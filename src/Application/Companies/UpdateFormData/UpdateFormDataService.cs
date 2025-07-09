@@ -1,7 +1,7 @@
-﻿using Application.Common.Interfaces.Authentication;
+﻿using Contracts.Services.Authentication;
 using Application.Common.Services;
 using Domain.Common.Errors;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using ErrorOr;
 
 namespace Application.Companies.UpdateFormData;

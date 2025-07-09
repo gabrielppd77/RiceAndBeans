@@ -1,8 +1,8 @@
-﻿using Application.Common.Interfaces.Email;
-using Application.Common.Interfaces.Email.Templates;
-using Application.Common.Interfaces.Frontend;
+﻿using Contracts.Services.Email;
+using Contracts.Services.Email.Templates;
+using Contracts.Services.Frontend;
 using Application.Common.Services;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using ErrorOr;
 
 namespace Application.RecoverPassword.RecoverPassword;

@@ -1,5 +1,4 @@
-﻿using Application.Common.Interfaces.Database;
-using Domain.Categories;
+﻿using Domain.Categories;
 using Domain.Companies;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Database;
 
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : DbContext(options), IApplicationDbContext
+    : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
 

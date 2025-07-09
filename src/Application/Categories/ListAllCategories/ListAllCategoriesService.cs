@@ -1,6 +1,6 @@
-﻿using Application.Common.Interfaces.Authentication;
+﻿using Contracts.Services.Authentication;
 using Application.Common.Services;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 
 namespace Application.Categories.ListAllCategories;
 

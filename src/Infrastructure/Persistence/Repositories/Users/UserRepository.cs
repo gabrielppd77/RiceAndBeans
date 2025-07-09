@@ -1,11 +1,11 @@
-using Application.Common.Interfaces.Database;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using Domain.Users;
+using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Users;
 
-public class UserRepository(IApplicationDbContext context) : IUserRepository
+public class UserRepository(ApplicationDbContext context) : IUserRepository
 {
     public async Task Add(User user)
     {

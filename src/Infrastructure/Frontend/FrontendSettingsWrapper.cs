@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-
-using Application.Common.Interfaces.Frontend;
+using Contracts.Services.Frontend;
 
 namespace Infrastructure.Frontend;
 

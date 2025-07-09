@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Interfaces.Frontend;
+﻿namespace Contracts.Services.Frontend;
 
 public interface IFrontendSettingsWrapper
 {

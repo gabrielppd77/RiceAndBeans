@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces.Email.Templates;
+﻿using Contracts.Services.Email.Templates;
 
 namespace Infrastructure.Email.Templates;
 

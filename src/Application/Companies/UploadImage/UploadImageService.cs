@@ -1,8 +1,8 @@
-﻿using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.FileManager;
+﻿using Contracts.Services.Authentication;
+using Contracts.Services.FileManager;
 using Application.Common.Services;
 using Domain.Common.Errors;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using ErrorOr;
 
 namespace Application.Companies.UploadImage;

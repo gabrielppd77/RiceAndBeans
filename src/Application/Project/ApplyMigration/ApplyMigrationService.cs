@@ -1,7 +1,7 @@
-﻿using Application.Common.Interfaces.Project.ApplyMigration;
+﻿using Contracts.Services.Project.ApplyMigration;
 using Application.Common.Services;
 using Domain.Common.Errors;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using ErrorOr;
 using Microsoft.Extensions.Logging;
 

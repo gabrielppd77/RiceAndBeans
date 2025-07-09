@@ -1,11 +1,11 @@
 using Application.Authentication.Common;
-using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.Email;
-using Application.Common.Interfaces.Email.Templates;
-using Application.Common.Interfaces.Frontend;
+using Contracts.Services.Authentication;
+using Contracts.Services.Email;
+using Contracts.Services.Email.Templates;
+using Contracts.Services.Frontend;
 using Application.Common.Services;
 using Domain.Common.Errors;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
 using Domain.Companies;
 using Domain.Users;
 using ErrorOr;

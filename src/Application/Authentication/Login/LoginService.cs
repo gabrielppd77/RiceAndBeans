@@ -1,8 +1,8 @@
 using Application.Authentication.Common;
-using Application.Common.Interfaces.Authentication;
 using Application.Common.Services;
+using Contracts.Repositories;
+using Contracts.Services.Authentication;
 using Domain.Common.Errors;
-using Domain.Common.Repositories;
 using ErrorOr;
 
 namespace Application.Authentication.Login;

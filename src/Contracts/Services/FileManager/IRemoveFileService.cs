@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 
-namespace Application.Common.Interfaces.FileManager;
+namespace Contracts.Services.FileManager;
 
 public interface IRemoveFileService
 {

@@ -1,11 +1,11 @@
-﻿using Application.Common.Interfaces.Database;
+﻿using Contracts.Repositories;
 using Domain.Categories;
-using Domain.Common.Repositories;
+using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Categories;
 
-public class CategoryRepository(IApplicationDbContext context) : ICategoryRepository
+public class CategoryRepository(ApplicationDbContext context) : ICategoryRepository
 {
     public async Task Add(Category category)
     {

@@ -1,13 +1,12 @@
 using System.Text;
-using Application.Common.Interfaces.Authentication;
-using Application.Common.Interfaces.Database;
-using Application.Common.Interfaces.Email;
-using Application.Common.Interfaces.Email.Templates;
-using Application.Common.Interfaces.FileManager;
-using Application.Common.Interfaces.Frontend;
-using Application.Common.Interfaces.Project.ApplyMigration;
-using Application.Common.Interfaces.Time;
-using Domain.Common.Repositories;
+using Contracts.Repositories;
+using Contracts.Services.Authentication;
+using Contracts.Services.Email;
+using Contracts.Services.Email.Templates;
+using Contracts.Services.FileManager;
+using Contracts.Services.Frontend;
+using Contracts.Services.Project.ApplyMigration;
+using Contracts.Services.Time;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Email;
@@ -130,6 +129,7 @@ public static class DependencyInjection
                         };
                         context.Response.StatusCode = problemDetails.Status.Value;
                         context.Response.ContentType = "application/json";
+                        //TODO:fix it
                         context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
                         await context.Response.WriteAsJsonAsync(problemDetails);
@@ -166,7 +166,7 @@ public static class DependencyInjection
                         npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default))
                 .UseSnakeCaseNamingConvention());
 
-        services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        //services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
     }
 
     private static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)

@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Interfaces.Email.Templates;
+﻿namespace Contracts.Services.Email.Templates;
 
 public interface IPasswordRecoveryEmailTemplate
 {

@@ -1,6 +1,6 @@
 ﻿using Domain.Categories;
 
-namespace Domain.Common.Repositories;
+namespace Contracts.Repositories;
 
 public interface ICategoryRepository
 {
