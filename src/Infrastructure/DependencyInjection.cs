@@ -131,8 +131,7 @@ public static class DependencyInjection
                         };
                         context.Response.StatusCode = problemDetails.Status.Value;
                         context.Response.ContentType = "application/json";
-                        //TODO:fix it
-                        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
 
                         await context.Response.WriteAsJsonAsync(problemDetails);
                     },
@@ -167,8 +166,6 @@ public static class DependencyInjection
                     npgsqlOptions =>
                         npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default))
                 .UseSnakeCaseNamingConvention());
-
-        //services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
     }
 
     private static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)

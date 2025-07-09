@@ -1,9 +1,8 @@
 ﻿using Domain.Companies;
-using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Configurations.Companies;
+namespace Infrastructure.Database.Configurations;
 
 internal sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
 {
