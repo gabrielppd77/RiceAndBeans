@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces.Email;
 using Application.Common.Interfaces.Email.Templates;
 using Application.Common.Interfaces.Frontend;
+using Application.Common.Services;
 using Domain.Common.Repositories;
 using ErrorOr;
 
@@ -12,9 +13,9 @@ public class RecoverPasswordService(
     IUnitOfWork unitOfWork,
     IFrontendSettingsWrapper frontendSettingsWrapper,
     IPasswordRecoveryEmailTemplate passwordRecoveryEmailTemplate)
-    : IRecoverPasswordService
+    : IServiceHandler<RecoverPasswordRequest, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(RecoverPasswordRequest request)
+    public async Task<ErrorOr<Success>> Handler(RecoverPasswordRequest request)
     {
         var user = await userRepository.GetByEmail(request.Email);
 

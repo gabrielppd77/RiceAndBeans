@@ -1,5 +1,7 @@
-﻿using Application.RecoverPassword.RecoverPassword;
+﻿using Application.Common.Services;
+using Application.RecoverPassword.RecoverPassword;
 using Application.RecoverPassword.ResetPassword;
+using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +12,10 @@ public class RecoverPasswordController : ApiController
 {
     [AllowAnonymous]
     [HttpPost("recover")]
-    public async Task<IActionResult> RecoverPassword(IRecoverPasswordService service, string email)
+    public async Task<IActionResult> RecoverPassword(IServiceHandler<RecoverPasswordRequest, ErrorOr<Success>> service,
+        string email)
     {
-        var result = await service.Handle(new RecoverPasswordRequest(email));
+        var result = await service.Handler(new RecoverPasswordRequest(email));
         return result.Match(
             _ => NoContent(),
             Problem
@@ -21,9 +24,10 @@ public class RecoverPasswordController : ApiController
 
     [AllowAnonymous]
     [HttpPost("reset")]
-    public async Task<IActionResult> ResetPassword(IResetPasswordService service, ResetPasswordRequest request)
+    public async Task<IActionResult> ResetPassword(IServiceHandler<ResetPasswordRequest, ErrorOr<Success>> service,
+        ResetPasswordRequest request)
     {
-        var result = await service.Handle(request);
+        var result = await service.Handler(request);
         return result.Match(
             _ => NoContent(),
             Problem

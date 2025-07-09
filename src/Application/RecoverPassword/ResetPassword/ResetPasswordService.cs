@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
@@ -9,9 +10,9 @@ public class ResetPasswordService(
     IUserRepository userRepository,
     IPasswordHasher passwordHasher,
     IUnitOfWork unitOfWork)
-    : IResetPasswordService
+    : IServiceHandler<ResetPasswordRequest, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(ResetPasswordRequest request)
+    public async Task<ErrorOr<Success>> Handler(ResetPasswordRequest request)
     {
         var user = await userRepository.GetByTokenRecoverPassword(request.Token);
 
