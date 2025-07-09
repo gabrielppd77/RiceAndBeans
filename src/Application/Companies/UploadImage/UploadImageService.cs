@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.FileManager;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
@@ -12,11 +13,11 @@ public class UploadImageService(
     IUserAuthenticated userAuthenticated,
     ICompanyRepository companyRepository,
     IUnitOfWork unitOfWork)
-    : IUploadImageService
+    : IServiceHandler<UploadImageRequest, ErrorOr<string>>
 {
     private const string FolderPathImage = "company";
 
-    public async Task<ErrorOr<string>> Handle(UploadImageRequest request)
+    public async Task<ErrorOr<string>> Handler(UploadImageRequest request)
     {
         var companyId = userAuthenticated.GetCompanyId();
 

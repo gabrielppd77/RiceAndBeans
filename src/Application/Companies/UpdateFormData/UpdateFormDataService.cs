@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
@@ -9,9 +10,9 @@ public class UpdateFormDataService(
     IUserAuthenticated userAuthenticated,
     IUnitOfWork unitOfWork,
     ICompanyRepository companyRepository)
-    : IUpdateFormDataService
+    : IServiceHandler<UpdateFormDataRequest, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(UpdateFormDataRequest request)
+    public async Task<ErrorOr<Success>> Handler(UpdateFormDataRequest request)
     {
         var companyId = userAuthenticated.GetCompanyId();
 

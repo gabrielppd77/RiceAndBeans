@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces.Authentication;
+using Application.Common.Services;
 using Domain.Common.Errors;
 using Domain.Common.Repositories;
 using ErrorOr;
@@ -8,9 +9,9 @@ namespace Application.Companies.GetFormData;
 public class GetFormDataService(
     ICompanyRepository companyRepository,
     IUserAuthenticated userAuthenticated)
-    : IGetFormDataService
+    : IServiceHandler<Unit, ErrorOr<FormDataResponse>>
 {
-    public async Task<ErrorOr<FormDataResponse>> Handle()
+    public async Task<ErrorOr<FormDataResponse>> Handler(Unit _)
     {
         var companyId = userAuthenticated.GetCompanyId();
 

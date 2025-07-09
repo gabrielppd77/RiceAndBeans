@@ -1,6 +1,8 @@
-﻿using Application.Companies.GetFormData;
+﻿using Application.Common.Services;
+using Application.Companies.GetFormData;
 using Application.Companies.UpdateFormData;
 using Application.Companies.UploadImage;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -9,9 +11,9 @@ namespace Api.Controllers;
 public class CompaniesController : ApiController
 {
     [HttpGet("get-form-data")]
-    public async Task<IActionResult> GetFormData(IGetFormDataService service)
+    public async Task<IActionResult> GetFormData(IServiceHandler<Unit, ErrorOr<FormDataResponse>> service)
     {
-        var result = await service.Handle();
+        var result = await service.Handler(Unit.Value);
         return result.Match(
             Ok,
             Problem
@@ -19,9 +21,10 @@ public class CompaniesController : ApiController
     }
 
     [HttpPut("update-form-data")]
-    public async Task<IActionResult> UpdateFormData(IUpdateFormDataService service, UpdateFormDataRequest request)
+    public async Task<IActionResult> UpdateFormData(IServiceHandler<UpdateFormDataRequest, ErrorOr<Success>> service,
+        UpdateFormDataRequest request)
     {
-        var result = await service.Handle(request);
+        var result = await service.Handler(request);
         return result.Match(
             _ => NoContent(),
             Problem
@@ -29,9 +32,10 @@ public class CompaniesController : ApiController
     }
 
     [HttpPatch("upload-image")]
-    public async Task<IActionResult> UploadImage(IUploadImageService service, IFormFile file)
+    public async Task<IActionResult> UploadImage(IServiceHandler<UploadImageRequest, ErrorOr<string>> service,
+        IFormFile file)
     {
-        var result = await service.Handle(new UploadImageRequest(file));
+        var result = await service.Handler(new UploadImageRequest(file));
         return result.Match(
             Ok,
             Problem
