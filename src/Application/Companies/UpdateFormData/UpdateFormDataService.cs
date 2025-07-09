@@ -2,6 +2,7 @@
 using Application.Common.Services;
 using Domain.Common.Errors;
 using Contracts.Repositories;
+using Contracts.Works;
 using ErrorOr;
 
 namespace Application.Companies.UpdateFormData;

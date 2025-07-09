@@ -7,6 +7,7 @@ using Contracts.Services.FileManager;
 using Contracts.Services.Frontend;
 using Contracts.Services.Project.ApplyMigration;
 using Contracts.Services.Time;
+using Contracts.Works;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Email;
@@ -66,6 +67,7 @@ public static class DependencyInjection
         services.AddScoped<IPasswordRecoveryEmailTemplate, PasswordRecoveryEmailTemplate>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IMigrateWork, MigrateWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();

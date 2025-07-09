@@ -1,4 +1,5 @@
-﻿using Application.Common.Services;
+﻿using Api.Controllers.Common;
+using Application.Common.Services;
 using Application.Companies.GetFormData;
 using Application.Companies.UpdateFormData;
 using Application.Companies.UploadImage;

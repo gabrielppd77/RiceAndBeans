@@ -1,3 +1,4 @@
+using Api.Controllers.Common;
 using Application.Authentication.Common;
 using Application.Authentication.ConfirmEmail;
 using Application.Authentication.Login;

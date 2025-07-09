@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Api.Common.Http;
 
-namespace Api.Controllers;
+namespace Api.Controllers.Common;
 
 [ApiController]
 public class ApiController : ControllerBase

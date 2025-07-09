@@ -3,6 +3,7 @@ using Contracts.Services.Email.Templates;
 using Contracts.Services.Frontend;
 using Application.Common.Services;
 using Contracts.Repositories;
+using Contracts.Works;
 using ErrorOr;
 
 namespace Application.RecoverPassword.RecoverPassword;

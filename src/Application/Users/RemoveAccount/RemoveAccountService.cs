@@ -2,6 +2,7 @@ using Contracts.Services.Authentication;
 using Application.Common.Services;
 using Domain.Common.Errors;
 using Contracts.Repositories;
+using Contracts.Works;
 using ErrorOr;
 
 namespace Application.Users.RemoveAccount;

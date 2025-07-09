@@ -1,14 +1,14 @@
-﻿using Contracts.Services.Project.ApplyMigration;
-using Application.Common.Services;
+﻿using Application.Common.Services;
+using Contracts.Services.Project.ApplyMigration;
+using Contracts.Works;
 using Domain.Common.Errors;
-using Contracts.Repositories;
 using ErrorOr;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Project.ApplyMigration;
 
 public class ApplyMigrationService(
-    IUnitOfWork unitOfWork,
+    IMigrateWork migrateWork,
     ILogger<ApplyMigrationService> logger,
     IApplyMigrationSettingsWrapper applyMigrationSettingsWrapper)
     : IServiceHandler<ApplyMigrationRequest, ErrorOr<Success>>
@@ -20,7 +20,7 @@ public class ApplyMigrationService(
             return Errors.Project.InvalidCredentials;
         }
 
-        await unitOfWork.MigrateAsync();
+        await migrateWork.MigrateAsync();
 
         logger.LogInformation("Migrations successfully applied.");
 

@@ -6,6 +6,7 @@ using Contracts.Services.Frontend;
 using Application.Common.Services;
 using Domain.Common.Errors;
 using Contracts.Repositories;
+using Contracts.Works;
 using Domain.Companies;
 using Domain.Users;
 using ErrorOr;

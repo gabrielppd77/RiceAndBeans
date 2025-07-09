@@ -1,4 +1,5 @@
-﻿using Application.Common.Services;
+﻿using Api.Controllers.Common;
+using Application.Common.Services;
 using Application.RecoverPassword.RecoverPassword;
 using Application.RecoverPassword.ResetPassword;
 using ErrorOr;
