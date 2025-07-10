@@ -19,7 +19,7 @@ public class RegisterService(
     IUnitOfWork unitOfWork,
     IUserRepository userRepository,
     IEmailService emailService,
-    IFrontendSettingsWrapper frontendSettingsWrapper,
+    IFrontendSettings frontendSettings,
     IConfirmPasswordEmailTemplate confirmPasswordEmailTemplate)
     : IServiceHandler<RegisterRequest, ErrorOr<AuthenticationResponse>>
 {
@@ -45,7 +45,7 @@ public class RegisterService(
 
         await unitOfWork.SaveChangesAsync();
 
-        var link = $"{frontendSettingsWrapper.ConfirmEmailUrl}?token={user.TokenEmailConfirmation}";
+        var link = $"{frontendSettings.ConfirmEmailUrl}?token={user.TokenEmailConfirmation}";
 
         var body = confirmPasswordEmailTemplate.Generate(user.Name, link);
 

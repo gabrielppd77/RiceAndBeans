@@ -10,12 +10,12 @@ namespace Application.Project.ApplyMigration;
 public class ApplyMigrationService(
     IMigrateWork migrateWork,
     ILogger<ApplyMigrationService> logger,
-    IApplyMigrationSettingsWrapper applyMigrationSettingsWrapper)
+    IApplyMigrationSettings applyMigrationSettings)
     : IServiceHandler<ApplyMigrationRequest, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handler(ApplyMigrationRequest request)
     {
-        if (applyMigrationSettingsWrapper.MigrationToken != request.Token)
+        if (applyMigrationSettings.MigrationToken != request.Token)
         {
             return Errors.Project.InvalidCredentials;
         }
