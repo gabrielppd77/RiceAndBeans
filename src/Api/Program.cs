@@ -1,7 +1,7 @@
 using Api;
+using Api.Configurations.ApplyMigration;
 using Api.Configurations.Cors;
 using Api.Configurations.Swagger;
-using Api.Extensions;
 using Application;
 using Infrastructure;
 using Serilog;

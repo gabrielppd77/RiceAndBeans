@@ -1,9 +1,9 @@
 ﻿using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Extensions;
+namespace Api.Configurations.ApplyMigration;
 
-public static class MigrationExtensions
+public static class ApplyMigrationConfiguration
 {
     public static WebApplication ApplyMigrations(this WebApplication app)
     {
