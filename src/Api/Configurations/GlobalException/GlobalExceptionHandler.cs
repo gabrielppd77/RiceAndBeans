@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Common.Exception;
+namespace Api.Configurations.GlobalException;
 
 internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
     : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
-        System.Exception exception,
+        Exception exception,
         CancellationToken cancellationToken)
     {
         logger.LogCritical(exception, "Unhandled exception occurred");

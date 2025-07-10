@@ -1,7 +1,7 @@
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Api.Common.Http;
+using Api.Configurations.ApiProblemDetails;
 
 namespace Api.Controllers.Common;
 

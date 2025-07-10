@@ -1,7 +1,9 @@
+using Api.Configurations.ApiProblemDetails;
+using Api.Configurations.Cors;
+using Api.Configurations.GlobalException;
+using Api.Configurations.Serilog;
+using Api.Configurations.Swagger;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Api.Common.Errors;
-using Api.Common.Exception;
-using Api.Extensions;
 
 namespace Api;
 

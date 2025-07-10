@@ -1,4 +1,4 @@
-﻿namespace Api.Extensions.Common.CorsConfiguration;
+﻿namespace Api.Configurations.Cors;
 
 public static class CorsPolicy
 {

@@ -1,4 +1,6 @@
 using Api;
+using Api.Configurations.Cors;
+using Api.Configurations.Swagger;
 using Api.Extensions;
 using Application;
 using Infrastructure;

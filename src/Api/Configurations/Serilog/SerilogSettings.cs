@@ -1,4 +1,4 @@
-﻿namespace Api.Extensions.Common.SerilogConfiguration;
+﻿namespace Api.Configurations.Serilog;
 
 public class SerilogSettings
 {

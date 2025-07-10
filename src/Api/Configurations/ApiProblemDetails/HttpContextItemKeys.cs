@@ -1,4 +1,4 @@
-namespace Api.Common.Http;
+namespace Api.Configurations.ApiProblemDetails;
 
 public static class HttpContextItemKeys
 {
