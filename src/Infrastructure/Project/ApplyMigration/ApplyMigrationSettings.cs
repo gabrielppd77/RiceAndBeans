@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.Project.ApplyMigration;
+﻿using Contracts.Services.Project.ApplyMigration;
 
-public class ApplyMigrationSettings
+namespace Infrastructure.Project.ApplyMigration;
+
+public class ApplyMigrationSettings : IApplyMigrationSettings
 {
     public const string SectionName = "ApplyMigrationSettings";
 

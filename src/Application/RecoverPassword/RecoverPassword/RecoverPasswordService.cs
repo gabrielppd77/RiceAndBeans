@@ -12,7 +12,7 @@ public class RecoverPasswordService(
     IEmailService emailService,
     IUserRepository userRepository,
     IUnitOfWork unitOfWork,
-    IFrontendSettingsWrapper frontendSettingsWrapper,
+    IFrontendSettings frontendSettings,
     IPasswordRecoveryEmailTemplate passwordRecoveryEmailTemplate)
     : IServiceHandler<RecoverPasswordRequest, ErrorOr<Success>>
 {
@@ -27,7 +27,7 @@ public class RecoverPasswordService(
 
         user.StartRecoverPassword();
 
-        var link = $"{frontendSettingsWrapper.PasswordRecoveryUrl}?token={user.TokenRecoverPassword}";
+        var link = $"{frontendSettings.PasswordRecoveryUrl}?token={user.TokenRecoverPassword}";
 
         var body = passwordRecoveryEmailTemplate.Generate(link);
 

@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.Frontend;
+﻿using Contracts.Services.Frontend;
 
-public class FrontendSettings
+namespace Infrastructure.Frontend;
+
+public class FrontendSettings : IFrontendSettings
 {
     public const string SectionName = "FrontendSettings";
 

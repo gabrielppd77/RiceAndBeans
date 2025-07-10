@@ -2,17 +2,16 @@
 using Contracts.Services.FileManager;
 using Domain.Common.Errors;
 using ErrorOr;
-using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel.Args;
 
 namespace Infrastructure.FileManager;
 
-public class UploadFileService(IMinioClient minioClient, IOptions<FileManagerSettings> fileManagerSettingsOptions)
+public class UploadFileService(IMinioClient minioClient, FileManagerSettings fileManagerSettings)
     : IUploadFileService
 {
-    private readonly string _mainBucket = fileManagerSettingsOptions.Value.MainBucket;
-    private readonly string _baseUrl = fileManagerSettingsOptions.Value.BaseUrl;
+    private readonly string _mainBucket = fileManagerSettings.MainBucket;
+    private readonly string _baseUrl = fileManagerSettings.BaseUrl;
 
     public async Task<ErrorOr<string>> UploadFileAsync(Stream fileStream, string fileName)
     {

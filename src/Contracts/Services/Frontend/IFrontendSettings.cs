@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Services.Frontend;
 
-public interface IFrontendSettingsWrapper
+public interface IFrontendSettings
 {
     public string ConfirmEmailUrl { get; }
     public string PasswordRecoveryUrl { get; }

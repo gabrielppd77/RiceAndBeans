@@ -1,16 +1,15 @@
 ﻿using Contracts.Services.FileManager;
 using Domain.Common.Errors;
 using ErrorOr;
-using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel.Args;
 
 namespace Infrastructure.FileManager;
 
-public class RemoveFileService(IMinioClient minioClient, IOptions<FileManagerSettings> fileManagerSettingsOptions)
+public class RemoveFileService(IMinioClient minioClient, FileManagerSettings fileManagerSettings)
     : IRemoveFileService
 {
-    private readonly string _mainBucket = fileManagerSettingsOptions.Value.MainBucket;
+    private readonly string _mainBucket = fileManagerSettings.MainBucket;
 
     public async Task<ErrorOr<Success>> RemoveFileAsync(string fileName)
     {
