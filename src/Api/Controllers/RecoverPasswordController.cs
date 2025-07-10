@@ -1,5 +1,5 @@
 ﻿using Api.Controllers.Common;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using Application.RecoverPassword.RecoverPassword;
 using Application.RecoverPassword.ResetPassword;
 using ErrorOr;
@@ -13,7 +13,8 @@ public class RecoverPasswordController : ApiController
 {
     [AllowAnonymous]
     [HttpPost("recover")]
-    public async Task<IActionResult> RecoverPassword(IServiceHandler<RecoverPasswordRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> RecoverPassword(
+        IServiceHandler<RecoverPasswordRequest, ErrorOr<Success>> service,
         string email)
     {
         var result = await service.Handler(new RecoverPasswordRequest(email));
@@ -25,7 +26,8 @@ public class RecoverPasswordController : ApiController
 
     [AllowAnonymous]
     [HttpPost("reset")]
-    public async Task<IActionResult> ResetPassword(IServiceHandler<ResetPasswordRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> ResetPassword(
+        IServiceHandler<ResetPasswordRequest, ErrorOr<Success>> service,
         ResetPasswordRequest request)
     {
         var result = await service.Handler(request);

@@ -1,9 +1,9 @@
 using Application.Authentication.Common;
+using Application.Common.ServiceHandler;
 using Contracts.Services.Authentication;
 using Contracts.Services.Email;
 using Contracts.Services.Email.Templates;
 using Contracts.Services.Frontend;
-using Application.Common.Services;
 using Domain.Common.Errors;
 using Contracts.Repositories;
 using Contracts.Works;

@@ -1,5 +1,5 @@
 using Application.Authentication.Common;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using Contracts.Repositories;
 using Contracts.Services.Authentication;
 using Domain.Common.Errors;

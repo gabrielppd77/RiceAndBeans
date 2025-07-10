@@ -1,5 +1,5 @@
 ﻿using Api.Controllers.Common;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using Application.Companies.GetFormData;
 using Application.Companies.UpdateFormData;
 using Application.Companies.UploadImage;
@@ -22,7 +22,8 @@ public class CompaniesController : ApiController
     }
 
     [HttpPut("update-form-data")]
-    public async Task<IActionResult> UpdateFormData(IServiceHandler<UpdateFormDataRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> UpdateFormData(
+        IServiceHandler<UpdateFormDataRequest, ErrorOr<Success>> service,
         UpdateFormDataRequest request)
     {
         var result = await service.Handler(request);
@@ -33,7 +34,8 @@ public class CompaniesController : ApiController
     }
 
     [HttpPatch("upload-image")]
-    public async Task<IActionResult> UploadImage(IServiceHandler<UploadImageRequest, ErrorOr<string>> service,
+    public async Task<IActionResult> UploadImage(
+        IServiceHandler<UploadImageRequest, ErrorOr<string>> service,
         IFormFile file)
     {
         var result = await service.Handler(new UploadImageRequest(file));

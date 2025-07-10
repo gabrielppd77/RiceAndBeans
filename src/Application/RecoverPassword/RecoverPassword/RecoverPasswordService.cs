@@ -1,7 +1,7 @@
-﻿using Contracts.Services.Email;
+﻿using Application.Common.ServiceHandler;
+using Contracts.Services.Email;
 using Contracts.Services.Email.Templates;
 using Contracts.Services.Frontend;
-using Application.Common.Services;
 using Contracts.Repositories;
 using Contracts.Works;
 using ErrorOr;

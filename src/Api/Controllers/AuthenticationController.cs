@@ -3,7 +3,7 @@ using Application.Authentication.Common;
 using Application.Authentication.ConfirmEmail;
 using Application.Authentication.Login;
 using Application.Authentication.Register;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +15,8 @@ public class AuthenticationController : ApiController
 {
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<IActionResult> Register(IServiceHandler<RegisterRequest, ErrorOr<AuthenticationResponse>> service,
+    public async Task<IActionResult> Register(
+        IServiceHandler<RegisterRequest, ErrorOr<AuthenticationResponse>> service,
         RegisterRequest request)
     {
         var result = await service.Handler(request);
@@ -27,7 +28,8 @@ public class AuthenticationController : ApiController
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<IActionResult> Login(IServiceHandler<LoginRequest, ErrorOr<AuthenticationResponse>> service,
+    public async Task<IActionResult> Login(
+        IServiceHandler<LoginRequest, ErrorOr<AuthenticationResponse>> service,
         LoginRequest request)
     {
         var result = await service.Handler(request);
@@ -39,7 +41,8 @@ public class AuthenticationController : ApiController
 
     [AllowAnonymous]
     [HttpPost("confirm-email")]
-    public async Task<IActionResult> ConfirmEmail(IServiceHandler<ConfirmEmailRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> ConfirmEmail(
+        IServiceHandler<ConfirmEmailRequest, ErrorOr<Success>> service,
         Guid token)
     {
         var result = await service.Handler(new ConfirmEmailRequest(token));

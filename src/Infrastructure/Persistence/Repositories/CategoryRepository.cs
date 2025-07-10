@@ -3,7 +3,7 @@ using Domain.Categories;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repositories.Categories;
+namespace Infrastructure.Persistence.Repositories;
 
 public class CategoryRepository(ApplicationDbContext context) : ICategoryRepository
 {

@@ -1,7 +1,5 @@
 ﻿using Contracts.Repositories;
-using Infrastructure.Persistence.Repositories.Categories;
-using Infrastructure.Persistence.Repositories.Companies;
-using Infrastructure.Persistence.Repositories.Users;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Configurations;

@@ -1,5 +1,5 @@
 ﻿using Api.Controllers.Common;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using Application.Project.ApplyMigration;
 using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +31,8 @@ public class ProjectController : ApiController
     }
 
     [HttpPost("apply-migration")]
-    public async Task<IActionResult> ApplyMigration(IServiceHandler<ApplyMigrationRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> ApplyMigration(
+        IServiceHandler<ApplyMigrationRequest, ErrorOr<Success>> service,
         [FromHeader(Name = "Authorization")] string? authorization)
     {
         var result = await service.Handler(new ApplyMigrationRequest(authorization));

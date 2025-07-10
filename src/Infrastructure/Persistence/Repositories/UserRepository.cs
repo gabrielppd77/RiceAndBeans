@@ -3,7 +3,7 @@ using Domain.Users;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repositories.Users;
+namespace Infrastructure.Persistence.Repositories;
 
 public class UserRepository(ApplicationDbContext context) : IUserRepository
 {

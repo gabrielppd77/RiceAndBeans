@@ -1,5 +1,5 @@
 ﻿using Api.Controllers.Common;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using Application.Users.GetGeneralData;
 using Application.Users.RemoveAccount;
 using Application.Users.UpdateFormData;
@@ -23,7 +23,8 @@ public class UsersController : ApiController
     }
 
     [HttpPut("update-form-data")]
-    public async Task<IActionResult> UpdateFormData(IServiceHandler<UpdateFormDataRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> UpdateFormData(
+        IServiceHandler<UpdateFormDataRequest, ErrorOr<Success>> service,
         UpdateFormDataRequest request)
     {
         var result = await service.Handler(request);
@@ -34,7 +35,8 @@ public class UsersController : ApiController
     }
 
     [HttpDelete("remove-account")]
-    public async Task<IActionResult> RemoveAccount(IServiceHandler<RemoveAccountRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> RemoveAccount(
+        IServiceHandler<RemoveAccountRequest, ErrorOr<Success>> service,
         string password)
     {
         var result = await service.Handler(new RemoveAccountRequest(password));
@@ -45,7 +47,8 @@ public class UsersController : ApiController
     }
 
     [HttpPatch("upload-image")]
-    public async Task<IActionResult> UploadImage(IServiceHandler<UploadImageRequest, ErrorOr<string>> service,
+    public async Task<IActionResult> UploadImage(
+        IServiceHandler<UploadImageRequest, ErrorOr<string>> service,
         IFormFile file)
     {
         var result = await service.Handler(new UploadImageRequest(file));

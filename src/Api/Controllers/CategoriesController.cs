@@ -1,7 +1,7 @@
 ﻿using Api.Controllers.Common;
 using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
-using Application.Common.Services;
+using Application.Common.ServiceHandler;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +11,8 @@ namespace Api.Controllers;
 public class CategoriesController : ApiController
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Register(IServiceHandler<CreateCategoryRequest, ErrorOr<Success>> service,
+    public async Task<IActionResult> Register(
+        IServiceHandler<CreateCategoryRequest, ErrorOr<Success>> service,
         CreateCategoryRequest request)
     {
         var result = await service.Handler(request);

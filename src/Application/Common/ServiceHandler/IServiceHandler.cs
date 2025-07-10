@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Services;
+﻿namespace Application.Common.ServiceHandler;
 
 public interface IServiceHandler<TRequest, TResponse>
 {

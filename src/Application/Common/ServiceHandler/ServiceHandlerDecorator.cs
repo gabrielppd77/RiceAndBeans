@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Common.Services;
+namespace Application.Common.ServiceHandler;
 
 public class ServiceHandlerDecorator<TRequest, TResponse> : IServiceHandler<TRequest, TResponse>
 {

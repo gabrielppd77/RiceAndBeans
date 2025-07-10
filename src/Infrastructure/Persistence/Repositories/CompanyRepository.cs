@@ -3,7 +3,7 @@ using Domain.Companies;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repositories.Companies;
+namespace Infrastructure.Persistence.Repositories;
 
 public class CompanyRepository(ApplicationDbContext context) : ICompanyRepository
 {
