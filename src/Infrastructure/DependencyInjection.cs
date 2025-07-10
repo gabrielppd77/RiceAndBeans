@@ -12,7 +12,6 @@ using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Email;
 using Infrastructure.Email.Templates;
-using Infrastructure.Exception;
 using Infrastructure.FileManager;
 using Infrastructure.Frontend;
 using Infrastructure.Persistence;
@@ -39,14 +38,11 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuth(configuration);
-        services.AddHttpContextAccessor();
         services.AddMinio(configuration);
         services.AddDatabase(configuration);
         services.AddHealthChecks(configuration);
         services.AddServices();
         services.AddSettings(configuration);
-        services.AddProblemDetails();
-        services.AddExceptionHandler<GlobalExceptionHandler>();
 
         return services;
     }
@@ -58,7 +54,9 @@ public static class DependencyInjection
 
         services.AddScoped<IUploadFileService, UploadFileService>();
         services.AddScoped<IRemoveFileService, RemoveFileService>();
+
         services.AddScoped<IUserAuthenticated, UserAuthenticated>();
+
         services.AddScoped<IFrontendSettingsWrapper, FrontendSettingsWrapper>();
         services.AddScoped<IApplyMigrationSettingsWrapper, ApplyMigrationSettingsWrapper>();
 
@@ -68,6 +66,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IMigrateWork, MigrateWork>();
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
