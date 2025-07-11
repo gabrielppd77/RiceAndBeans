@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.Common;
+using Application.Categories.ChangeCategoryPosition;
 using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
 using Application.Categories.RemoveCategory;
@@ -47,6 +48,18 @@ public class CategoriesController : ApiController
     public async Task<IActionResult> Remove(
         IServiceHandler<RemoveCategoryRequest, ErrorOr<Success>> service,
         RemoveCategoryRequest request)
+    {
+        var result = await service.Handler(request);
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPatch("change-position")]
+    public async Task<IActionResult> ChangePosition(
+        IServiceHandler<IEnumerable<ChangeCategoryPositionRequest>, ErrorOr<Success>> service,
+        IEnumerable<ChangeCategoryPositionRequest> request)
     {
         var result = await service.Handler(request);
         return result.Match(

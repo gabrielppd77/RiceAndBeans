@@ -1,6 +1,6 @@
 ﻿using Application.Common.ServiceHandler;
-using Contracts.Services.Authentication;
 using Contracts.Repositories;
+using Contracts.Services.Authentication;
 
 namespace Application.Categories.ListAllCategories;
 
@@ -15,6 +15,6 @@ public class ListAllCategoriesService(
 
         var categories = await categoryRepository.GetAllByCompanyIdUntracked(companyId);
 
-        return categories.Select(x => new CategoryResponse(x.Id, x.Name));
+        return categories.Select(x => new CategoryResponse(x.Id, x.Name, x.Position));
     }
 }

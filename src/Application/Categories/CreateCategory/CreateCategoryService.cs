@@ -16,7 +16,11 @@ public class CreateCategoryService(
     {
         var companyId = userAuthenticated.GetCompanyId();
 
-        var category = new Category(companyId, request.Name);
+        var lastPosition = await categoryRepository.GetLastPositionByCompanyIdUntracked(companyId);
+
+        var currentPosition = lastPosition + 1;
+
+        var category = new Category(companyId, request.Name, currentPosition);
 
         await categoryRepository.Add(category);
 
