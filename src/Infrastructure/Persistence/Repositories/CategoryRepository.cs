@@ -19,4 +19,9 @@ public class CategoryRepository(ApplicationDbContext context) : ICategoryReposit
             .Where(x => x.CompanyId == companyId)
             .ToListAsync();
     }
+
+    public async Task<Category?> GetById(Guid categoryId)
+    {
+        return await context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
+    }
 }

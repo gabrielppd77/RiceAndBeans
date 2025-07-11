@@ -19,4 +19,9 @@ public class Category
         CompanyId = companyId;
         Name = name;
     }
+
+    public void UpdateFormFields(string name)
+    {
+        Name = name;
+    }
 }

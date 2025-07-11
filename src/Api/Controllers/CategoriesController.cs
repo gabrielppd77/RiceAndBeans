@@ -1,6 +1,7 @@
 ﻿using Api.Controllers.Common;
 using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
+using Application.Categories.UpdateCategory;
 using Application.Common.ServiceHandler;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,18 @@ public class CategoriesController : ApiController
     public async Task<IActionResult> Register(
         IServiceHandler<CreateCategoryRequest, ErrorOr<Success>> service,
         CreateCategoryRequest request)
+    {
+        var result = await service.Handler(request);
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> Update(
+        IServiceHandler<UpdateCategoryRequest, ErrorOr<Success>> service,
+        UpdateCategoryRequest request)
     {
         var result = await service.Handler(request);
         return result.Match(
