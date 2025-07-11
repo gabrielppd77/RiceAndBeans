@@ -24,4 +24,9 @@ public class CategoryRepository(ApplicationDbContext context) : ICategoryReposit
     {
         return await context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
     }
+
+    public void Remove(Category category)
+    {
+        context.Categories.Remove(category);
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Api.Controllers.Common;
 using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
+using Application.Categories.RemoveCategory;
 using Application.Categories.UpdateCategory;
 using Application.Common.ServiceHandler;
 using ErrorOr;
@@ -40,5 +41,17 @@ public class CategoriesController : ApiController
     {
         var result = await service.Handler(Unit.Value);
         return Ok(result);
+    }
+
+    [HttpDelete("remove")]
+    public async Task<IActionResult> Remove(
+        IServiceHandler<RemoveCategoryRequest, ErrorOr<Success>> service,
+        RemoveCategoryRequest request)
+    {
+        var result = await service.Handler(request);
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
     }
 }
