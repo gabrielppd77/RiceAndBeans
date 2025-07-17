@@ -15,6 +15,6 @@ public class ListAllCategoriesService(
 
         var categories = await categoryRepository.GetAllByCompanyIdUntracked(companyId);
 
-        return categories.Select(x => new CategoryResponse(x.Id, x.Name, x.Position));
+        return categories.Select(x => new CategoryResponse(x.Id, x.Name));
     }
 }

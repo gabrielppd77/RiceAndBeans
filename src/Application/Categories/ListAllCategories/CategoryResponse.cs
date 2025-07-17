@@ -1,3 +1,3 @@
 ﻿namespace Application.Categories.ListAllCategories;
 
-public record CategoryResponse(Guid Id, string Name, int Position);
+public record CategoryResponse(Guid Id, string Name);
