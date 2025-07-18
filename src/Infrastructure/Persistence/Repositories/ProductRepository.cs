@@ -19,4 +19,14 @@ public class ProductRepository(ApplicationDbContext context) : IProductRepositor
     {
         await context.Products.AddAsync(product);
     }
+
+    public async Task<IEnumerable<Product>> GetAllByCompanyIdUntracked(Guid companyId)
+    {
+        return await context.Products
+            .AsNoTracking()
+            .Where(x => x.CompanyId == companyId)
+            .OrderBy(x => x.Position)
+            .Include(x => x.Category)
+            .ToListAsync();
+    }
 }

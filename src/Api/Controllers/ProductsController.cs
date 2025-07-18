@@ -1,6 +1,8 @@
 ﻿using Api.Controllers.Common;
+using Application.Categories.ListAllCategories;
 using Application.Common.ServiceHandler;
 using Application.Products.CreateProduct;
+using Application.Products.ListAllProducts;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,5 +21,12 @@ public class ProductsController : ApiController
             _ => NoContent(),
             Problem
         );
+    }
+
+    [HttpGet("list-all")]
+    public async Task<IActionResult> ListAll(IServiceHandler<Unit, IEnumerable<ProductResponse>> service)
+    {
+        var result = await service.Handler(Unit.Value);
+        return Ok(result);
     }
 }

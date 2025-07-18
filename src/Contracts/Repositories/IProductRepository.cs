@@ -6,4 +6,5 @@ public interface IProductRepository
 {
     Task<int> GetLastPositionByCompanyIdUntracked(Guid companyId);
     Task Add(Product product);
+    Task<IEnumerable<Product>> GetAllByCompanyIdUntracked(Guid companyId);
 }
