@@ -1,8 +1,8 @@
 ﻿using Api.Controllers.Common;
-using Application.Categories.ListAllCategories;
 using Application.Common.ServiceHandler;
 using Application.Products.CreateProduct;
 using Application.Products.ListAllProducts;
+using Application.Products.RemoveProduct;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,5 +28,17 @@ public class ProductsController : ApiController
     {
         var result = await service.Handler(Unit.Value);
         return Ok(result);
+    }
+
+    [HttpDelete("remove")]
+    public async Task<IActionResult> Remove(
+        IServiceHandler<RemoveProductRequest, ErrorOr<Success>> service,
+        RemoveProductRequest request)
+    {
+        var result = await service.Handler(request);
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
     }
 }

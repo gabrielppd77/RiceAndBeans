@@ -29,4 +29,14 @@ public class ProductRepository(ApplicationDbContext context) : IProductRepositor
             .Include(x => x.Category)
             .ToListAsync();
     }
+
+    public async Task<Product?> GetById(Guid productId)
+    {
+        return await context.Products.FirstOrDefaultAsync(x => x.Id == productId);
+    }
+
+    public void Remove(Product product)
+    {
+        context.Products.Remove(product);
+    }
 }

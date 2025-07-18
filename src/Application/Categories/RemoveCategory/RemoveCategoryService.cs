@@ -6,7 +6,9 @@ using ErrorOr;
 
 namespace Application.Categories.RemoveCategory;
 
-public class RemoveCategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork) : IServiceHandler<RemoveCategoryRequest, ErrorOr<Success>>
+public class RemoveCategoryService(
+    ICategoryRepository categoryRepository,
+    IUnitOfWork unitOfWork) : IServiceHandler<RemoveCategoryRequest, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handler(RemoveCategoryRequest request)
     {
