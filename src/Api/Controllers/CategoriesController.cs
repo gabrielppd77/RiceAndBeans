@@ -14,7 +14,7 @@ namespace Api.Controllers;
 public class CategoriesController : ApiController
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Register(
+    public async Task<IActionResult> Create(
         IServiceHandler<CreateCategoryRequest, ErrorOr<Success>> service,
         CreateCategoryRequest request)
     {

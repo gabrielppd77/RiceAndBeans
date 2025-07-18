@@ -1,5 +1,6 @@
 ﻿using Domain.Categories;
 using Domain.Companies;
+using Domain.Products;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,8 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Company> Companies { get; set; }
 
     public DbSet<Category> Categories { get; set; }
+
+    public DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
