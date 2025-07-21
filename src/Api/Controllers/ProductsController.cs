@@ -3,6 +3,7 @@ using Application.Common.ServiceHandler;
 using Application.Products.CreateProduct;
 using Application.Products.ListAllProducts;
 using Application.Products.RemoveProduct;
+using Application.Products.UpdateProduct;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,18 @@ public class ProductsController : ApiController
     public async Task<IActionResult> Create(
         IServiceHandler<CreateProductRequest, ErrorOr<Success>> service,
         CreateProductRequest request)
+    {
+        var result = await service.Handler(request);
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> Update(
+        IServiceHandler<UpdateProductRequest, ErrorOr<Success>> service,
+        UpdateProductRequest request)
     {
         var result = await service.Handler(request);
         return result.Match(

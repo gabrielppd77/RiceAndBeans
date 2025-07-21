@@ -31,13 +31,13 @@ public class Product
         Price = price;
     }
 
-    //public void UpdateFormFields(Guid? categoryId, string name, string? description, decimal price)
-    //{
-    //    CategoryId = categoryId;
-    //    Name = name;
-    //    Description = description;
-    //    Price = price;
-    //}
+    public void UpdateFormFields(Guid? categoryId, string name, string? description, decimal price)
+    {
+        CategoryId = categoryId;
+        Name = name;
+        Description = description;
+        Price = price;
+    }
 
     //public void UpdateImage(string? urlImage)
     //{
