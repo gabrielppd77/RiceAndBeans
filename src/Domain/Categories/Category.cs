@@ -1,10 +1,11 @@
-﻿using Domain.Companies;
+﻿using Domain.Common.Entities;
+using Domain.Common.Positions;
+using Domain.Companies;
 
 namespace Domain.Categories;
 
-public class Category
+public class Category : Entity, IPositionable
 {
-    public Guid Id { get; }
     public Guid CompanyId { get; private set; }
     public string Name { get; private set; }
     public int Position { get; private set; }
@@ -16,10 +17,9 @@ public class Category
 
     public Category(Guid companyId, string name, int position)
     {
-        Id = Guid.NewGuid();
         CompanyId = companyId;
         Name = name;
-        Position = position;
+        ChangePosition(position);
     }
 
     public void UpdateFormFields(string name)

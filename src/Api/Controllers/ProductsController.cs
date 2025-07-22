@@ -1,9 +1,11 @@
 ﻿using Api.Controllers.Common;
 using Application.Common.ServiceHandler;
+using Application.Positions.ChangePosition;
 using Application.Products.CreateProduct;
 using Application.Products.ListAllProducts;
 using Application.Products.RemoveProduct;
 using Application.Products.UpdateProduct;
+using Domain.Products;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +51,18 @@ public class ProductsController : ApiController
         RemoveProductRequest request)
     {
         var result = await service.Handler(request);
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPatch("change-position")]
+    public async Task<IActionResult> ChangePosition(
+        IChangePositionService<Product> changePositionService,
+        IEnumerable<ChangePositionRequest> request)
+    {
+        var result = await changePositionService.Handler(request);
         return result.Match(
             _ => NoContent(),
             Problem

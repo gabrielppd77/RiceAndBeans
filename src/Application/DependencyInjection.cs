@@ -1,5 +1,6 @@
 using System.Reflection;
 using Application.Common.ServiceHandler;
+using Application.Positions.ChangePosition;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ public static class DependencyInjection
             .AsImplementedInterfaces()
             .WithScopedLifetime());
         services.Decorate(typeof(IServiceHandler<,>), typeof(ServiceHandlerDecorator<,>));
+        services.AddScoped(typeof(IChangePositionService<>), typeof(ChangePositionService<>));
 
         return services;
     }

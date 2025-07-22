@@ -38,11 +38,4 @@ public class CategoryRepository(ApplicationDbContext context) : ICategoryReposit
             .Where(x => x.CompanyId == companyId)
             .MaxAsync(c => (int?)c.Position) ?? 0;
     }
-
-    public async Task<IEnumerable<Category>> GetAllByIds(IEnumerable<Guid> categoriesId)
-    {
-        return await context.Categories
-            .Where(x => categoriesId.Contains(x.Id))
-            .ToListAsync();
-    }
 }

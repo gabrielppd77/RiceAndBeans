@@ -9,5 +9,4 @@ public interface ICategoryRepository
     Task<Category?> GetById(Guid categoryId);
     void Remove(Category category);
     Task<int> GetLastPositionByCompanyIdUntracked(Guid companyId);
-    Task<IEnumerable<Category>> GetAllByIds(IEnumerable<Guid> categoriesId);
 }

@@ -1,11 +1,12 @@
 ﻿using Domain.Categories;
+using Domain.Common.Entities;
+using Domain.Common.Positions;
 using Domain.Companies;
 
 namespace Domain.Products;
 
-public class Product
+public class Product : Entity, IPositionable
 {
-    public Guid Id { get; }
     public Guid CompanyId { get; private set; }
     public Guid? CategoryId { get; private set; }
     public string Name { get; private set; }
@@ -22,13 +23,12 @@ public class Product
 
     public Product(Guid companyId, Guid? categoryId, string name, string? description, int position, decimal price)
     {
-        Id = Guid.NewGuid();
         CompanyId = companyId;
         CategoryId = categoryId;
         Name = name;
         Description = description;
-        Position = position;
         Price = price;
+        ChangePosition(position);
     }
 
     public void UpdateFormFields(Guid? categoryId, string name, string? description, decimal price)
@@ -44,8 +44,8 @@ public class Product
     //    UrlImage = urlImage;
     //}
 
-    //public void ChangePosition(int newPosition)
-    //{
-    //    Position = newPosition;
-    //}
+    public void ChangePosition(int newPosition)
+    {
+        Position = newPosition;
+    }
 }

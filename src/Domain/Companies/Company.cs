@@ -1,10 +1,10 @@
-﻿using Domain.Users;
+﻿using Domain.Common.Entities;
+using Domain.Users;
 
 namespace Domain.Companies
 {
-    public class Company
+    public class Company : Entity
     {
-        public Guid Id { get; }
         public Guid UserId { get; }
         public string Name { get; private set; }
         public string? Description { get; private set; }
@@ -18,7 +18,6 @@ namespace Domain.Companies
 
         public Company(User user, string name)
         {
-            Id = Guid.NewGuid();
             UserId = user.Id;
             Name = name;
             Path = GeneratePath(name);

@@ -1,10 +1,10 @@
+using Domain.Common.Entities;
 using Domain.Companies;
 
 namespace Domain.Users;
 
-public class User
+public class User : Entity
 {
-    public Guid Id { get; }
     public string Name { get; private set; }
     public string Email { get; private set; }
     public string Password { get; private set; }
@@ -21,7 +21,6 @@ public class User
 
     public User(string name, string email, string password)
     {
-        Id = Guid.NewGuid();
         Name = name;
         Email = email;
         Password = password;

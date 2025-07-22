@@ -1,10 +1,11 @@
 ﻿using Api.Controllers.Common;
-using Application.Categories.ChangeCategoryPosition;
 using Application.Categories.CreateCategory;
 using Application.Categories.ListAllCategories;
 using Application.Categories.RemoveCategory;
 using Application.Categories.UpdateCategory;
 using Application.Common.ServiceHandler;
+using Application.Positions.ChangePosition;
+using Domain.Categories;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,10 +59,10 @@ public class CategoriesController : ApiController
 
     [HttpPatch("change-position")]
     public async Task<IActionResult> ChangePosition(
-        IServiceHandler<IEnumerable<ChangeCategoryPositionRequest>, ErrorOr<Success>> service,
-        IEnumerable<ChangeCategoryPositionRequest> request)
+        IChangePositionService<Category> changePositionService,
+        IEnumerable<ChangePositionRequest> request)
     {
-        var result = await service.Handler(request);
+        var result = await changePositionService.Handler(request);
         return result.Match(
             _ => NoContent(),
             Problem
