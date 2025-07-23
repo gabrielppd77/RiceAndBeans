@@ -5,4 +5,5 @@ public record ProductResponse(
     string Name,
     string? Description,
     decimal Price,
-    string CategoryName);
+    Guid? CategoryId,
+    string? CategoryName);
