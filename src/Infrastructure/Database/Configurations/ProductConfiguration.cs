@@ -12,7 +12,6 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.Name).HasMaxLength(100);
         builder.Property(x => x.Description).HasMaxLength(500);
-        builder.Property(x => x.UrlImage).HasMaxLength(150);
         builder.Property(x => x.Price).HasColumnType("numeric(12,2)");
 
         builder.HasOne(x => x.Company).WithMany().HasForeignKey(x => x.CompanyId);

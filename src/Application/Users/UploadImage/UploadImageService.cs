@@ -1,59 +1,50 @@
 ﻿using Application.Common.ServiceHandler;
+using Contracts.Repositories;
 using Contracts.Services.Authentication;
 using Contracts.Services.FileManager;
-using Domain.Common.Errors;
-using Contracts.Repositories;
 using Contracts.Works;
+using Domain.Picturies;
+using Domain.Users;
 using ErrorOr;
 
 namespace Application.Users.UploadImage;
 
 public class UploadImageService(
-    IUploadFileService uploadFileService,
-    IRemoveFileService removeFileService,
     IUserAuthenticated userAuthenticated,
-    IUserRepository userRepository,
+    IFileManagerSettings fileManagerSettings,
+    IPictureRepository pictureRepository,
+    IRemoveFileService removeFileService,
+    IUploadFileService uploadFileService,
     IUnitOfWork unitOfWork)
     : IServiceHandler<UploadImageRequest, ErrorOr<string>>
 {
-    private const string FolderPathImage = "user";
-
     public async Task<ErrorOr<string>> Handler(UploadImageRequest request)
     {
         var userId = userAuthenticated.GetUserId();
 
-        var user = await userRepository.GetById(userId);
+        var bucket = fileManagerSettings.MainBucket;
 
-        if (user is null) return Errors.User.UserNotFound;
+        var pathToRemove = await pictureRepository.GetPathByEntityUntracked(nameof(User), userId);
 
-        if (user.UrlImage is not null)
+        if (pathToRemove is not null)
         {
-            var uri = new Uri(user.UrlImage);
-            var fileNameToRemove = $"{FolderPathImage}/{Path.GetFileName(uri.LocalPath)}";
-            var resultRemove = await removeFileService.RemoveFileAsync(fileNameToRemove);
-
-            if (resultRemove.IsError)
-            {
-                return resultRemove.Errors;
-            }
+            var resultRemove = await removeFileService.RemoveFileAsync(bucket, pathToRemove);
+            if (resultRemove.IsError) return resultRemove.Errors;
         }
 
-        var fileName = $"{FolderPathImage}/{user.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
+        var path = $"user/{Guid.NewGuid().ToString()}{Path.GetExtension(request.File.FileName)}";
 
-        var resultUpload =
-            await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), fileName);
+        var result =
+            await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), bucket, path);
 
-        if (resultUpload.IsError)
-        {
-            return resultUpload.Errors;
-        }
+        if (result.IsError) return result.Errors;
 
-        var urlImageUploaded = resultUpload.Value;
+        var picture = new Picture(bucket, path, nameof(User), userId);
 
-        user.UpdateImage(urlImageUploaded);
+        await pictureRepository.Add(picture);
 
         await unitOfWork.SaveChangesAsync();
 
-        return urlImageUploaded;
+        return picture.GetUrl(fileManagerSettings.BaseUrl);
     }
 }

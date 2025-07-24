@@ -1,59 +1,50 @@
 ﻿using Application.Common.ServiceHandler;
+using Contracts.Repositories;
 using Contracts.Services.Authentication;
 using Contracts.Services.FileManager;
-using Domain.Common.Errors;
-using Contracts.Repositories;
 using Contracts.Works;
+using Domain.Companies;
+using Domain.Picturies;
 using ErrorOr;
 
 namespace Application.Companies.UploadImage;
 
 public class UploadImageService(
-    IUploadFileService uploadFileService,
-    IRemoveFileService removeFileService,
     IUserAuthenticated userAuthenticated,
-    ICompanyRepository companyRepository,
+    IPictureRepository pictureRepository,
+    IRemoveFileService removeFileService,
+    IUploadFileService uploadFileService,
+    IFileManagerSettings fileManagerSettings,
     IUnitOfWork unitOfWork)
     : IServiceHandler<UploadImageRequest, ErrorOr<string>>
 {
-    private const string FolderPathImage = "company";
-
     public async Task<ErrorOr<string>> Handler(UploadImageRequest request)
     {
         var companyId = userAuthenticated.GetCompanyId();
 
-        var company = await companyRepository.GetById(companyId);
+        var bucket = fileManagerSettings.MainBucket;
 
-        if (company is null) return Errors.Company.CompanyNotFound;
+        var pathToRemove = await pictureRepository.GetPathByEntityUntracked(nameof(Company), companyId);
 
-        if (company.UrlImage is not null)
+        if (pathToRemove is not null)
         {
-            var uri = new Uri(company.UrlImage);
-            var fileNameToRemove = $"{FolderPathImage}/{Path.GetFileName(uri.LocalPath)}";
-            var resultRemove = await removeFileService.RemoveFileAsync(fileNameToRemove);
-
-            if (resultRemove.IsError)
-            {
-                return resultRemove.Errors;
-            }
+            var resultRemove = await removeFileService.RemoveFileAsync(bucket, pathToRemove);
+            if (resultRemove.IsError) return resultRemove.Errors;
         }
 
-        var fileName = $"{FolderPathImage}/{company.Id.ToString()}{Path.GetExtension(request.File.FileName)}";
+        var path = $"company/{Guid.NewGuid().ToString()}{Path.GetExtension(request.File.FileName)}";
 
-        var resultUpload =
-            await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), fileName);
+        var result =
+            await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), bucket, path);
 
-        if (resultUpload.IsError)
-        {
-            return resultUpload.Errors;
-        }
+        if (result.IsError) return result.Errors;
 
-        var urlImageUploaded = resultUpload.Value;
+        var picture = new Picture(bucket, path, nameof(Company), companyId);
 
-        company.UpdateImage(urlImageUploaded);
+        await pictureRepository.Add(picture);
 
         await unitOfWork.SaveChangesAsync();
 
-        return urlImageUploaded;
+        return picture.GetUrl(fileManagerSettings.BaseUrl);
     }
 }

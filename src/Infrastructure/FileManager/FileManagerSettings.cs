@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.FileManager;
+﻿using Contracts.Services.FileManager;
 
-public class FileManagerSettings
+namespace Infrastructure.FileManager;
+
+public class FileManagerSettings : IFileManagerSettings
 {
     public const string SectionName = "FileManagerSettings";
 

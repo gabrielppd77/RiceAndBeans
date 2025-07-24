@@ -8,7 +8,6 @@ public class User : Entity
     public string Name { get; private set; }
     public string Email { get; private set; }
     public string Password { get; private set; }
-    public string? UrlImage { get; private set; }
     public bool IsEmailConfirmed { get; private set; }
     public Guid? TokenEmailConfirmation { get; private set; }
     public Guid? TokenRecoverPassword { get; private set; }
@@ -51,11 +50,6 @@ public class User : Entity
         TokenRecoverPassword = null;
         TokenRecoverPasswordExpire = null;
         Password = newPassword;
-    }
-
-    public void UpdateImage(string? urlImage)
-    {
-        UrlImage = urlImage;
     }
 
     public void UpdateFormFields(string name)

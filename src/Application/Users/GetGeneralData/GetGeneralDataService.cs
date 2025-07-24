@@ -1,14 +1,18 @@
 ﻿using Application.Common.ServiceHandler;
-using Contracts.Services.Authentication;
-using Domain.Common.Errors;
 using Contracts.Repositories;
+using Contracts.Services.Authentication;
+using Contracts.Services.FileManager;
+using Domain.Common.Errors;
+using Domain.Users;
 using ErrorOr;
 
 namespace Application.Users.GetGeneralData;
 
 public class GetGeneralDataService(
+    IUserAuthenticated userAuthenticated,
     IUserRepository userRepository,
-    IUserAuthenticated userAuthenticated)
+    IPictureRepository pictureRepository,
+    IFileManagerSettings fileManagerSettings)
     : IServiceHandler<Unit, ErrorOr<GeneralDataResponse>>
 {
     public async Task<ErrorOr<GeneralDataResponse>> Handler(Unit _)
@@ -20,6 +24,8 @@ public class GetGeneralDataService(
         if (user is null)
             return Errors.User.UserNotFound;
 
-        return new GeneralDataResponse(user.Name, user.UrlImage);
+        var picture = await pictureRepository.GetByEntityUntracked(nameof(User), userId);
+
+        return new GeneralDataResponse(user.Name, picture?.GetUrl(fileManagerSettings.BaseUrl));
     }
 }

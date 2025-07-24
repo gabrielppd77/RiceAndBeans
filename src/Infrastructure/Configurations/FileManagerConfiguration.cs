@@ -16,10 +16,12 @@ public static class FileManagerConfiguration
             .GetRequiredSection(FileManagerSettings.SectionName)
             .Get<FileManagerSettings>()!;
 
+        services.AddSingleton<IFileManagerSettings>(fileManagerSettings);
+
         services.AddScoped<IUploadFileService>(provider =>
-            new UploadFileService(provider.GetRequiredService<IMinioClient>(), fileManagerSettings));
+            new UploadFileService(provider.GetRequiredService<IMinioClient>()));
         services.AddScoped<IRemoveFileService>(provider =>
-            new RemoveFileService(provider.GetRequiredService<IMinioClient>(), fileManagerSettings));
+            new RemoveFileService(provider.GetRequiredService<IMinioClient>()));
 
         return services;
     }

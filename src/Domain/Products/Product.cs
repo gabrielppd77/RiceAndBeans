@@ -11,7 +11,6 @@ public class Product : Entity, IPositionable
     public Guid? CategoryId { get; private set; }
     public string Name { get; private set; }
     public string? Description { get; private set; }
-    public string? UrlImage { get; private set; }
     public int Position { get; private set; }
     public decimal Price { get; private set; }
     public Company? Company { get; private set; }
@@ -38,11 +37,6 @@ public class Product : Entity, IPositionable
         Description = description;
         Price = price;
     }
-
-    //public void UpdateImage(string? urlImage)
-    //{
-    //    UrlImage = urlImage;
-    //}
 
     public void ChangePosition(int newPosition)
     {

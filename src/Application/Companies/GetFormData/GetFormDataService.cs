@@ -1,14 +1,18 @@
 ﻿using Application.Common.ServiceHandler;
-using Contracts.Services.Authentication;
-using Domain.Common.Errors;
 using Contracts.Repositories;
+using Contracts.Services.Authentication;
+using Contracts.Services.FileManager;
+using Domain.Common.Errors;
+using Domain.Companies;
 using ErrorOr;
 
 namespace Application.Companies.GetFormData;
 
 public class GetFormDataService(
+    IUserAuthenticated userAuthenticated,
     ICompanyRepository companyRepository,
-    IUserAuthenticated userAuthenticated)
+    IPictureRepository pictureRepository,
+    IFileManagerSettings fileManagerSettings)
     : IServiceHandler<Unit, ErrorOr<FormDataResponse>>
 {
     public async Task<ErrorOr<FormDataResponse>> Handler(Unit _)
@@ -19,6 +23,8 @@ public class GetFormDataService(
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
-        return new FormDataResponse(company.Name, company.Description, company.Path, company.UrlImage);
+        var picture = await pictureRepository.GetByEntityUntracked(nameof(Company), companyId);
+
+        return new FormDataResponse(company.Name, company.Description, company.Path, picture?.GetUrl(fileManagerSettings.BaseUrl));
     }
 }

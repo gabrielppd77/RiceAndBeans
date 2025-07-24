@@ -9,7 +9,6 @@ namespace Domain.Companies
         public string Name { get; private set; }
         public string? Description { get; private set; }
         public string Path { get; private set; }
-        public string? UrlImage { get; private set; }
         public User? User { get; private set; }
 
         protected Company()
@@ -29,11 +28,6 @@ namespace Domain.Companies
             Name = name;
             Description = description;
             Path = path;
-        }
-
-        public void UpdateImage(string? urlImage)
-        {
-            UrlImage = urlImage;
         }
 
         private string GeneratePath(string path)

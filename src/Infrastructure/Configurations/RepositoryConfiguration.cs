@@ -13,6 +13,7 @@ public static class RepositoryConfiguration
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped(typeof(IChangePositionRepository<>), typeof(ChangePositionRepository<>));
+        services.AddScoped<IPictureRepository, PictureRepository>();
 
         return services;
     }
