@@ -1,5 +1,8 @@
 using System.Reflection;
 using Application.Common.ServiceHandler;
+using Application.Picturies.CreatePicture;
+using Application.Picturies.GetPicture;
+using Application.Picturies.RemovePicture;
 using Application.Positions.ChangePosition;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,9 @@ public static class DependencyInjection
             .WithScopedLifetime());
         services.Decorate(typeof(IServiceHandler<,>), typeof(ServiceHandlerDecorator<,>));
         services.AddScoped(typeof(IChangePositionService<>), typeof(ChangePositionService<>));
+        services.AddScoped<ICreatePictureService, CreatePictureService>();
+        services.AddScoped<IRemovePictureService, RemovePictureService>();
+        services.AddScoped<IGetPictureService, GetPictureService>();
 
         return services;
     }

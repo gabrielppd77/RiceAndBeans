@@ -39,4 +39,9 @@ public class ProductRepository(ApplicationDbContext context) : IProductRepositor
     {
         context.Products.Remove(product);
     }
+
+    public async Task<Product?> GetByIdUntracked(Guid productId)
+    {
+        return await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == productId);
+    }
 }

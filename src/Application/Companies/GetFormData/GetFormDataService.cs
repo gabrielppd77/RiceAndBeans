@@ -1,4 +1,5 @@
 ﻿using Application.Common.ServiceHandler;
+using Application.Picturies.GetPicture;
 using Contracts.Repositories;
 using Contracts.Services.Authentication;
 using Contracts.Services.FileManager;
@@ -11,7 +12,7 @@ namespace Application.Companies.GetFormData;
 public class GetFormDataService(
     IUserAuthenticated userAuthenticated,
     ICompanyRepository companyRepository,
-    IPictureRepository pictureRepository,
+    IGetPictureService getPictureService,
     IFileManagerSettings fileManagerSettings)
     : IServiceHandler<Unit, ErrorOr<FormDataResponse>>
 {
@@ -23,7 +24,7 @@ public class GetFormDataService(
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
-        var picture = await pictureRepository.GetByEntityUntracked(nameof(Company), companyId);
+        var picture = await getPictureService.Handler(new GetPictureRequest(nameof(Company), companyId));
 
         return new FormDataResponse(company.Name, company.Description, company.Path, picture?.GetUrl(fileManagerSettings.BaseUrl));
     }

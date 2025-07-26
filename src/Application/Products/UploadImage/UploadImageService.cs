@@ -1,22 +1,19 @@
 ﻿using Application.Common.ServiceHandler;
 using Application.Picturies.CreatePicture;
 using Application.Picturies.RemovePicture;
-using Contracts.Services.Authentication;
-using Domain.Users;
+using Domain.Products;
 using ErrorOr;
 
-namespace Application.Users.UploadImage;
+namespace Application.Products.UploadImage;
 
 public class UploadImageService(
-    IUserAuthenticated userAuthenticated,
     IRemovePictureService removePictureService,
-    ICreatePictureService createPictureService)
-    : IServiceHandler<UploadImageRequest, ErrorOr<string>>
+    ICreatePictureService createPictureService) : IServiceHandler<UploadImageRequest, ErrorOr<string>>
 {
     public async Task<ErrorOr<string>> Handler(UploadImageRequest request)
     {
-        var entityType = nameof(User);
-        var entityId = userAuthenticated.GetUserId();
+        var entityType = nameof(Product);
+        var entityId = request.ProductId;
         var file = request.File;
 
         var resultRemove = await removePictureService.Handler(
@@ -26,7 +23,7 @@ public class UploadImageService(
 
         if (resultRemove.IsError) return resultRemove.Errors;
 
-        var path = $"user/{Guid.NewGuid().ToString()}{Path.GetExtension(request.File.FileName)}";
+        var path = $"product/{Guid.NewGuid().ToString()}{Path.GetExtension(file.FileName)}";
 
         return await createPictureService.Handler(
             new CreatePictureRequest(

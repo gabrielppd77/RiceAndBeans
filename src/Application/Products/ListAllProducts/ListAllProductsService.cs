@@ -14,6 +14,6 @@ public class ListAllProductsService(
 
         var products = await productRepository.GetAllByCompanyIdUntracked(companyId);
 
-        return products.Select(x => new ProductResponse(x.Id, x.Name, x.Description, x.Price, x.Category?.Id, x.Category?.Name));
+        return products.Select(x => new ProductResponse(x.Id, x.Name, x.Description, x.Price, x.Category?.Name));
     }
 }

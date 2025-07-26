@@ -12,22 +12,27 @@ public class PictureRepository(ApplicationDbContext context) : IPictureRepositor
         await context.Pictures.AddAsync(picture);
     }
 
-    public async Task<string?> GetPathByEntityUntracked(string entityType, Guid entityId)
+    public async Task<Picture?> GetUntracked(string bucket, string entityType, Guid entityId)
     {
         return await context.Pictures
             .AsNoTracking()
+            .Where(x => x.Bucket == bucket)
             .Where(x => x.EntityType == entityType)
             .Where(x => x.EntityId == entityId)
-            .Select(x => x.Path)
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Picture?> GetByEntityUntracked(string entityType, Guid entityId)
+    public async Task<Picture?> Get(string bucket, string entityType, Guid entityId)
     {
         return await context.Pictures
-            .AsNoTracking()
+            .Where(x => x.Bucket == bucket)
             .Where(x => x.EntityType == entityType)
             .Where(x => x.EntityId == entityId)
             .FirstOrDefaultAsync();
+    }
+
+    public void Remove(Picture picture)
+    {
+        context.Pictures.Remove(picture);
     }
 }

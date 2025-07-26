@@ -9,4 +9,5 @@ public interface IProductRepository
     Task<IEnumerable<Product>> GetAllByCompanyIdUntracked(Guid companyId);
     Task<Product?> GetById(Guid productId);
     void Remove(Product product);
+    Task<Product?> GetByIdUntracked(Guid productId);
 }

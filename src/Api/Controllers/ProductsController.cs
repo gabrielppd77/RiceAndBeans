@@ -2,9 +2,11 @@
 using Application.Common.ServiceHandler;
 using Application.Positions.ChangePosition;
 using Application.Products.CreateProduct;
+using Application.Products.GetProduct;
 using Application.Products.ListAllProducts;
 using Application.Products.RemoveProduct;
 using Application.Products.UpdateProduct;
+using Application.Products.UploadImage;
 using Domain.Products;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +67,31 @@ public class ProductsController : ApiController
         var result = await changePositionService.Handler(request);
         return result.Match(
             _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPatch("upload-image")]
+    public async Task<IActionResult> UploadImage(
+        IServiceHandler<UploadImageRequest, ErrorOr<string>> service,
+        IFormFile file,
+        Guid productId)
+    {
+        var result = await service.Handler(new UploadImageRequest(productId, file));
+        return result.Match(
+            Ok,
+            Problem
+        );
+    }
+
+    [HttpGet("get")]
+    public async Task<IActionResult> Get(
+        IServiceHandler<GetProductRequest, ErrorOr<GetProductResponse>> service,
+        Guid productId)
+    {
+        var result = await service.Handler(new GetProductRequest(productId));
+        return result.Match(
+            Ok,
             Problem
         );
     }

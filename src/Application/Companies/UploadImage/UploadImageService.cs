@@ -1,50 +1,38 @@
 ﻿using Application.Common.ServiceHandler;
-using Contracts.Repositories;
+using Application.Picturies.CreatePicture;
+using Application.Picturies.RemovePicture;
 using Contracts.Services.Authentication;
-using Contracts.Services.FileManager;
-using Contracts.Works;
 using Domain.Companies;
-using Domain.Picturies;
 using ErrorOr;
 
 namespace Application.Companies.UploadImage;
 
 public class UploadImageService(
     IUserAuthenticated userAuthenticated,
-    IPictureRepository pictureRepository,
-    IRemoveFileService removeFileService,
-    IUploadFileService uploadFileService,
-    IFileManagerSettings fileManagerSettings,
-    IUnitOfWork unitOfWork)
+    IRemovePictureService removePictureService,
+    ICreatePictureService createPictureService)
     : IServiceHandler<UploadImageRequest, ErrorOr<string>>
 {
     public async Task<ErrorOr<string>> Handler(UploadImageRequest request)
     {
-        var companyId = userAuthenticated.GetCompanyId();
+        var entityType = nameof(Company);
+        var entityId = userAuthenticated.GetCompanyId();
+        var file = request.File;
 
-        var bucket = fileManagerSettings.MainBucket;
+        var resultRemove = await removePictureService.Handler(
+            new RemovePictureRequest(
+                entityType,
+                entityId));
 
-        var pathToRemove = await pictureRepository.GetPathByEntityUntracked(nameof(Company), companyId);
+        if (resultRemove.IsError) return resultRemove.Errors;
 
-        if (pathToRemove is not null)
-        {
-            var resultRemove = await removeFileService.RemoveFileAsync(bucket, pathToRemove);
-            if (resultRemove.IsError) return resultRemove.Errors;
-        }
+        var path = $"company/{Guid.NewGuid().ToString()}{Path.GetExtension(file.FileName)}";
 
-        var path = $"company/{Guid.NewGuid().ToString()}{Path.GetExtension(request.File.FileName)}";
-
-        var result =
-            await uploadFileService.UploadFileAsync(request.File.OpenReadStream(), bucket, path);
-
-        if (result.IsError) return result.Errors;
-
-        var picture = new Picture(bucket, path, nameof(Company), companyId);
-
-        await pictureRepository.Add(picture);
-
-        await unitOfWork.SaveChangesAsync();
-
-        return picture.GetUrl(fileManagerSettings.BaseUrl);
+        return await createPictureService.Handler(
+            new CreatePictureRequest(
+                file,
+                path,
+                entityType,
+                entityId));
     }
 }
