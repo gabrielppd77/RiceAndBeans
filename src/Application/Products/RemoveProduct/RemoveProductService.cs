@@ -19,10 +19,7 @@ public class RemoveProductService(
 
         if (product is null) return Errors.Product.ProductNotFound;
 
-        var result = await removePictureService.Handler(
-            new RemovePictureRequest(
-                nameof(Product),
-                product.Id));
+        var result = await removePictureService.Handler(nameof(Product), product.Id);
 
         if (result.IsError) return result.Errors;
 

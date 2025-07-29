@@ -4,5 +4,5 @@ namespace Application.Picturies.RemovePicture;
 
 public interface IRemovePictureService
 {
-    Task<ErrorOr<Success>> Handler(RemovePictureRequest request);
+    Task<ErrorOr<Success>> Handler(string entityType, Guid entityId);
 }

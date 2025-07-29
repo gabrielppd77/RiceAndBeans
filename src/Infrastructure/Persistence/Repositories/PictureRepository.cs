@@ -35,4 +35,13 @@ public class PictureRepository(ApplicationDbContext context) : IPictureRepositor
     {
         context.Pictures.Remove(picture);
     }
+
+    public async Task<List<Picture>> GetAllUntracked(string bucket, string entityType, IEnumerable<Guid> entitiesId)
+    {
+        return await context.Pictures
+            .Where(x => x.Bucket == bucket)
+            .Where(x => x.EntityType == entityType)
+            .Where(x => entitiesId.Contains(x.EntityId))
+            .ToListAsync();
+    }
 }

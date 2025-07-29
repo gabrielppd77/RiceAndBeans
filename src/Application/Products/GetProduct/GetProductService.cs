@@ -1,7 +1,6 @@
 ﻿using Application.Common.ServiceHandler;
-using Application.Picturies.GetPicture;
+using Application.Picturies.GetPictureUrl;
 using Contracts.Repositories;
-using Contracts.Services.FileManager;
 using Domain.Common.Errors;
 using Domain.Products;
 using ErrorOr;
@@ -10,8 +9,7 @@ namespace Application.Products.GetProduct;
 
 public class GetProductService(
     IProductRepository productRepository,
-    IGetPictureService getPictureService,
-    IFileManagerSettings fileManagerSettings) : IServiceHandler<GetProductRequest, ErrorOr<GetProductResponse>>
+    IGetPictureUrlService getPictureUrlService) : IServiceHandler<GetProductRequest, ErrorOr<GetProductResponse>>
 {
     public async Task<ErrorOr<GetProductResponse>> Handler(GetProductRequest request)
     {
@@ -19,16 +17,13 @@ public class GetProductService(
 
         if (product is null) return Errors.Product.ProductNotFound;
 
-        var picture = await getPictureService.Handler(
-            new GetPictureRequest(
-                nameof(Product),
-                product.Id));
+        var urlImage = await getPictureUrlService.Handler(nameof(Product), product.Id);
 
         return new GetProductResponse(
             product.Id,
             product.Name,
             product.Description,
-            picture?.GetUrl(fileManagerSettings.BaseUrl),
+            urlImage,
             product.Price,
             product.CategoryId);
     }

@@ -1,12 +1,12 @@
 using Application.Common.ServiceHandler;
-using Contracts.Services.Authentication;
-using Domain.Common.Errors;
-using Contracts.Repositories;
-using Contracts.Works;
-using ErrorOr;
 using Application.Picturies.RemovePicture;
+using Contracts.Repositories;
+using Contracts.Services.Authentication;
+using Contracts.Works;
+using Domain.Common.Errors;
 using Domain.Companies;
 using Domain.Users;
+using ErrorOr;
 
 namespace Application.Users.RemoveAccount;
 
@@ -35,17 +35,11 @@ public class RemoveAccountService(
             return Errors.Authentication.InvalidCredentials;
         }
 
-        var resultRemovePictureUser = await removePictureService.Handler(
-            new RemovePictureRequest(
-                nameof(User),
-                user.Id));
+        var resultRemovePictureUser = await removePictureService.Handler(nameof(User), user.Id);
 
         if (resultRemovePictureUser.IsError) return resultRemovePictureUser.Errors;
 
-        var resultRemovePictureCompany = await removePictureService.Handler(
-            new RemovePictureRequest(
-                nameof(Company),
-                companyId));
+        var resultRemovePictureCompany = await removePictureService.Handler(nameof(Company), companyId);
 
         if (resultRemovePictureCompany.IsError) return resultRemovePictureCompany.Errors;
 

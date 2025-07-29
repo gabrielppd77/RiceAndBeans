@@ -16,4 +16,12 @@ public class CompanyRepository(ApplicationDbContext context) : ICompanyRepositor
     {
         return await context.Companies.AsNoTracking().FirstOrDefaultAsync(x => x.Id == companyId);
     }
+
+    public async Task<Company?> GetByPathUntracked(string companyPath)
+    {
+        return await context.Companies
+            .AsNoTracking()
+            .Where(x => x.Path == companyPath)
+            .FirstOrDefaultAsync();
+    }
 }

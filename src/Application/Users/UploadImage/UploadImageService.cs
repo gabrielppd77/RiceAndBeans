@@ -19,10 +19,7 @@ public class UploadImageService(
         var entityId = userAuthenticated.GetUserId();
         var file = request.File;
 
-        var resultRemove = await removePictureService.Handler(
-            new RemovePictureRequest(
-                entityType,
-                entityId));
+        var resultRemove = await removePictureService.Handler(entityType, entityId);
 
         if (resultRemove.IsError) return resultRemove.Errors;
 

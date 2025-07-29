@@ -1,7 +1,7 @@
 using System.Reflection;
 using Application.Common.ServiceHandler;
 using Application.Picturies.CreatePicture;
-using Application.Picturies.GetPicture;
+using Application.Picturies.GetPictureUrl;
 using Application.Picturies.RemovePicture;
 using Application.Positions.ChangePosition;
 using FluentValidation;
@@ -24,7 +24,7 @@ public static class DependencyInjection
         services.AddScoped(typeof(IChangePositionService<>), typeof(ChangePositionService<>));
         services.AddScoped<ICreatePictureService, CreatePictureService>();
         services.AddScoped<IRemovePictureService, RemovePictureService>();
-        services.AddScoped<IGetPictureService, GetPictureService>();
+        services.AddScoped<IGetPictureUrlService, GetPictureUrlService>();
 
         return services;
     }

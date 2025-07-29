@@ -8,4 +8,5 @@ public interface IPictureRepository
     Task<Picture?> GetUntracked(string bucket, string entityType, Guid entityId);
     Task<Picture?> Get(string bucket, string entityType, Guid entityId);
     void Remove(Picture picture);
+    Task<List<Picture>> GetAllUntracked(string bucket, string entityType, IEnumerable<Guid> entitiesId);
 }

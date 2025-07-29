@@ -11,9 +11,9 @@ public class RemovePictureService(
     IRemoveFileService removeFileService,
     IUnitOfWork unitOfWork) : IRemovePictureService
 {
-    public async Task<ErrorOr<Success>> Handler(RemovePictureRequest request)
+    public async Task<ErrorOr<Success>> Handler(string entityType, Guid entityId)
     {
-        var picture = await pictureRepository.Get(fileManagerSettings.MainBucket, request.EntityType, request.EntityId);
+        var picture = await pictureRepository.Get(fileManagerSettings.MainBucket, entityType, entityId);
 
         if (picture is null) return Result.Success;
 
