@@ -25,7 +25,18 @@ public class ProductRepository(ApplicationDbContext context) : IProductRepositor
         return await context.Products
             .AsNoTracking()
             .Where(x => x.CompanyId == companyId)
-            .OrderBy(x => x.Position)
+            .OrderBy(x => x.Category!.Position).ThenBy(x => x.Position)
+            .Include(x => x.Category)
+            .ToListAsync();
+    }
+
+    public async Task<List<Product>> GetAllWithCategoryRequiredByCompanyIdUntracked(Guid companyId)
+    {
+        return await context.Products
+            .AsNoTracking()
+            .Where(x => x.CompanyId == companyId)
+            .Where(x => x.CategoryId != null)
+            .OrderBy(x => x.Category!.Position).ThenBy(x => x.Position)
             .Include(x => x.Category)
             .ToListAsync();
     }

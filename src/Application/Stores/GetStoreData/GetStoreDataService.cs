@@ -21,7 +21,7 @@ public class GetStoreDataService(
 
         if (company is null) return Errors.Company.CompanyNotFound;
 
-        var products = await productRepository.GetAllByCompanyIdUntracked(company.Id);
+        var products = await productRepository.GetAllWithCategoryRequiredByCompanyIdUntracked(company.Id);
 
         var productsPictures = await getPictureUrlService.Handler(nameof(Product), products.Select(x => x.Id));
         var urlImage = await getPictureUrlService.Handler(nameof(Company), company.Id);
@@ -39,7 +39,7 @@ public class GetStoreDataService(
                     .Select(x => x.GetUrl(fileManagerSettings.BaseUrl))
                     .FirstOrDefault(),
                 product.Price,
-                product.Category?.Name));
+                product.Category!.Name));
         }
 
         return new GetStoreDataResponse(
