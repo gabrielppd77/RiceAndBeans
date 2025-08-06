@@ -6,4 +6,4 @@ public record GetStoreProductResponse(
     string? Description,
     string? UrlImage,
     decimal Price,
-    string? CategoryName);
+    string CategoryName);
