@@ -16,7 +16,7 @@ services:
       - db
 
   db:
-    image: postgres:17.5-alpine
+    image: postgres:17.6-alpine
     container_name: rice-and-beans-db
     ports:
       - 5432:5432
@@ -29,17 +29,18 @@ services:
       - rice-and-beans-db-volume:/var/lib/postgresql/data
 
   mailpit:
-    image: axllent/mailpit
+    image: axllent/mailpit:v1.27.4
     container_name: rice-and-beans-mailpit
     ports:
       - "8025:8025"   
       - "1025:1025" 
 
   seq:
-    image: datalust/seq:2024.3
+    image: datalust/seq:2025.2
     container_name: rice-and-beans-seq
     environment:
       - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=admin
     ports:
       - 8081:80
 

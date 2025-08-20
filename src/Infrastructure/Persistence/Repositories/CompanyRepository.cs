@@ -24,4 +24,9 @@ public class CompanyRepository(ApplicationDbContext context) : ICompanyRepositor
             .Where(x => x.Path == companyPath)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<List<Company>> GetAllUntracked()
+    {
+        return await context.Companies.AsNoTracking().ToListAsync();
+    }
 }
