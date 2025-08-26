@@ -1,5 +1,5 @@
-import { useGetStores } from "../data/hooks/useGetStoreData";
-import { useNavigate } from "react-router-dom";
+import { useGetStores } from "../data/hooks/useGetStores";
+import { useGoTo } from "../../configuration/routing/hooks/useGoTo";
 
 import { Container } from "../../components/container";
 import { LinearProgress } from "../../components/linear-progress";
@@ -9,9 +9,9 @@ import { CompanyCard } from "./components/company-card";
 import { CompanyCardSkeleton } from "./components/company-card-skeleton";
 import { Footer } from "./components/footer";
 
-export function HomeMain() {
+export function Home() {
   const { data: _d, isLoading, isFetching } = useGetStores();
-  const navigate = useNavigate();
+  const { goToStore } = useGoTo();
 
   const data = _d || [];
 
@@ -37,7 +37,7 @@ export function HomeMain() {
                     key={d.companyId}
                     name={d.companyName}
                     image={d.companyUrlImage}
-                    onClick={() => navigate(d.companyPath)}
+                    onClick={() => goToStore(d.companyPath)}
                   />
                 ))}
           </div>

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
-import { paramQueryFieldCategory } from "../../../../../../categories/search-category";
+import { useParams } from "react-router";
+import { useGoTo } from "../../../../../../configuration/routing/hooks/useGoTo";
 
 interface InformationProps {
   title: string;
@@ -21,7 +21,8 @@ export function Information({
   clampedRef,
   fullRef,
 }: InformationProps) {
-  const { companyPath } = useParams<{ companyPath: string }>();
+  const { companyPath = "" } = useParams<{ companyPath: string }>();
+  const { goToSearchCategory } = useGoTo();
 
   const lineClamp = "line-clamp-2";
 
@@ -30,14 +31,17 @@ export function Information({
       <h3 className="text-lg font-semibold select-none">{title}</h3>
 
       <div>
-        <Link
+        <a
           className="rounded-xl bg-white/20 px-2 py-1.5 text-sm hover:brightness-95"
-          to={`/${companyPath}/${title}/pesquisar-categoria?${paramQueryFieldCategory}=${categoryName}`}
+          onClick={() =>
+            goToSearchCategory(companyPath, { query: categoryName }, title)
+          }
         >
           {categoryName}
-        </Link>
+        </a>
       </div>
 
+      {/* TODO: add max height in description*/}
       <div className="mt-1 text-sm text-white/80" onClick={() => toggleOpen()}>
         <AnimatePresence initial={false}>
           <motion.div

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router";
+import { useGoTo } from "../../configuration/routing/hooks/useGoTo";
 
 import { useGetStoreData } from "../../store/data/hooks/useGetStoreData";
 
@@ -15,11 +16,12 @@ export const paramQueryFieldCategory = "query";
 export function SearchCategory() {
   const [isOpenDrawer, setOpenDrawer] = useState(false);
 
-  const { companyPath, productName } = useParams<{
+  const { companyPath = "", productName } = useParams<{
     companyPath: string;
     productName: string;
   }>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { goToStore } = useGoTo();
 
   const queryCategory = searchParams.get(paramQueryFieldCategory);
 
@@ -36,9 +38,12 @@ export function SearchCategory() {
   return (
     <main className="flex h-dvh w-full flex-col">
       <header className="flex items-center justify-between gap-4 p-3">
-        <Link className="absolute" to={`/${companyPath}/${productName}`}>
+        <a
+          className="absolute"
+          onClick={() => goToStore(companyPath, productName)}
+        >
           <ChevronLeft />
-        </Link>
+        </a>
 
         {isLoading ? (
           <div className="mx-10 flex-1 animate-pulse rounded-sm bg-white/20 py-1.5 pr-2 pl-3">

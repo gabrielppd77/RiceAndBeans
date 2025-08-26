@@ -1,9 +1,11 @@
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { useGoTo } from "../../../../configuration/routing/hooks/useGoTo";
 
 function PageTitle() {
+  const { goToHome } = useGoTo();
+
   return (
-    <Link to="/" className="flex items-center gap-1">
+    <a className="flex items-center gap-1" onClick={() => goToHome()}>
       <img
         src="rice-and-beans-logo.svg"
         className="h-12"
@@ -12,7 +14,7 @@ function PageTitle() {
       <span className="text-sm font-medium whitespace-nowrap text-white sm:text-base md:text-lg lg:text-xl">
         Rice & Beans
       </span>
-    </Link>
+    </a>
   );
 }
 

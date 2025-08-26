@@ -1,29 +1,36 @@
 import {
   RouterProvider as RouterProviderMain,
   createBrowserRouter,
-} from "react-router-dom";
+} from "react-router";
 
-import { HomeMain } from "../../../home/main";
-import { StoreMain } from "../../../store/main";
-import { SearchCategory } from "../../../categories/search-category";
-import { SearchProduct } from "../../../products/search-product";
+import { Home } from "../../../home/main";
+import { Store } from "../../../store/main";
+import { Feed } from "../../../store/feed";
+import { SearchProduct } from "../../../store/search-product";
+import { SearchCategory } from "../../../store/search-category";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <HomeMain />,
+    element: <Home />,
   },
   {
-    path: ":companyPath/:productName?",
-    element: <StoreMain />,
-  },
-  {
-    path: ":companyPath/:productName?/pesquisar-categoria",
-    element: <SearchCategory />,
-  },
-  {
-    path: ":companyPath/:productName?/pesquisar-produto",
-    element: <SearchProduct />,
+    path: "/:companyPath/:productName?",
+    element: <Store />,
+    children: [
+      {
+        path: "/:companyPath/:productName?",
+        element: <Feed />,
+      },
+      {
+        path: "/:companyPath/:productName?/pesquisar-produto",
+        element: <SearchProduct />,
+      },
+      {
+        path: "/:companyPath/:productName?/pesquisar-categoria",
+        element: <SearchCategory />,
+      },
+    ],
   },
 ]);
 

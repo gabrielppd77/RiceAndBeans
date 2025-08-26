@@ -1,5 +1,6 @@
 import { Image } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router";
+import { useGoTo } from "../../configuration/routing/hooks/useGoTo";
 
 interface ProductCardProps {
   name: string;
@@ -7,15 +8,16 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ name, urlImage }: ProductCardProps) {
-  const { companyPath } = useParams<{
+  const { companyPath = "" } = useParams<{
     companyPath: string;
   }>();
-  const navigate = useNavigate();
+  const { goToStore } = useGoTo();
 
+  //todo: add price and name
   return (
     <div
       className="flex h-44 w-full items-center justify-center"
-      onClick={() => navigate(`/${companyPath}/${name}`)}
+      onClick={() => goToStore(companyPath, name)}
     >
       {urlImage ? (
         <img alt={name} src={urlImage} className="h-44 w-full rounded-sm" />

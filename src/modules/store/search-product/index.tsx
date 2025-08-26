@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router";
 
 import { useGetStoreData } from "../../store/data/hooks/useGetStoreData";
 
@@ -11,6 +11,7 @@ import { ProductCard } from "../../components/product-card";
 import { SearchField } from "./components/search-field";
 
 import type { GetStoreProductResponse } from "../../store/data/types/GetStoreProductResponse";
+import { useGoTo } from "../../configuration/routing/hooks/useGoTo";
 
 interface CategoryWithProductData {
   category: string;
@@ -22,10 +23,11 @@ const paramQueryFieldProduct = "query";
 export function SearchProduct() {
   const [query, setQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  const { goToStore } = useGoTo();
 
   const queryProduct = searchParams.get(paramQueryFieldProduct);
 
-  const { companyPath, productName } = useParams<{
+  const { companyPath = "", productName } = useParams<{
     companyPath: string;
     productName: string;
   }>();
@@ -69,9 +71,12 @@ export function SearchProduct() {
   return (
     <main className="flex h-dvh w-full flex-col">
       <header className="flex items-center justify-between gap-4 p-3">
-        <Link className="absolute" to={`/${companyPath}/${productName}`}>
+        <a
+          className="absolute"
+          onClick={() => goToStore(companyPath, productName)}
+        >
           <ChevronLeft />
-        </Link>
+        </a>
 
         {isLoading ? (
           <div className="mx-10 flex-1 animate-pulse rounded-sm bg-white/20 py-1.5 pr-2 pl-3">

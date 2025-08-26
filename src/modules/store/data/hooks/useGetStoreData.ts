@@ -3,7 +3,7 @@ import api from "../../../configuration/api/api";
 import { fireError } from "../../../configuration/alert/alert";
 
 import type { GetStoreDataResponse } from "../types/GetStoreDataResponse";
-import { useNavigate } from "react-router-dom";
+import { useGoTo } from "../../../configuration/routing/hooks/useGoTo";
 
 const queryKey = ["/stores/get-store-data"];
 
@@ -14,7 +14,7 @@ interface RequestProps {
 }
 
 export function useGetStoreData({ params }: RequestProps) {
-  const navigate = useNavigate();
+  const { goToHome } = useGoTo();
 
   async function handleRequest() {
     if (!params.companyPath) return;
@@ -32,9 +32,7 @@ export function useGetStoreData({ params }: RequestProps) {
 
   if (result.error) {
     fireError(result.error);
-    navigate("/", {
-      replace: true,
-    });
+    goToHome();
   }
 
   return result;

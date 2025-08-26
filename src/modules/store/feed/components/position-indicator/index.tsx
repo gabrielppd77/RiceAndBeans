@@ -9,6 +9,7 @@ export function PositionIndicator({
   currentIndex,
   onClick,
 }: PositionIndicatorProps) {
+  // TODO: component are over when open description of product
   return (
     <div className="absolute top-1/2 left-4 flex -translate-y-1/2 transform flex-col gap-2">
       {Array.from({ length: listCount }).map((_, index) => (
