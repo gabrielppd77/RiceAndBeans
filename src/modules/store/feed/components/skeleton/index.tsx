@@ -1,6 +1,6 @@
 import { Image, Store } from "lucide-react";
 
-export function ProductSkeleton() {
+export function Skeleton() {
   return (
     <div className="relative flex h-full w-full snap-start snap-always items-center justify-center">
       <div className="absolute inset-0 flex h-full w-full items-center justify-center object-cover">

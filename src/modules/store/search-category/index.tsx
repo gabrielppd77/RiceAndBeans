@@ -36,7 +36,7 @@ export function SearchCategory() {
     : products;
 
   return (
-    <main className="flex h-dvh w-full flex-col">
+    <main className="flex h-full w-full flex-col">
       <header className="flex items-center justify-between gap-4 p-3">
         <a
           className="absolute"
@@ -46,12 +46,12 @@ export function SearchCategory() {
         </a>
 
         {isLoading ? (
-          <div className="mx-10 flex-1 animate-pulse rounded-sm bg-white/20 py-1.5 pr-2 pl-3">
+          <div className="mx-10 flex-1 animate-pulse rounded-sm py-1.5 pr-2 pl-3 shadow">
             <p>Carregando...</p>
           </div>
         ) : (
           <button
-            className="mx-10 grid w-full grid-cols-1 rounded-sm bg-white/10 py-1.5 pr-2 pl-3"
+            className="mx-10 grid w-full grid-cols-1 rounded-sm py-1.5 pr-2 pl-3 shadow"
             onClick={() => setOpenDrawer(true)}
           >
             <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">

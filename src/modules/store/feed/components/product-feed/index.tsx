@@ -16,7 +16,7 @@ interface ProductProps {
   price: number;
 }
 
-export function Product({
+export function ProductFeed({
   currentIndex,
   id,
   name,
@@ -89,7 +89,7 @@ export function Product({
             />
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 drop-shadow-xl">
             {urlImage ? (
               <div className="relative hover:brightness-95">
                 <img
@@ -100,17 +100,17 @@ export function Product({
                 <div className="absolute right-0 -bottom-2.5 left-0 flex items-center justify-center">
                   <Plus
                     strokeWidth={4}
-                    className="size-5 rounded-full bg-red-500/90 p-1"
+                    className="size-5 rounded-full bg-red-500/90 p-1 text-white"
                   />
                 </div>
               </div>
             ) : (
-              <button className="size-12 rounded-full bg-white/20 backdrop-blur-sm hover:brightness-95">
+              <button className="size-12 rounded-full bg-white/20 text-white backdrop-blur-sm hover:brightness-95">
                 <Image className="w-full" />
               </button>
             )}
 
-            <button>
+            <button className="text-white drop-shadow-xl">
               <p className="text-2xl font-extrabold">R$</p>
               <p className="-mt-1.5 text-xs font-semibold">
                 {formatToCurrency(price)}

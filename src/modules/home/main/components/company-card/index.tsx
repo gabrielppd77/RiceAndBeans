@@ -13,14 +13,12 @@ export function CompanyCard({ name, image, onClick }: CompanyCardProps) {
       onClick={() => onClick()}
       className={clsx(
         "flex h-28 gap-2 rounded-md p-4",
-        "transition duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:shadow-md",
+        "shadow-md transition duration-200 ease-in-out hover:cursor-pointer",
       )}
     >
       <Avatar image={image} alt="icone da loja" />
       <div className="flex items-center">
-        <div className="text-md line-clamp-1 font-medium text-white">
-          {name}
-        </div>
+        <div className="text-md line-clamp-1 font-medium">{name}</div>
       </div>
     </div>
   );

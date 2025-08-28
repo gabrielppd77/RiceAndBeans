@@ -69,7 +69,7 @@ export function SearchProduct() {
   );
 
   return (
-    <main className="flex h-dvh w-full flex-col">
+    <main className="flex h-full w-full flex-col">
       <header className="flex items-center justify-between gap-4 p-3">
         <a
           className="absolute"
@@ -79,11 +79,11 @@ export function SearchProduct() {
         </a>
 
         {isLoading ? (
-          <div className="mx-10 flex-1 animate-pulse rounded-sm bg-white/20 py-1.5 pr-2 pl-3">
+          <div className="mx-10 flex-1 animate-pulse rounded-sm py-1.5 pr-2 pl-3 shadow">
             <p>Carregando...</p>
           </div>
         ) : (
-          <div className="mx-10 grid w-full grid-cols-1 rounded-sm bg-white/10">
+          <div className="mx-10 grid w-full grid-cols-1 rounded-sm">
             <SearchField value={query} onChange={setQuery} />
           </div>
         )}

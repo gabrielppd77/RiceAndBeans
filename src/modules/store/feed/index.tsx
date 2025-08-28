@@ -8,8 +8,8 @@ import { useGetStoreData } from "../data/hooks/useGetStoreData";
 
 import { LinearProgress } from "../../components/linear-progress";
 
-import { ProductSkeleton } from "./components/product-skeleton";
-import { Product } from "./components/product";
+import { Skeleton } from "./components/skeleton";
+import { ProductFeed } from "./components/product-feed";
 import { PositionIndicator } from "./components/position-indicator";
 
 export function Feed() {
@@ -94,24 +94,33 @@ export function Feed() {
         className="scrollbar-hide h-full w-full snap-y snap-mandatory overflow-y-auto"
       >
         {isLoading ? (
-          <ProductSkeleton />
+          <Skeleton />
         ) : (
-          products.map((product) => (
-            <Product
-              currentIndex={currentIndex}
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              description={product.description}
-              urlImage={product.urlImage}
-              categoryName={product.categoryName}
-              price={product.price}
-            />
-          ))
+          <>
+            {/* {data && (
+              <StoreFeed
+                name={data.name}
+                description={data.description}
+                urlImage={data.urlImage}
+              />
+            )} */}
+            {products.map((product) => (
+              <ProductFeed
+                currentIndex={currentIndex}
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                description={product.description}
+                urlImage={product.urlImage}
+                categoryName={product.categoryName}
+                price={product.price}
+              />
+            ))}
+          </>
         )}
       </div>
 
-      <div className="absolute top-0 right-0 left-0 flex flex-col">
+      <div className="drop-shadow-outline absolute top-0 right-0 left-0 flex flex-col text-white">
         <div className="flex items-center justify-between p-3">
           <a
             className="flex items-center gap-2"
@@ -125,7 +134,7 @@ export function Feed() {
               alt="logo rice and beans"
               className="size-8"
             />
-            <h1 className="font-medium">{data?.name || "Rice & Beans"}</h1>
+            <h1 className="font-medium">{data?.name || "Rice&Beans"}</h1>
           </a>
 
           <a
@@ -144,12 +153,6 @@ export function Feed() {
         listCount={categories.length}
         onClick={handleScrollToCategory}
       />
-
-      {/* <NavControls
-        currentIndex={indexCategory}
-        listCount={categories.length}
-        onClick={handleScrollToCategory}
-      /> */}
     </div>
   );
 }

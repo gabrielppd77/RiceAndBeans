@@ -25,7 +25,7 @@ export function Home() {
 
       <Container>
         <div className="mb-10">
-          <h2 className="mb-2 text-lg font-medium text-white">Lojas</h2>
+          <h2 className="mb-2 text-lg font-medium">Lojas</h2>
 
           <div className="mb-2 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             {isLoading

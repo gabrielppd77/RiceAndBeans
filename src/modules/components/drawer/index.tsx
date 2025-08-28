@@ -8,7 +8,7 @@ interface DrawerProps {
 
 export function Drawer({ isOpen, onChange, content }: DrawerProps) {
   return (
-    <div className="text-black">
+    <div>
       <div
         className={clsx(
           "fixed inset-0 bg-black/50 transition-opacity duration-300",
@@ -19,7 +19,7 @@ export function Drawer({ isOpen, onChange, content }: DrawerProps) {
 
       <div
         className={clsx(
-          "fixed bottom-0 flex h-[85%] min-h-64 w-full transform flex-col rounded-md bg-gray-950 shadow-lg transition-all duration-300",
+          "fixed bottom-0 flex h-[85%] min-h-64 w-full transform flex-col rounded-md bg-white shadow-lg transition-all duration-300",
           isOpen ? "translate-y-0" : "translate-y-full",
         )}
       >

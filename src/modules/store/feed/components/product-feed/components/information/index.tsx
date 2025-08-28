@@ -28,11 +28,13 @@ export function Information({
 
   return (
     <div className="flex flex-col gap-1">
-      <h3 className="text-lg font-semibold select-none">{title}</h3>
+      <h3 className="text-lg font-semibold text-white drop-shadow-xl select-none">
+        {title}
+      </h3>
 
       <div>
         <a
-          className="rounded-xl bg-white/20 px-2 py-1.5 text-sm hover:brightness-95"
+          className="rounded-xl bg-white/20 px-2 py-1.5 text-sm text-white drop-shadow-xl hover:brightness-95"
           onClick={() =>
             goToSearchCategory(companyPath, { query: categoryName }, title)
           }

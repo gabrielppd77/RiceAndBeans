@@ -11,8 +11,8 @@ function PageTitle() {
         className="h-12"
         alt="rice and beans Logo"
       />
-      <span className="text-sm font-medium whitespace-nowrap text-white sm:text-base md:text-lg lg:text-xl">
-        Rice & Beans
+      <span className="text-sm font-medium whitespace-nowrap sm:text-base md:text-lg lg:text-xl">
+        Rice&Beans
       </span>
     </a>
   );
@@ -23,7 +23,7 @@ export function Navbar() {
     <nav
       className={clsx(
         "h-appbar fixed top-0 right-0 left-0 z-10",
-        "flex items-center justify-between border-b bg-black px-2 md:px-4",
+        "flex items-center justify-between px-2 shadow-md md:px-4",
       )}
     >
       <PageTitle />
