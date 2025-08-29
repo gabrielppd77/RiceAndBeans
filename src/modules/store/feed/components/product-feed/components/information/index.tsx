@@ -28,19 +28,23 @@ export function Information({
 
   return (
     <div className="flex flex-col gap-1">
-      <h3 className="text-lg font-semibold text-white drop-shadow-xl select-none">
+      <h3
+        title={title}
+        className="line-clamp-1 text-lg font-semibold text-white drop-shadow-xl"
+      >
         {title}
       </h3>
 
       <div>
-        <a
+        <button
+          title={categoryName}
           className="rounded-xl bg-white/20 px-2 py-1.5 text-sm text-white drop-shadow-xl hover:brightness-95"
           onClick={() =>
             goToSearchCategory(companyPath, { query: categoryName }, title)
           }
         >
-          {categoryName}
-        </a>
+          <span className="line-clamp-1">{categoryName}</span>
+        </button>
       </div>
 
       <div className="mt-1 text-sm text-white/80" onClick={() => toggleOpen()}>

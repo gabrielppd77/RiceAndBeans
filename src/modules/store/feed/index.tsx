@@ -145,7 +145,12 @@ export function Feed() {
               alt="logo rice and beans"
               className="size-8"
             />
-            <h1 className="font-medium">{data?.name || "Rice&Beans"}</h1>
+            <h1
+              className="line-clamp-1 font-medium"
+              title={data?.name || "Rice&Beans"}
+            >
+              {data?.name || "Rice&Beans"}
+            </h1>
           </a>
 
           <a onClick={() => goToSearchProduct(companyPath, productName)}>

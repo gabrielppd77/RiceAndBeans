@@ -113,7 +113,10 @@ export function SearchProduct() {
         <div className="scrollbar-hide mt-1 flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-1">
           {categoryWithProducts.map((d) => (
             <div key={d.category} className="flex flex-col">
-              <h1 className="mb-3 text-lg font-medium select-none">
+              <h1
+                title={d.category}
+                className="mb-3 line-clamp-1 text-lg font-medium"
+              >
                 {d.category}
               </h1>
               <span className="-mx-4 grid grid-cols-3 gap-1">
