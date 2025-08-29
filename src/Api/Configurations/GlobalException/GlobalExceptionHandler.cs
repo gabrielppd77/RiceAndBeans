@@ -17,7 +17,7 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
         {
             Status = StatusCodes.Status500InternalServerError,
             Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
-            Title = "Server failure",
+            Title = "Ocorreu um erro inesperado, por favor entrar em contato com o suporte no número (32)984816780",
             Detail = exception.Message,
         };
 
