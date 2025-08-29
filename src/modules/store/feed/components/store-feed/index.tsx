@@ -9,7 +9,7 @@ interface StoreFeedProps {
 export function StoreFeed({ name, description, urlImage }: StoreFeedProps) {
   return (
     <div className="relative flex h-full w-full snap-start snap-always items-center justify-center">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center gap-4">
         {urlImage ? (
           <img
             src={urlImage}
@@ -21,8 +21,8 @@ export function StoreFeed({ name, description, urlImage }: StoreFeedProps) {
             <Image className="w-full" />
           </button>
         )}
-        <h1>{name}</h1>
-        <span>{description}</span>
+        <h1 className="font-semibold">{name}</h1>
+        <span className="line-clamp-3">{description}</span>
       </div>
     </div>
   );

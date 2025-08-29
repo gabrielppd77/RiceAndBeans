@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Search } from "lucide-react";
 
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useGoTo } from "../../configuration/routing/hooks/useGoTo";
 import { useGetStoreData } from "../data/hooks/useGetStoreData";
 
@@ -11,6 +11,7 @@ import { LinearProgress } from "../../components/linear-progress";
 import { Skeleton } from "./components/skeleton";
 import { ProductFeed } from "./components/product-feed";
 import { PositionIndicator } from "./components/position-indicator";
+import { StoreFeed } from "./components/store-feed";
 
 export function Feed() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,18 +23,28 @@ export function Feed() {
   }>();
 
   const { goToStore, goToSearchProduct } = useGoTo();
-  const navigate = useNavigate();
 
   const { data, isLoading, isFetching } = useGetStoreData({
     params: { companyPath },
   });
 
   const products = useMemo(() => data?.products || [], [data]);
+  const productsWithIndexFixed = useMemo(
+    () => [
+      { index: 0, name: "", categoryName: "" },
+      ...products.map((p, index) => ({
+        index: index + 1,
+        name: p.name,
+        categoryName: p.categoryName,
+      })),
+    ],
+    [products],
+  );
 
   const categories = [...new Set(products.map((p) => p.categoryName))];
 
   const indexCategory = categories.findIndex(
-    (x) => x === products[currentIndex].categoryName,
+    (x) => x === productsWithIndexFixed[currentIndex].categoryName,
   );
 
   const handleScroll = useCallback(() => {
@@ -41,45 +52,45 @@ export function Feed() {
       const scrollTop = containerRef.current.scrollTop;
       const itemHeight = containerRef.current.clientHeight;
       const newIndex = Math.round(scrollTop / itemHeight);
-
       if (newIndex !== currentIndex) {
-        navigate(`/${companyPath}/${products[newIndex].name}`);
+        goToStore(companyPath, productsWithIndexFixed[newIndex]?.name);
         setCurrentIndex(newIndex);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, currentIndex]);
+  }, [productsWithIndexFixed, currentIndex]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
+      container.addEventListener("scrollend", handleScroll);
+      return () => container.removeEventListener("scrollend", handleScroll);
     }
   }, [handleScroll]);
 
   useEffect(() => {
     if (productName) {
-      const index = products.findIndex((x) => x.name === productName);
+      const index = productsWithIndexFixed.findIndex(
+        (x) => x.name === productName,
+      );
       if (index >= 0) {
-        scrollToProduct(index);
+        scrollToProduct(index, false);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products]);
+  }, [productName, productsWithIndexFixed]);
 
-  const scrollToProduct = (index: number) => {
+  const scrollToProduct = (index: number, isSmooth: boolean = true) => {
     if (containerRef.current) {
       const itemHeight = containerRef.current.clientHeight;
       containerRef.current.scrollTo({
         top: index * itemHeight,
-        behavior: "smooth",
+        behavior: isSmooth ? "smooth" : "instant",
       });
     }
   };
 
   function handleScrollToCategory(categoryIndex: number) {
-    const index = products.findIndex(
+    const index = productsWithIndexFixed.findIndex(
       (x) => x.categoryName === categories[categoryIndex],
     );
     if (index >= 0) {
@@ -97,13 +108,13 @@ export function Feed() {
           <Skeleton />
         ) : (
           <>
-            {/* {data && (
+            {data && (
               <StoreFeed
                 name={data.name}
                 description={data.description}
                 urlImage={data.urlImage}
               />
-            )} */}
+            )}
             {products.map((product) => (
               <ProductFeed
                 currentIndex={currentIndex}
@@ -137,11 +148,7 @@ export function Feed() {
             <h1 className="font-medium">{data?.name || "Rice&Beans"}</h1>
           </a>
 
-          <a
-            onClick={() =>
-              goToSearchProduct(companyPath, { query: "" }, productName)
-            }
-          >
+          <a onClick={() => goToSearchProduct(companyPath, productName)}>
             <Search />
           </a>
         </div>

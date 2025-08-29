@@ -43,7 +43,6 @@ export function Information({
         </a>
       </div>
 
-      {/* TODO: add max height in description*/}
       <div className="mt-1 text-sm text-white/80" onClick={() => toggleOpen()}>
         <AnimatePresence initial={false}>
           <motion.div

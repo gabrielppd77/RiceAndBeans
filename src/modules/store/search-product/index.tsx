@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useParams, useSearchParams } from "react-router";
+import { useParams } from "react-router";
 
 import { useGetStoreData } from "../../store/data/hooks/useGetStoreData";
 
@@ -18,14 +18,10 @@ interface CategoryWithProductData {
   products: GetStoreProductResponse[];
 }
 
-const paramQueryFieldProduct = "query";
-
 export function SearchProduct() {
-  const [query, setQuery] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [queryDebounced, setQueryDebounced] = useState("");
+  const [query, setQuery] = useState<string | null>(null);
   const { goToStore } = useGoTo();
-
-  const queryProduct = searchParams.get(paramQueryFieldProduct);
 
   const { companyPath = "", productName } = useParams<{
     companyPath: string;
@@ -38,17 +34,17 @@ export function SearchProduct() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setSearchParams({ [paramQueryFieldProduct]: query });
+      if (query === null) return;
+      setQueryDebounced(query);
     }, 500);
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const products = data?.products || [];
 
-  const productsFiltred = queryProduct
+  const productsFiltred = queryDebounced
     ? products.filter((x) =>
-        x.name.toLowerCase().includes(queryProduct.toLowerCase()),
+        x.name.toLowerCase().includes(queryDebounced.toLowerCase()),
       )
     : products;
 
@@ -84,7 +80,7 @@ export function SearchProduct() {
           </div>
         ) : (
           <div className="mx-10 grid w-full grid-cols-1 rounded-sm">
-            <SearchField value={query} onChange={setQuery} />
+            <SearchField value={query || ""} onChange={setQuery} />
           </div>
         )}
       </header>

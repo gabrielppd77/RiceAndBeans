@@ -25,13 +25,9 @@ export function useGoTo() {
     navigate(`/${companyPath}${productName ? `/${productName}` : ""}`);
   }
 
-  function goToSearchProduct(
-    companyPath: string,
-    params: ParamQuery,
-    productName?: string,
-  ) {
+  function goToSearchProduct(companyPath: string, productName?: string) {
     navigate(
-      `/${companyPath}${productName ? `/${productName}` : ""}/pesquisar-produto${toQueryString(params)}`,
+      `/${companyPath}${productName ? `/${productName}` : ""}/pesquisar-produto`,
     );
   }
 

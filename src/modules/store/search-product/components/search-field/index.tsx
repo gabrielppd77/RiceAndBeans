@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { CircleX, Search } from "lucide-react";
 
 interface SearchFieldProps {
@@ -6,6 +7,8 @@ interface SearchFieldProps {
 }
 
 export function SearchField({ value, onChange }: SearchFieldProps) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <div className="transform rounded-sm py-1.5 shadow transition-transform duration-200 ease-out">
       <div className="relative h-full">
@@ -13,6 +16,7 @@ export function SearchField({ value, onChange }: SearchFieldProps) {
           <Search className="size-6" />
         </div>
         <input
+          ref={inputRef}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           type="text"
@@ -22,7 +26,10 @@ export function SearchField({ value, onChange }: SearchFieldProps) {
         />
         {value && (
           <div
-            onClick={() => onChange("")}
+            onClick={() => {
+              onChange("");
+              if (inputRef.current) inputRef.current.focus();
+            }}
             className="absolute inset-y-0 end-2 flex items-center"
           >
             <CircleX className="size-6 rounded-full" />
