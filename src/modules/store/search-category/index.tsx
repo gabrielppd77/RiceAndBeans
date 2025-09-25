@@ -36,50 +36,57 @@ export function SearchCategory() {
     : products;
 
   return (
-    <main className="flex h-full w-full flex-col">
-      <header className="flex items-center justify-between gap-4 p-3">
-        <a
-          className="absolute"
-          onClick={() => goToStore(companyPath, productName)}
-        >
-          <ChevronLeft />
-        </a>
-
-        {isLoading ? (
-          <div className="mx-10 flex-1 animate-pulse rounded-sm py-1.5 pr-2 pl-3 shadow">
-            <p>Carregando...</p>
-          </div>
-        ) : (
-          <button
-            className="mx-10 grid w-full grid-cols-1 rounded-sm py-1.5 pr-2 pl-3 shadow"
-            onClick={() => setOpenDrawer(true)}
+    <main className="h-full">
+      <div className="flex h-full w-full flex-col items-center">
+        <header className="flex w-full items-center justify-between gap-4 p-3">
+          <a
+            className="absolute"
+            onClick={() => goToStore(companyPath, productName)}
           >
-            <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-              <span className="block truncate">
-                {queryCategory || "Selecione"}
-              </span>
-            </span>
-            <ChevronDown
-              aria-hidden="true"
-              className="col-start-1 row-start-1 size-5 self-center justify-self-end"
-            />
-          </button>
-        )}
-      </header>
+            <ChevronLeft />
+          </a>
 
-      <LinearProgress active={isFetching} />
-
-      <div className="scrollbar-hide mt-1 flex-1 overflow-y-auto">
-        <div className="grid grid-cols-3 gap-1">
           {isLoading ? (
-            <div className="flex h-44 w-full animate-pulse items-center justify-center">
-              <Image className="h-44 w-full rounded-sm" />
+            <div className="mx-10 flex-1 animate-pulse rounded-sm py-1.5 pr-2 pl-3 shadow">
+              <p>Carregando...</p>
             </div>
           ) : (
-            productsFiltred.map((x) => (
-              <ProductCard key={x.id} name={x.name} urlImage={x.urlImage} />
-            ))
+            <button
+              className="mx-10 grid w-full grid-cols-1 rounded-sm py-1.5 pr-2 pl-3 shadow"
+              onClick={() => setOpenDrawer(true)}
+            >
+              <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
+                <span className="block truncate">
+                  {queryCategory || "Selecione"}
+                </span>
+              </span>
+              <ChevronDown
+                aria-hidden="true"
+                className="col-start-1 row-start-1 size-5 self-center justify-self-end"
+              />
+            </button>
           )}
+        </header>
+
+        <LinearProgress active={isFetching} />
+
+        <div className="scrollbar-hide mt-1 flex-1 overflow-y-auto">
+          <div className="grid grid-cols-2 gap-1">
+            {isLoading ? (
+              <div className="flex h-44 w-full animate-pulse items-center justify-center">
+                <Image className="h-44 w-full rounded-sm" />
+              </div>
+            ) : (
+              productsFiltred.map((x) => (
+                <ProductCard
+                  key={x.id}
+                  name={x.name}
+                  price={x.price}
+                  urlImage={x.urlImage}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
 

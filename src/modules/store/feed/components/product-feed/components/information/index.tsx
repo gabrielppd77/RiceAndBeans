@@ -30,7 +30,7 @@ export function Information({
     <div className="flex flex-col gap-1">
       <h3
         title={title}
-        className="line-clamp-1 text-lg font-semibold text-white drop-shadow-xl"
+        className="drop-shadow-outline line-clamp-1 text-lg font-semibold text-white"
       >
         {title}
       </h3>
@@ -38,7 +38,7 @@ export function Information({
       <div>
         <button
           title={categoryName}
-          className="rounded-xl bg-white/20 px-2 py-1.5 text-sm text-white drop-shadow-xl hover:brightness-95"
+          className="drop-shadow-outline rounded-xl bg-white/20 px-2 py-1.5 text-sm text-white hover:brightness-95"
           onClick={() =>
             goToSearchCategory(companyPath, { query: categoryName }, title)
           }

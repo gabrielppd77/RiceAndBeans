@@ -10,7 +10,6 @@ import { LinearProgress } from "../../components/linear-progress";
 
 import { Skeleton } from "./components/skeleton";
 import { ProductFeed } from "./components/product-feed";
-import { PositionIndicator } from "./components/position-indicator";
 import { StoreFeed } from "./components/store-feed";
 
 export function Feed() {
@@ -41,11 +40,11 @@ export function Feed() {
     [products],
   );
 
-  const categories = [...new Set(products.map((p) => p.categoryName))];
+  // const categories = [...new Set(products.map((p) => p.categoryName))];
 
-  const indexCategory = categories.findIndex(
-    (x) => x === productsWithIndexFixed[currentIndex].categoryName,
-  );
+  // const indexCategory = categories.findIndex(
+  //   (x) => x === productsWithIndexFixed[currentIndex].categoryName,
+  // );
 
   const handleScroll = useCallback(() => {
     if (containerRef.current) {
@@ -89,20 +88,20 @@ export function Feed() {
     }
   };
 
-  function handleScrollToCategory(categoryIndex: number) {
-    const index = productsWithIndexFixed.findIndex(
-      (x) => x.categoryName === categories[categoryIndex],
-    );
-    if (index >= 0) {
-      scrollToProduct(index);
-    }
-  }
+  // function handleScrollToCategory(categoryIndex: number) {
+  //   const index = productsWithIndexFixed.findIndex(
+  //     (x) => x.categoryName === categories[categoryIndex],
+  //   );
+  //   if (index >= 0) {
+  //     scrollToProduct(index);
+  //   }
+  // }
 
   return (
-    <div className="h-full">
+    <div className="flex h-full justify-center">
       <div
         ref={containerRef}
-        className="scrollbar-hide h-full w-full snap-y snap-mandatory overflow-y-auto"
+        className="scrollbar-hide h-full w-full max-w-md snap-y snap-mandatory overflow-y-auto"
       >
         {isLoading ? (
           <Skeleton />
@@ -160,11 +159,11 @@ export function Feed() {
         <LinearProgress active={isFetching} />
       </div>
 
-      <PositionIndicator
+      {/* <PositionIndicator
         currentIndex={indexCategory}
         listCount={categories.length}
         onClick={handleScrollToCategory}
-      />
+      /> */}
     </div>
   );
 }

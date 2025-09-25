@@ -51,19 +51,15 @@ export function ProductFeed({
   return (
     <div
       key={id}
-      className="relative flex h-full w-full snap-start snap-always items-center justify-center"
+      className="relative flex h-full w-full snap-start snap-always items-center justify-center bg-black"
     >
-      {urlImage ? (
-        <img
-          src={urlImage}
-          alt={name}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      ) : (
-        <div className="absolute inset-0 flex items-center justify-center object-cover">
+      <div className="absolute inset-0 flex h-full w-full items-center justify-center object-cover">
+        {urlImage ? (
+          <img src={urlImage} alt={name} loading="lazy" />
+        ) : (
           <Image className="h-2/3 min-h-28 w-2/3 min-w-28" />
-        </div>
-      )}
+        )}
+      </div>
 
       <div
         className={clsx(
@@ -89,7 +85,7 @@ export function ProductFeed({
             />
           </div>
 
-          <div className="flex flex-col gap-4 drop-shadow-xl">
+          <div className="drop-shadow-outline flex flex-col gap-4">
             {urlImage ? (
               <div className="relative hover:brightness-95">
                 <img
@@ -110,7 +106,7 @@ export function ProductFeed({
               </button>
             )}
 
-            <button className="text-white drop-shadow-xl">
+            <button className="drop-shadow-outline text-white">
               <p className="text-2xl font-extrabold">R$</p>
               <p className="-mt-1.5 text-xs font-semibold">
                 {formatToCurrency(price)}

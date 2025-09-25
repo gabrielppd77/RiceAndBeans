@@ -26,7 +26,9 @@ export function Avatar({
   );
 
   if (image) {
-    return <img alt={alt} src={image} className={classNameProp} />;
+    return (
+      <img alt={alt} src={image} className={classNameProp} loading="lazy" />
+    );
   }
 
   return (
