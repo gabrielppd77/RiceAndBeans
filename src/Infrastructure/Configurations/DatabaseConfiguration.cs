@@ -17,6 +17,8 @@ public static class DatabaseConfiguration
                 .UseNpgsql(connectionString, npgsqlOptions => npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default))
                 .UseSnakeCaseNamingConvention());
 
-        services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("DefaultConnection")!);
+        services.AddHealthChecks()
+            .AddNpgSql(connectionString!)
+            .AddDbContextCheck<ApplicationDbContext>();
     }
 }

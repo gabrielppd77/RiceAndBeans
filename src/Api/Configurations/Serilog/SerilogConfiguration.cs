@@ -45,10 +45,18 @@ public static class SerilogConfiguration
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .Enrich.WithThreadId()
+            .Enrich.WithProperty("Application", "rice-and-beans-api")
             .WriteTo.Console()
             .WriteTo.Seq(serilogSettings.SeqServerUrl)
             .WriteTo.Email(emailConfiguration, null, LogEventLevel.Fatal)
             .CreateLogger();
+
+        services.AddHealthChecks()
+            .AddUrlGroup(
+                new Uri(serilogSettings.SeqServerUrlHealthCheck),
+                name: "seq",
+                tags: []
+            );
 
         return services;
     }

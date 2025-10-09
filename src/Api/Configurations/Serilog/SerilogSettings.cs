@@ -5,6 +5,7 @@ public class SerilogSettings
     public const string SectionName = "SerilogSettings";
 
     public required string SeqServerUrl { get; set; }
+    public required string SeqServerUrlHealthCheck { get; set; }
     public required string EmailConfigFrom { get; set; }
     public required string EmailConfigTo { get; set; }
     public required string EmailConfigHost { get; set; }

@@ -11,12 +11,6 @@ namespace Api.Controllers;
 [Route("")]
 public class ProjectController : ApiController
 {
-    [HttpGet("")]
-    public IActionResult GetHealthCheck()
-    {
-        return Ok("Server is Living!");
-    }
-
     [HttpGet("version")]
     public IActionResult GetVersion()
     {

@@ -3,7 +3,9 @@ using Api.Configurations.ApplyMigration;
 using Api.Configurations.Cors;
 using Api.Configurations.Swagger;
 using Application;
+using HealthChecks.UI.Client;
 using Infrastructure;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,11 @@ var app = builder.Build();
     app.UseCorsPolicy();
     app.UseSerilogRequestLogging();
     app.UseExceptionHandler();
+
+    app.MapHealthChecks("health", new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
     app.Run();
 }

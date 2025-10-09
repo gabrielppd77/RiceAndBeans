@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
+using Minio.AspNetCore.HealthChecks;
 
 namespace Infrastructure.Configurations;
 
@@ -18,6 +19,9 @@ public static class MinioConfiguration
             .WithCredentials(uploadFileSettings.AccessKey, uploadFileSettings.SecretKey)
             .WithSSL(uploadFileSettings.EnableSsl)
             .Build());
+
+        services.AddHealthChecks()
+            .AddMinio(sp => sp.GetRequiredService<IMinioClient>());
 
         return services;
     }
