@@ -4,11 +4,12 @@ using Domain.Picturies;
 using Domain.Products;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using Audit.EntityFramework;
 
 namespace Infrastructure.Database;
 
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : DbContext(options)
+    : AuditDbContext(options)
 {
     public DbSet<User> Users { get; set; }
 

@@ -1,4 +1,5 @@
 using Api.Configurations.ApiProblemDetails;
+using Api.Configurations.Audit;
 using Api.Configurations.Cors;
 using Api.Configurations.GlobalException;
 using Api.Configurations.Serilog;
@@ -20,6 +21,7 @@ public static class DependencyInjection
         services.AddSwaggerGenWithAuth();
         services.AddCorsPolicy(configuration);
         services.AddSerilogServices(configuration);
+        services.AddAudit();
 
         return services;
     }

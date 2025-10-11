@@ -1,5 +1,6 @@
 using Api;
 using Api.Configurations.ApplyMigration;
+using Api.Configurations.Audit;
 using Api.Configurations.Cors;
 using Api.Configurations.Swagger;
 using Application;
@@ -27,6 +28,7 @@ var app = builder.Build();
     app.UseCorsPolicy();
     app.UseSerilogRequestLogging();
     app.UseExceptionHandler();
+    app.UseAudit();
 
     app.MapHealthChecks("health", new HealthCheckOptions
     {
