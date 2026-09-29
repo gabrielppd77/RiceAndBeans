@@ -8,11 +8,6 @@ RUN npm install
 
 COPY . .
 
-ARG VITE_BASE_URL
-ENV VITE_BASE_URL=$VITE_BASE_URL
-ARG VITE_URL_REDIRECT_REGISTER
-ENV VITE_URL_REDIRECT_REGISTER=$VITE_URL_REDIRECT_REGISTER
-
 RUN npm run build
 
 FROM nginx:alpine
@@ -20,6 +15,12 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY docker/env.template.js /etc/nginx/env.template.js
+
+COPY docker/40-generate-env.sh /docker-entrypoint.d/40-generate-env.sh
+
+RUN chmod +x /docker-entrypoint.d/40-generate-env.sh
 
 EXPOSE 80
 

@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useGoTo } from "../../../../configuration/routing/hooks/useGoTo";
+import { env } from "../../../../configuration/env/env";
 
 function PageTitle() {
   const { goToHome } = useGoTo();
@@ -30,7 +31,7 @@ export function Navbar() {
 
       <button
         onClick={() =>
-          window.open(import.meta.env.VITE_URL_REDIRECT_REGISTER, "_blank")
+          window.open(env.urlRedirectRegister, "_blank")
         }
         className={clsx(
           "bg-red-500 text-white hover:bg-red-700",
