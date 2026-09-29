@@ -25,4 +25,9 @@ public static class DependencyInjection
 
         return services;
     }
+
+    public static void UsePresentation(this WebApplication app)
+    {
+        app.MapGet("/", () => new { Message = "Server is living" });
+    }
 }

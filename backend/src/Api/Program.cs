@@ -35,5 +35,7 @@ var app = builder.Build();
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
+    app.UsePresentation();
+
     app.Run();
 }
