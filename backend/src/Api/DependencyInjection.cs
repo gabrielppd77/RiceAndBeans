@@ -28,6 +28,6 @@ public static class DependencyInjection
 
     public static void UsePresentation(this WebApplication app)
     {
-        app.MapGet("/", () => new { Message = "Server is living" });
+        app.MapGet("/", () => new { Message = "Server is running" });
     }
 }
